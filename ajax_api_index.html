@@ -1,0 +1,117 @@
+<html>
+<head>
+    <title>API Examples</title>
+    <style>
+
+        .group 
+        {
+
+            display: block;
+            padding: 1em;
+	    width: 50%;
+            margin: auto auto;
+        }
+
+        .group h1
+        {
+            font-weight: normal;
+            font-size: 1.8em;
+            margin-bottom: 1em;
+        }
+
+	.group .info
+	{	
+	    padding: 0.4em;
+            line-height: 2em;
+            margin: 0.5em;
+            color: #888;
+            font-size: 1em;
+	}
+
+        .group h2
+        {
+            border-bottom: 1px dotted #444;
+            font-weight: normal;
+            font-size: 1.4em;
+            margin-top: 1em;
+	    margin-bottom: 0;
+        }
+
+        a
+        {
+            line-height: 2em;
+            margin-left: 1em;
+            color: black;
+            text-decoration: none;
+            font-size: 1em;
+        }
+    
+        a:hover
+        {
+            text-decoration: underline;
+        }
+
+	.demo
+	{
+		color: #888;
+		clear: right;
+		float: right;
+	}
+    </style>
+</head>
+<body>
+
+    <div class="group">
+
+    	<h1>Api documentation & Management</h1>
+
+        <h2>Administration</h2>
+	<div class="info">Management of resources, customers, bookings, availability</div>
+        <a href="admin/editresource.php">Edit resources</a> </br>
+        <a href="admin/editcustomers.php">Edit customers</a> </br>
+        <a href="admin/editbooking.php">Edit bookings</a> </br>
+        <a href="admin/editavailability.php">Edit resource availability</a> </br>
+    
+
+        <h2>Api Overview</h2>
+	<div class="info">Documentation of parameters and calls</div>
+        <a href="calls.html">Overview</a> </br>
+	
+        <h2>Examples & Demos</h2>
+	<div class="info">Create and get information about a customer</div>
+        <a href="AJAX/AjaxDemoApp1_storeCustomer.php">Creation of Customer</a>
+	 <a class="demo" href="AJAX/AjaxDemoApp1_storeCustomer.html">demo</a> </br>
+        <a href="AJAX/AjaxDemoApp0_getCustomer.php">Get customer information</a>
+	 <a class="demo" href="AJAX/AjaxDemoApp0_getCustomer.html">demo</a> </br>
+
+	<div class="info">Get information about resources. (create a resource and edit availabilty in the administration panel)</div>
+   	<a href="AJAX/AjaxDemoApp3_getResources.php">Get resources</a>
+		<a class="demo" href="AJAX/AjaxDemoApp3_getResources.html">demo</a> </br>
+        <a href="AJAX/AjaxDemoApp8_getResourceAvailability.php">Get resource availability</a>
+		<a class="demo" href="AJAX/AjaxDemoApp8_getResourceAvailability.html">demo</a> </br>
+
+	<div class="info">Make and get information about bookings</div>
+        <a href="AJAX/AjaxDemoApp6_makeBookings.php">Make bookings</a>
+	 <a class="demo" href="AJAX/AjaxDemoApp6_makeBookings.html">demo</a> </br>
+
+        <a href="AJAX/AjaxDemoApp5_showBookings.php">Get bookings</a>
+		<a class="demo" href="AJAX/AjaxDemoApp5_showBookings.html">demo</a> </br>
+
+        <a href="AJAX/AjaxDemoApp4_getBookingsForDate.php">Get bookings for date</a>
+		<a class="demo" href="AJAX/AjaxDemoApp4_getBookingsForDate.html">demo</a> </br>
+
+        <a href="AJAX/AjaxDemoApp2_getCustomerBookings.php">Get customer bookings</a> 
+	 <a class="demo" href="AjaxDemoApp2_getCustomerBookings.html">demo</a> </br>
+
+        <a href="AJAX/AjaxDemoApp7_makeBookingsTimer.php">Make bookings with timer</a>
+	 <a class="demo" href="AJAX/AjaxDemoApp7_makeBookingsTimer.html">demo</a> </br>
+
+	<div class="info">Make and get clicks</div>
+        <a href="#" onclick="alert('only demo');">Make clicks</a>
+	 <a class="demo" href="AJAX/AjaxDemoApp9_makeClick.html">demo</a> </br>
+        <a href="#" onclick="alert('only demo');">Get clicks</a>
+		<a class="demo" href="AJAX/AjaxDemoApp10_getClicks.html">demo</a> </br>
+    </div>
+
+</body>
+</html>
