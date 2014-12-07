@@ -11,37 +11,45 @@
 			$location=getpostAJAX("location");
 			$name=getpostAJAX("name");
 			$fulltext=getpostAJAX("fulltext");
+			$resID=getpostAJAX("resID");
 
 			if(notset($type)){
 					err("Missing Form Data: (type)");					
 			}
 			
-			if(isset($type)||isset($name)||isset($company)||isset($location)||isset($fulltext)) $querystring.=" WHERE";
+			if(isset($type)||isset($name)||isset($company)||isset($location)||isset($fulltext)||isset($resID)) $querystring.=" WHERE";
 			if(isset($type)) $querystring.=" type='".$type."'";
 
-			if(isset($name)||isset($company)||isset($location)){
+			if(isset($name)||isset($company)||isset($location)||isset($resID)){
+					
 					if(isset($type)){
 							$querystring.=" and (";
 					}else{
 							$querystring.="(";
 					}
-
-					// Handle all the cases with 1/2/3 Parameters
-					if(isset($name)){
-							$querystring.="name like '%".$name."%'";
-							if(isset($company)) $querystring.=" and company like '%".$company."%'";
-							if(isset($location))$querystring.=" and location like '%".$location."%'";
+					
+					// ID Search overrides other plain search kinds
+					if(isset($resID)){
+							$querystring.="ID like '%".$resID."%'";									
 					}else{
-							if(isset($company)){
-									$querystring.="company like '%".$company."%'";
+							// Handle all the cases with 1/2/3 Parameters
+							if(isset($name)){
+									$querystring.="name like '%".$name."%'";
+									if(isset($company)) $querystring.=" and company like '%".$company."%'";
 									if(isset($location))$querystring.=" and location like '%".$location."%'";
 							}else{
-									if(isset($location)){
-												$querystring.="location like '%".$location."%'";							
-									}
-							} 
-					
-					}	
+									if(isset($company)){
+											$querystring.="company like '%".$company."%'";
+											if(isset($location))$querystring.=" and location like '%".$location."%'";
+									}else{
+											if(isset($location)){
+														$querystring.="location like '%".$location."%'";							
+											}
+									} 
+							
+							}	
+					}
+
 					$querystring.=")";
 
 			}else if(isset($fulltext)){

@@ -114,11 +114,13 @@
 				var reslocation=document.getElementById("resLocationS").value;
 				var rescompany=document.getElementById("resCompanyS").value;
 				var resfulltext=document.getElementById("resFulltextS").value;
+				var resID=document.getElementById("resIDS").value;
 
 				$.ajax({
 					type: 'POST',
 					url: '../booking/getresources_XML.php',
-					data: { name: escape(resname),
+					data: { resID : escape(resID),
+						name: escape(resname),
 						location:  escape(reslocation),
 						company: escape(rescompany),
 						fulltext: escape(resfulltext),
@@ -453,7 +455,8 @@
 
 	<div class="actionbox">
 			<span class="actionheading">Search Resources</span>
-			Name:<input type='text' name='resNameS' id='resNameS' onchange="searchResources()" onkeyup="searchResources()">
+			ID:<input type='text' name='resIDS' id='resIDS' onchange="searchResources()" onkeyup="searchResources()">
+			Name:<input type='text' name='resNameS' id='resNameS' onchange="searchResources()" onkeyup="searchResources()"><br/>
 			Location:<input type='text' name='resLocationS' id='resLocationS' onchange="searchResources()" onkeyup="searchResources()">
 			Company:<input type='text' name='resCompanyS' id='resCompanyS' onchange="searchResources()" onkeyup="searchResources()"><br/>
 			Full Text:<input type='text' name='resFulltextS' id='resFulltextS' onchange="searchResources()" onkeyup="searchResources()"><br/>
