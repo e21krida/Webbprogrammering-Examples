@@ -69,18 +69,7 @@
 					}
 			}
 			
-			if(isset($_POST['resourceID'])){
-					$querystring="SELECT DATE_FORMAT(date,'%Y-%m-%d %H:%i') as date FROM resourceavailability where resourceID='".$resourceid."' order by date";
-					$sinnerresult=mysql_query($querystring);
-					if (!$sinnerresult) err("SQL Query Error: ".mysql_error(),"Filter database querying error");
-					echo "<tr><td>Date: </td><td><SELECT NAME='date'>";
-					while ($sinnerrow = mysql_fetch_assoc($sinnerresult)) {
-						echo "<OPTION value='".$sinnerrow['date']."'>".$sinnerrow['date'];
-					}
-					echo "</SELECT></td></tr>";					
-			}else{
-					echo "<tr><td>Date: </td><td><SELECT NAME='date'><OPTION>None!</SELECT></td></tr>";														
-			}
+			echo "<tr><td>Date: </td><td><input type='text' name='date'></td></tr>";														
 
 			if(isset($_POST['position'])){
 					echo "<tr><td>Position:</td><td><input type='text' value='".$position."' name='position'></td><tr>";
@@ -116,8 +105,7 @@
 			echo "<tr><td><input name='Button' type='submit' value='Save'></td></tr>";							
 			echo "</table>";
 			echo "</form>";								
-
-				
+													
 			if($button=='Save'){
 					$querystring="INSERT INTO booking(customerID,resourceID,position,date,cost,rebate,status,auxdata) values ('".$_POST['customer']."','".$_POST['resourceID']."','".$_POST['position']."',DATE_FORMAT('".$_POST['date']."','%Y-%m-%d %H:%i'),'".$_POST['cost']."','".$_POST['rebate']."','".$_POST['status']."','".$_POST['auxdata']."');";
 					$innerresult=mysql_query($querystring);								
@@ -127,15 +115,15 @@
 					$querystring="DELETE FROM booking WHERE resourceID='".$_POST['resourceID']."' and date='".$_POST['date']."' and position='".$_POST['position']."';";
 					$innerresult=mysql_query($querystring);													
 					if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Delete Error!");
-			}
-			
+			}			
+
 			//---------------------------------------------------------------------------------------------------------------
 			// Search Query!
 			//---------------------------------------------------------------------------------------------------------------
 
-			$querystring="SELECT * FROM booking,resourceavailability,resource where booking.resourceID=resourceavailability.resourceID and resource.ID=resourceavailability.resourceID and booking.date=resourceavailability.date";
+			$querystring="SELECT * FROM booking,resource WHERE resource.ID=booking.resourceID";
 			if(isset($_POST['filter'])) $querystring.=" and type='".$_POST['filter']."'";
-			$querystring.=" order by name,company,location,booking.date,position";
+			$querystring.=" order by customerID,company,location,booking.date,position";
 			$innerresult=mysql_query($querystring);
 			
 			if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Query Error!");

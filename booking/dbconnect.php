@@ -87,6 +87,7 @@
 			
 			function err($errmsg) {
 					header("HTTP/1.0 500 Internal server error:".$errmsg,true,500);
+					echo errmsg;
 					exit;
 			}
 			
