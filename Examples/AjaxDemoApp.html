@@ -1,12 +1,12 @@
 <html>
 <head>
 	<style>
-					table {border-collapse:collapse;box-shadow: 3px 3px 5px #444; border:1px solid #fff; }
-					.actionbox {border-radius: 6px;border:2px ridge #abd;padding:4px;background-color:#9AB;background: linear-gradient(to top, #89A , #ABC);margin-bottom:8px;box-shadow: 3px 3px 5px #456 inset; }
-					.actionheading {display:block;text-align:center;color:#fff;text-shadow:1px 1px 1px #000;font-family:Calibri;border-bottom:thin solid #456;margin-bottom:4px;}
-					.actiontablerow:nth-child(even) {background-color:#000;color:#fff;font-family:Calibri;}
-					.actiontablerow:nth-child(odd) {background-color:#888;color:#fff;font-family:Calibri;}
-					body {background-color:#CDE}
+		table {border-collapse:collapse;box-shadow: 3px 3px 5px #444; border:1px solid #fff; }
+		.actionbox {border-radius: 6px;border:2px ridge #abd;padding:4px;background-color:#9AB;background: linear-gradient(to top, #89A , #ABC);margin-bottom:8px;box-shadow: 3px 3px 5px #456 inset; }
+		.actionheading {display:block;text-align:center;color:#fff;text-shadow:1px 1px 1px #000;font-family:Calibri;border-bottom:thin solid #456;margin-bottom:4px;}
+		.actiontablerow:nth-child(even) {background-color:#000;color:#fff;font-family:Calibri;}
+		.actiontablerow:nth-child(odd) {background-color:#888;color:#fff;font-family:Calibri;}
+		body {background-color:#CDE}
 	</style>
 
 	<script language="javascript" src="../jquery/jquery-1.8.2.min.js"></script>
@@ -40,12 +40,12 @@
 					email: escape(email),
 					address: escape(address),
 				},
-				success:  ResultCustomer,
+				success:  ResultCustomern,
 				error: errormsg		
 			});
 		}
 	
-		function ResultCustomer(returnedData)
+		function ResultCustomern(returnedData)
 		{
 			// Iterate over all nodes in root node (i.e. the 'created' element in root which has an attribute called status)
 			for (i = 0; i < returnedData.childNodes.length; i++) {
@@ -73,12 +73,12 @@
 				type: 'POST',
 				url: '../booking/getcustomer_XML.php',
 				data: { customerID: escape(customerID)},
-				success:  ResultCustomer,
+				success:  ResultCustomers,
 				error: errormsg
 			});
 		}
 	
-		function ResultCustomer(returnedData)
+		function ResultCustomers(returnedData)
 		{
 			// An XML DOM document is returned from AJAX
 			var resultset=returnedData.childNodes[0];
@@ -290,7 +290,7 @@
 		//   Rebate is optional
 		//   Auxdata can be used to store additional information about the booking (any relevant information)
 		//------------------------------------------------------------------------
-
+ 
 		function makeBooking()
 		{
 			var customerID=document.getElementById("customerIDB").value;
@@ -331,6 +331,43 @@
 		// make booking END
 		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
 
+		//------------------------------------------------------------------------
+		// Delete booking
+		//------------------------------------------------------------------------
+		// Deletes a booking made by a customer on a resource at a certain date start date 
+		//------------------------------------------------------------------------
+
+		function deleteBooking()
+		{
+			//alert("caller is " + arguments.callee.caller.toString());
+			var customerID = document.getElementById("customerIDD").value;
+			var resourceID = document.getElementById("resourceIDD").value;
+			var date = document.getElementById("dateD").value;
+			
+			//console.log("CustomerID: " + customerID + " ResourceID: " + resourceID + " Date: " + date);
+			alert("CustomerID: " + customerID + " ResourceID: " + resourceID + " Date: " + date);
+			$.ajax({
+				type: 'POST',
+				url: '../booking/deletebooking_XML.php',
+				data: {
+					resourceID: resourceID,
+					date: date,
+					customerID: customerID  		// Filter out bookings made from other applications application.
+				},
+				success: deletemade,
+				error: errormsg
+			});
+		}
+		
+		function deletemade()
+		{
+			alert("Delete was a success");
+		}
+		
+		// delete booking END
+		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
+		
+		
 		//------------------------------------------------------------------------
 		// get customer bookings
 		//------------------------------------------------------------------------
@@ -447,14 +484,14 @@
 	</div>
 
 	<div class="actionbox">
-			<span class="actionheading">Get Customer Data</span>
+			<span class="actionheading">Get Customer Data (used for faux log-in)</span>
 			CustID:<input type='text' name='customerIDG' id='customerIDG' onchange="showCustomer()" onkeyup="showCustomer()">
 			<span class="actionheading">Result</span>
 			<div id="CustomerOutputDiv" />Customer Information</div>
 	</div>
 
 	<div class="actionbox">
-			<span class="actionheading">Search Resources</span>
+			<span class="actionheading">Search Resources (search resources given an ID or any or all of name,location,company or full text)</span>
 			ID:<input type='text' name='resIDS' id='resIDS' onchange="searchResources()" onkeyup="searchResources()">
 			Name:<input type='text' name='resNameS' id='resNameS' onchange="searchResources()" onkeyup="searchResources()"><br/>
 			Location:<input type='text' name='resLocationS' id='resLocationS' onchange="searchResources()" onkeyup="searchResources()">
@@ -466,7 +503,7 @@
 	</div>
 
 	<div class="actionbox">
-			<span class="actionheading">Search Availability</span>
+			<span class="actionheading">Search Availability (show the availability for a given Resource ID)</span>
 			ResourceID:<input type='text' name='resIDA' id='resIDA' onchange="searchAvailability()" onkeyup="searchAvailability()">
 			Name:<input type='text' name='resNameA' id='resNameA' onchange="searchAvailability()" onkeyup="searchAvailability()">
 			Location:<input type='text' name='resLocationA' id='resLocationA' onchange="searchAvailability()" onkeyup="searchAvailability()">
@@ -478,8 +515,8 @@
 	</div>
 
 	<div class="actionbox">
-			<span class="actionheading">Get Bookings </span>
-			Name:<input type='text' name='resNameGB' id='resNameGB' >
+			<span class="actionheading">Get Bookings (get all bookings for a given resource ID)</span>
+			ResourceID:<input type='text' name='resNameGB' id='resNameGB' >
 			Date:<input type='text' name='dateGB' id='dateGB' ><br/>
 			<input type="button" onclick="getBookings();" value="Get Bookings">			
 			<span class="actionheading">Result</span>
@@ -501,7 +538,15 @@
 	</div>
 
 	<div class="actionbox">
-			<span class="actionheading">Bookings Shopping Cart</span>
+			<span class="actionheading">Delete Booking (delete booking given customer ID, resourceID and date)</span>
+			CustID:<input type='text' name='customerIDD' id='customerIDD'>
+			ResourceID:<input type='text' name='resourceIDD' id='resourceIDD'>
+			Date:<input type='text' name='dateD' id='dateD'>
+			<input type="button" onclick="deleteBooking();" value="Delete Booking">
+	</div>
+	
+	<div class="actionbox">
+			<span class="actionheading">Bookings Shopping Cart (show bookings for a customer ID)</span>
 			CustID:<input type='text' name='customerID' id='customerID' onchange="processinputbox()" onkeyup="processinputbox()">
 			<span class="actionheading">Result</span>
 			<div id="OutputDiv" /></div>
