@@ -1,5 +1,6 @@
 <?PHP
-
+			$pdo=null;
+			
 			//---------------------------------------------------------------------------------------------------------------
 			// endsWith - does string start with?
 			//---------------------------------------------------------------------------------------------------------------
@@ -16,14 +17,6 @@
 			function endsWith($haystack, $needle)
 			{
 			    return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
-			}
-
-			//---------------------------------------------------------------------------------------------------------------
-			// presenthtml - Allows us to pass national characters - & is replaced with %
-			//---------------------------------------------------------------------------------------------------------------
-
-			function notset($var) {
-					return !isset($var);
 			}
 
 			//---------------------------------------------------------------------------------------------------------------
@@ -56,12 +49,12 @@
 							if($_POST[$param]==="0"){
 									$ret="0";							
 							}else if(empty($_POST[$param])){
-									$ret=NULL;
+									$ret="UNK";
 							}else{
 									$ret=mysql_real_escape_string(htmlentities(urldecode($_POST[$param])));							
 							}
 					}else{
-							$ret=NULL;
+							$ret="UNK";
 					}
 					return $ret;
 			}
@@ -87,14 +80,14 @@
 			
 			function err($errmsg) {
 					header("HTTP/1.0 500 Internal server error:".$errmsg,true,500);
-					echo errmsg;
+					echo $errmsg;
 					exit;
 			}
 			
 			//---------------------------------------------------------------------------------------------------------------
 			// dbConnect - Makes database connection
 			//---------------------------------------------------------------------------------------------------------------
-			
+						
 			function dbConnect() {
 				
 				$printHeaderFunction=0;
@@ -106,16 +99,19 @@
 					$hdr = '';
 				}
 
-				// Connect to DB server
-				$OC_db = mysql_connect(DB_HOST,DB_USER,DB_PASSWORD) or err("could not connect to database ".mysql_errno(),$hdr);
-			
-				// Select DB
-				mysql_select_db(DB_NAME) or err("could not select database \"".DB_NAME."\" error code".mysql_errno(),$hdr);
-				
+				global $pdo;
+				try {
+						$pdo = new PDO("mysql:dbname=".DB_NAME.";host=".DB_HOST, DB_USER, DB_PASSWORD);
+    				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);						
+				} catch (PDOException $e) {
+				    err("Error!: ".$e->getMessage()."<br/>");
+				    die();
+				}
+							
 			}
 
-			define("DB_USER","Enter User Name Here");
-			define("DB_PASSWORD","Enter Password Here");
+			define("DB_USER","THE USER NAME FROM CONSTRUCTION COURSE");
+			define("DB_PASSWORD","PASSWORD FROM CONSTRUCTION COURSE");
 			define("DB_HOST","localhost");
 			define("DB_NAME","BookingSystem");
 

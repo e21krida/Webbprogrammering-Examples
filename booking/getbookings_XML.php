@@ -5,41 +5,51 @@
 			$date=getpostAJAX("date");
 			$type=getpostAJAX("type");
 
-			if(notset($type)){
+			if($type=="UNK"){
 					err("Missing Form Data: (type)");					
 			}
 
-			$querystring="SELECT resource.size,resource.type,booking.customerID,booking.resourceID,resource.name,resource.company,resource.location,DATE_FORMAT(booking.date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(booking.dateto,'%Y-%m-%d %H:%i') as dateto,booking.cost,booking.rebate,booking.position,booking.status,auxdata FROM booking,resource where resource.ID=booking.resourceID ";
+			try{
+					// Set up query string
+					$querystring="SELECT resource.size,resource.type,booking.customerID,booking.resourceID,resource.name,resource.company,resource.location,DATE_FORMAT(booking.date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(booking.dateto,'%Y-%m-%d %H:%i') as dateto,booking.cost,booking.rebate,booking.position,booking.status,auxdata FROM booking,resource WHERE resource.ID=booking.resourceID AND type=:TYPE ";
 
-			if(isset($date)) $querystring.=" and date='".$date."'";
-			if(isset($resourceID)) $querystring.=" and resourceID='".$resourceID."'";
-			if(isset($type)) $querystring.=" and resource.type='".$type."'";
+					if($date!="UNK") $querystring.=" AND date=:DATE";
+					if($resourceID!="UNK") $querystring.=" AND resourceID=:RESID";
+					$querystring.=" ORDER BY resourceid,position";
+					
+					$stmt = $pdo->prepare($querystring);
+		
+					// Bind parameters
+					if($date!="UNK") $stmt->bindParam(':DATE',$date);
+					if($resourceID!="UNK") $stmt->bindParam(':RESID',$resourceID);
+					$stmt->bindParam(':TYPE',$type);
 
-			$querystring.=" order by resourceid,position";
-			$innerresult=mysql_query($querystring);
-			
-			if (!$innerresult) err("Select Bookings Error: ".mysql_error());
-			
-			$output="<bookings>\n";
-			while ($innerrow = mysql_fetch_assoc($innerresult)) {
-				  $output.="<booking \n";
-					$output.="    application='".presenthtml($innerrow['type'])."'\n";
-					$output.="    customerID='".presenthtml($innerrow['customerID'])."'\n";
-					$output.="    resourceID='".presenthtml($innerrow['resourceID'])."'\n";
-					$output.="    name='".presenthtml($innerrow['name'])."'\n";
-					$output.="    company='".presenthtml($innerrow['company'])."'\n";
-					$output.="    location='".presenthtml($innerrow['location'])."'\n";
-					$output.="    date='".$innerrow['date']."'\n";
-					$output.="    dateto='".$innerrow['dateto']."'\n";
-					$output.="    position='".$innerrow['position']."'\n";
-					$output.="    status='".$innerrow['status']."'\n";
-					$output.="    cost='".$innerrow['cost']."'\n";				
-					$output.="    size='".$innerrow['size']."'\n";				
-					$output.="    auxdata='".presenthtml($innerrow['auxdata'])."'\n";				
-					$output.=" />\n";
-			}				
-			$output.="</bookings>\n";
-
+					// Execute
+					$stmt->execute();
+		
+					$output="<bookings>\n";
+					foreach($stmt as $key => $row){
+						  $output.="<booking \n";
+							$output.="    application='".presenthtml($row['type'])."'\n";
+							$output.="    customerID='".presenthtml($row['customerID'])."'\n";
+							$output.="    resourceID='".presenthtml($row['resourceID'])."'\n";
+							$output.="    name='".presenthtml($row['name'])."'\n";
+							$output.="    company='".presenthtml($row['company'])."'\n";
+							$output.="    location='".presenthtml($row['location'])."'\n";
+							$output.="    date='".$row['date']."'\n";
+							$output.="    dateto='".$row['dateto']."'\n";
+							$output.="    position='".$row['position']."'\n";
+							$output.="    status='".$row['status']."'\n";
+							$output.="    cost='".$row['cost']."'\n";				
+							$output.="    size='".$row['size']."'\n";				
+							$output.="    auxdata='".presenthtml($row['auxdata'])."'\n";				
+							$output.=" />\n";
+					}				
+					$output.="</bookings>\n";
+			} catch (PDOException $e) {
+					err("Error!: ".$e->getMessage()."<br/>");
+					die();
+			}
 			header ("Content-Type:text/xml; charset=utf-8");  
 			echo $output;						
 ?>

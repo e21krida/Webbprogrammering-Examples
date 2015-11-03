@@ -1,23 +1,35 @@
 <?PHP
-			include 'dbconnect.php';
+		include 'dbconnect.php';	
+    		
+		$name=getpostAJAX("name");
+		$ID=getpostAJAX("ID");
+		$firstname=getpostAJAX("firstname");
+		$lastname=getpostAJAX("lastname");
+		$address=getpostAJAX("address");
+		$email=getpostAJAX("email");
+		$auxdata=getpostAJAX("auxdata");
 
-			$name=getpostAJAX("name");
-			$ID=getpostAJAX("ID");
-			$firstname=getpostAJAX("firstname");
-			$lastname=getpostAJAX("lastname");
-			$address=getpostAJAX("address");
-			$email=getpostAJAX("email");
+		
+		if ($ID=="UNK" || $firstname=="UNK" || $lastname=="UNK" || $address=="UNK" || $email=="UNK") err("Missing Form Data: (ID/firstname/lastname/address/email)");
 
-			if (notset($ID) || notset($firstname) || notset($lastname) || notset($address) || notset($email)) err("Missing Form Data: (ID/firstname/lastname/address/email)");
+		try{
+				$querystring="INSERT INTO customer(lastvisit,ID, firstname,lastname,address,email,auxdata) values (NOW(),:ID,:FIRSTNAME,:LASTNAME,:ADDRESS,:EMAIL,:AUXDATA);";
 
-			$querystring="INSERT INTO customer(lastvisit,ID, firstname,lastname,address,email) values (NOW(),'".$ID."','".$firstname."','".$lastname."','".$address."','".$email."');";
-			$innerresult=mysql_query($querystring);								
+				$stmt = $pdo->prepare($querystring);
+				$stmt->bindParam(':ID',$ID );
+				$stmt->bindParam(':FIRSTNAME',$ID );
+				$stmt->bindParam(':LASTNAME',$firstname );
+				$stmt->bindParam(':ADDRESS',$lastname );
+				$stmt->bindParam(':EMAIL',$address );
+				$stmt->bindParam(':AUXDATA',$auxdata );
+				$stmt->execute();
+				
+				header ("Content-Type:text/xml; charset=utf-8");  
+				echo '<created status="OK"/>';
 
-			if (!$innerresult){
-				err("Insert of Customer Error: ".mysql_error());
-			}else{
-					header ("Content-Type:text/xml; charset=utf-8");  
-					echo '<created status="OK"/>';
-			}
+		} catch (PDOException $e) {
+				err("Error!: ".$e->getMessage()."<br/>");
+				die();
+		}
 
 ?>

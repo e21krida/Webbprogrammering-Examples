@@ -6,21 +6,20 @@
 			$date=getpostAJAX("date");
 			$user=getpostAJAX("customerID");
 
-			if (notset($resource) || notset($date) || notset($user) ) err("Missing Form Data: (resourceidID/userID/date)");
+			if ($resource=="UNK" || $date=="UNK" || $user=="UNK" ) err("Missing Form Data: (resourceidID/userID/date)");
 
-			$innerresult=0;
-			$querystring="";
-			
-			if((isset($_POST['resourceID']))&&(isset($_POST['date']))&&(isset($_POST['customerID']))){
-					// Delete temp bookings for this user
-					$querystring="DELETE FROM booking WHERE customerID='".$user."' and date='".$date."' and resourceID='".$resource."'";
-					$innerresult=mysql_query($querystring);		
-			}
+			try{
+				 $querystring="DELETE FROM booking WHERE customerID=:CUSTID and date=:DDATE and resourceID=:RESOURCEID";
+		     $stmt = $pdo->prepare($querystring);
+		     $stmt->bindParam(':CUSTID',$user );
+		     $stmt->bindParam(':DDATE', $date);
+		     $stmt->bindParam(':RESOURCEID', $resource);
+				 $stmt->execute();
 
-			if (!$innerresult){
-				err("Could not delete booking: ".$user." ".$querystring."\n",""); 
-			}else{
 				header ("Content-Type:text/xml; charset=utf-8");  
 				echo '<deleted status="OK"/>';
+			} catch (PDOException $e) {
+			    err("Error!: ".$e->getMessage()."<br/>");
+			    die();
 			}
 ?>

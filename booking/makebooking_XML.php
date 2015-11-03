@@ -10,45 +10,64 @@
 			$status=getpostAJAX("status");
 			$position=getpostAJAX("position");
 			$auxdata=getpostAJAX("auxdata");
-			
-			// Delete temp bookings for this user
-			$querystring="DELETE FROM booking WHERE status=1 and customerID='".$user."'";
-			
-			$innerresult=mysql_query($querystring);		
-			if (!$innerresult) err("Could not delete temp bookings for customer $user ".$querystring."\n",""); 
 
-			// Compute current price
-			$querystring="SELECT count(*) as counted FROM booking where resourceid='".$resource."' and date='".$date."'";
-			$sinnerresult=mysql_query($querystring);
-			if (!$sinnerresult) err("Resource error".mysql_error(),"");
-
-			while ($sinnerrow = mysql_fetch_assoc($sinnerresult)) {
-					$counted=$sinnerrow['counted'];
-			}
-			
-			// Collate data for booking
-			$querystring="SELECT * FROM resource where id='".$resource."'";
-			$sinnerresult=mysql_query($querystring);
-			if (!$sinnerresult) err("Resource error".mysql_error(),"");
-			if(  mysql_num_rows($sinnerresult)==0) err("Invalid resource ID ".$resource);
-			// Fetch category, size and cost.
-			while ($sinnerrow = mysql_fetch_assoc($sinnerresult)) {
-					$category=$sinnerrow['category'];
-					$size=$sinnerrow['size'];
-					$cost=$sinnerrow['cost'];
+			if($resource=="UNK"||$date=="UNK"){
+					err("Missing Form Data: (type)");					
 			}
 
-			// Compute real cost
-			$remaining=$size-$counted;
-			$bookingclass=0;
-			$bookingcost=$cost;
+			try{
+										
+					// Delete temp bookings for this user
+					$querystring="DELETE FROM booking WHERE status=1 and customerID=:CUSTID;";
+					$stmt = $pdo->prepare($querystring);
+					$stmt->bindParam(':CUSTID',$user);
+					$stmt->execute();
+				
+					
+					// Retrieve size and cost from resource
+					$querystring="SELECT * FROM resource WHERE ID=:RESID";
+					$stmts = $pdo->prepare($querystring);
+					$stmts->bindParam(':RESID',$row['ID']);
+					$stmts->execute();
+					foreach($stmts as $kkey => $rrow){
+							$size=$row['size'];
+							$cost=$row['cost'];
+					}				
+					
+					// Count number of booked resources
+					$querystring="SELECT count(*) as counted FROM booking where resourceid=:RESID and date=:DATE";
+					$stmts = $pdo->prepare($querystring);
+					$stmts->bindParam(':RESID',$row['ID']);
+					$stmts->bindParam(':DATE',$row['Date']);
+					$stmts->execute();
+		
+					// Compute Remaining Resources for Date (equals)
+					foreach($stmts as $kkey => $row){
+							$counted=$row['counted'];
+					}	
+					$remaining=$size-$counted;
+		
+					// Save booking.
+					$querystring="INSERT INTO booking(customerID,resourceID,position,date,dateto,cost,rebate,status,auxdata) values (:USER,:RESID,:POSITION,DATE_FORMAT(:DATE,'%Y-%m-%d %H:%i'),DATE_FORMAT(:DATETO,'%Y-%m-%d %H:%i'),:COST,:REBATE,:STATUS,:AUXDATA);";
+					$stmts = $pdo->prepare($querystring);
+					$stmts->bindParam(':USER',$user);
+					$stmts->bindParam(':RESID',$resource);
+					$stmts->bindParam(':POSITION',$position);
+					$stmts->bindParam(':DATE',$date);
+					$stmts->bindParam(':DATETO',$dateto);
+					$stmts->bindParam(':COST',$cost);
+					$stmts->bindParam(':REBATE',$rebate);
+					$stmts->bindParam(':STATUS',$status);
+					$stmts->bindParam(':AUXDATA',$auxdata);
+					$stmts->execute();
+		
+					// Successfull booking
+					header ("Content-Type:text/xml; charset=utf-8");  
+					echo "<result category='".$category."' size='".$size."' bookingcost='".$bookingcost."' bokingclass='".$bookingclass."' remaining='".$remaining."'   />";		
 
-			// Save booking.
-			$querystring="INSERT INTO booking(customerID,resourceID,position,date,dateto,cost,rebate,status,auxdata) values ('".$user."','".$resource."','".$position."',DATE_FORMAT('".$date."','%Y-%m-%d %H:%i'),DATE_FORMAT('".$dateto."','%Y-%m-%d %H:%i'),'".$bookingcost."','".$rebate."','".$status."','".$auxdata."');";
-			$innerresult=mysql_query($querystring);	
-			if (!$innerresult) err("MySql Error ".mysql_error(),"");
+		} catch (PDOException $e) {
+				err("Error!: ".$e->getMessage()."<br/>");
+				die();
+		}
 
-			// Successfull booking
-			header ("Content-Type:text/xml; charset=utf-8");  
-			echo "<result category='".$category."' size='".$size."' bookingcost='".$bookingcost."' bokingclass='".$bookingclass."' remaining='".$remaining."'   />";		
 ?>

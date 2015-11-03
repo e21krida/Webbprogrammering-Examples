@@ -9,6 +9,7 @@ create table customer(
 		lastname		varchar(64),		
 		address			varchar(64),
 		email				varchar(64),
+		auxdata			varchar(256),
 		primary key(ID)
 );
 

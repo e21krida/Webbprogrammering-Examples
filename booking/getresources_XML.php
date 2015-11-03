@@ -6,80 +6,57 @@
 			include 'dbconnect.php';
 			$querystring="SELECT * FROM resource";
 
-			$company=getpostAJAX("company");
+			$company="%".getpostAJAX("company")."%";
 			$type=getpostAJAX("type");
-			$location=getpostAJAX("location");
-			$name=getpostAJAX("name");
+			$location="%".getpostAJAX("location")."%";
+			$name="%".getpostAJAX("name")."%";
 			$fulltext=getpostAJAX("fulltext");
-			$resID=getpostAJAX("resID");
+			$resID="%".getpostAJAX("resID")."%";
+			
+			if($fulltext!="UNK"){
+					$company="%".$fulltext."%";
+					$location="%".$fulltext."%";
+					$name="%".$fulltext."%";
+					$resID="%".$fulltext."%";
+			}
 
-			if(notset($type)){
+			if($type=="UNK"){
 					err("Missing Form Data: (type)");					
 			}
 			
-			if(isset($type)||isset($name)||isset($company)||isset($location)||isset($fulltext)||isset($resID)) $querystring.=" WHERE";
-			if(isset($type)) $querystring.=" type='".$type."'";
-
-			if(isset($name)||isset($company)||isset($location)||isset($resID)){
-					
-					if(isset($type)){
-							$querystring.=" and (";
-					}else{
-							$querystring.="(";
-					}
-					
-					// ID Search overrides other plain search kinds
-					if(isset($resID)){
-							$querystring.="ID like '%".$resID."%'";									
-					}else{
-							// Handle all the cases with 1/2/3 Parameters
-							if(isset($name)){
-									$querystring.="name like '%".$name."%'";
-									if(isset($company)) $querystring.=" and company like '%".$company."%'";
-									if(isset($location))$querystring.=" and location like '%".$location."%'";
-							}else{
-									if(isset($company)){
-											$querystring.="company like '%".$company."%'";
-											if(isset($location))$querystring.=" and location like '%".$location."%'";
-									}else{
-											if(isset($location)){
-														$querystring.="location like '%".$location."%'";							
-											}
-									} 
-							
-							}	
-					}
-
-					$querystring.=")";
-
-			}else if(isset($fulltext)){
-					if(isset($type)){
-							$querystring.=" and (name like '%".$fulltext."%' or company like '%".$fulltext."%' or location like '%".$fulltext."%')";
-					}else {
-							$querystring.="(name like '%".$fulltext."%' or company like '%".$fulltext."%' or location like '%".$fulltext."%')";
-					}
-			}
-
-			$innerresult=mysql_query($querystring);
-			if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Resource Search Error (".$querystring.")");
-
 			//---------------------------------------------------------------------------------------------------------------
 			// Make Result!
-			//---------------------------------------------------------------------------------------------------------------
+			//---------------------------------------------------------------------------------------------------------------					
 
-			header ("Content-Type:text/xml; charset=utf-8");  
-			echo "<resources>\n";
-			while ($innerrow = mysql_fetch_assoc($innerresult)) {
-					echo "<resource \n";
-					echo "    id='".presenthtml($innerrow['ID'])."'\n";
-					echo "    name='".presenthtml($innerrow['name'])."'\n";
-					echo "    company='".presenthtml($innerrow['company'])."'\n";
-					echo "    location='".presenthtml($innerrow['location'])."'\n";
-					echo "    size='".$innerrow['size']."'\n";
-					echo "    cost='".$innerrow['cost']."'\n";
-					echo " />\n";
-					echo "\n";
-			}				
-			echo "</resources>\n";						
+			try{
+					$querystring="SELECT * FROM resource WHERE type=:TYPE AND (name like :NAME or company like :COMPANY or location like :LOCATION or id like :RESID)";
+					$stmt = $pdo->prepare($querystring);
+					$stmt->bindParam(':TYPE',$type);
+					$stmt->bindParam(':COMPANY',$company);
+					$stmt->bindParam(':NAME',$name);
+					$stmt->bindParam(':LOCATION',$location);
+					$stmt->bindParam(':RESID',$resID);
+					$stmt->execute();
+												
+					header ("Content-Type:text/xml; charset=utf-8");  
+					echo "<resources>\n";
+							foreach($stmt as $key => $row){
+							echo "<resource \n";
+							echo "    id='".presenthtml($row['ID'])."'\n";
+							echo "    name='".presenthtml($row['name'])."'\n";
+							echo "    company='".presenthtml($row['company'])."'\n";
+							echo "    location='".presenthtml($row['location'])."'\n";
+							echo "    size='".$row['size']."'\n";
+							echo "    cost='".$row['cost']."'\n";
+							echo "    category='".$row['category']."'\n";
+							echo " />\n";
+							echo "\n";
+					}				
+					echo "</resources>\n";	
+				
+			} catch (PDOException $e) {
+					err("Error!: ".$e->getMessage()."<br/>");
+					die();
+			}
 			
 ?>
