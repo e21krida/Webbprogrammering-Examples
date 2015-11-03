@@ -69,3 +69,4 @@
                 
     * PDO?
     * Test all fields with ÅÄÖ and åäö and & ' " # etc.
+    * Auxdata in resources to add user-defined data about resources.
