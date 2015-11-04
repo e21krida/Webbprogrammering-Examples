@@ -17,10 +17,10 @@
 
 				$stmt = $pdo->prepare($querystring);
 				$stmt->bindParam(':ID',$ID );
-				$stmt->bindParam(':FIRSTNAME',$ID );
-				$stmt->bindParam(':LASTNAME',$firstname );
-				$stmt->bindParam(':ADDRESS',$lastname );
-				$stmt->bindParam(':EMAIL',$address );
+				$stmt->bindParam(':FIRSTNAME',$firstname );
+				$stmt->bindParam(':LASTNAME',$lastname );
+				$stmt->bindParam(':ADDRESS',$address );
+				$stmt->bindParam(':EMAIL',$email );
 				$stmt->bindParam(':AUXDATA',$auxdata );
 				$stmt->execute();
 				
