@@ -51,7 +51,7 @@
 							}else if(empty($_POST[$param])){
 									$ret="UNK";
 							}else{
-									$ret=mysql_real_escape_string(htmlentities(urldecode($_POST[$param])));							
+									$ret=htmlentities(urldecode($_POST[$param]));							
 							}
 					}else{
 							$ret="UNK";
