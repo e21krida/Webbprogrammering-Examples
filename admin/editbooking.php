@@ -1,4 +1,5 @@
-﻿<html>
+﻿<!DOCTYPE html> 
+<html>
 <style>
 		td.result{border-bottom: 1px solid green;}
 		td.head{background-color:#ffeedd;border-top: 1px solid green;border-right: 1px solid green;border-bottom: 2px solid black;}
@@ -20,56 +21,71 @@
 			$auxdata=getpost("auxdata");
 			$resourceid=getpost("resourceID");
 
+			$customer=getpost("customer");
+			$date=getpost("date");
+			$status=getpost("status");
+			$auxdata=getpost("auxdata");
+						
+			//---------------------------------------------------------------------------------------------------------------
+			// Build Form
+			//---------------------------------------------------------------------------------------------------------------
+
 			echo "<form action='editbooking.php' method='POST' >";
 			echo "<table>";
 
-			$querystring="SELECT DISTINCT type FROM resource order by type";
-			$innerresult=mysql_query($querystring);
-			if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Filter database querying error");
-			echo "<tr><td>Application:&nbsp;&nbsp;</td><td><SELECT NAME='filter'>";
-			while ($innerrow = mysql_fetch_assoc($innerresult)) {
-					if($filter==$innerrow['type']){
-							echo "<OPTION selected='selected'>".$innerrow['type'];
+			echo "<tr><td>Application:&nbsp;&nbsp;</td><td>";
+			echo "<SELECT NAME='filter'>";
+      foreach($pdo->query("SELECT DISTINCT type FROM resource order by type") as $row){
+					if($filter==$row['type']){
+							echo "<OPTION selected='selected'>".$row['type'];
 					}else{
-							echo "<OPTION>".$innerrow['type'];
+							echo "<OPTION>".$row['type'];
 					}
 			}
-			echo "</SELECT><input name='Button' type='submit' value='Filter'></td></tr>";
+			echo "</SELECT>";
 
-			$querystring="SELECT ID,name,company,location FROM resource WHERE type='".$filter."' ORDER BY name,company,location";
-			$sinnerresult=mysql_query($querystring);
-			if (!$sinnerresult) err("SQL Query Error: ".mysql_error(),"Filter database querying error");
-			echo "<tr><td>ResourceID</td><td><SELECT NAME='resourceID'>";
-			while ($sinnerrow = mysql_fetch_assoc($sinnerresult)) {
-					if(isset($_POST['resourceID'])){
-							if($resourceid==$sinnerrow['ID']){
-									echo "<OPTION selected='selected' value='".$sinnerrow['ID']."'>&lt;".$sinnerrow['name']."&gt; ".$sinnerrow['company']." - ".$sinnerrow['location'];
-							}else{
-									echo "<OPTION value='".$sinnerrow['ID']."'>&lt;".$sinnerrow['name']."&gt; ".$sinnerrow['company']." - ".$sinnerrow['location'];
-							}
-					}else{
-							echo "<OPTION value='".$sinnerrow['ID']."'>&lt;".$sinnerrow['name']."&gt; ".$sinnerrow['company']." - ".$sinnerrow['location'];
-					}
-			}
-			echo "</SELECT></td></tr>";
+			echo "<input name='Button' type='submit' value='Filter'></td></tr>";
 
-			$querystring="SELECT * FROM customer order by ID";
-			$innerresult=mysql_query($querystring);
-			if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Filter database querying error");
-			echo "<tr><td>Customer:&nbsp;</td><td><SELECT NAME='customer'>";
-			while ($innerrow = mysql_fetch_assoc($innerresult)) {
-					if(isset($_POST['customer'])){
-							if($_POST['customer']==$innerrow['ID']){
-									echo "<OPTION selected='selected' value='".$innerrow['ID']."'>&lt;".$innerrow['ID']."&gt; ".$innerrow['firstname']." ".$innerrow['lastname'];							
-							}else{
-									echo "<OPTION value='".$innerrow['ID']."'>&lt;".$innerrow['ID']."&gt; ".$innerrow['firstname']." ".$innerrow['lastname'];							
-							}
-					}else{
-							echo "<OPTION value='".$innerrow['ID']."'>&lt;".$innerrow['ID']."&gt; ".$innerrow['firstname']." ".$innerrow['lastname'];
-					}
-			}
+			$querystring="SELECT ID,name,company,location FROM resource WHERE type=:FILTER ORDER BY name,company,location";
+			$stmt = $pdo->prepare($querystring);
+			$stmt->bindParam(':FILTER',$filter);
+			$stmt->execute();
+					
+			echo "<tr><td>ResourceID</td><td>";
+				echo "<SELECT NAME='resourceID'>";
+				foreach($stmt as $key => $row){
+						if(isset($_POST['resourceID'])){
+								if($resourceid==$sinnerrow['ID']){
+										echo "<OPTION selected='selected' value='".$row['ID']."'>&lt;".$row['name']."&gt; ".$row['company']." - ".$row['location'];
+								}else{
+										echo "<OPTION value='".$row['ID']."'>&lt;".$row['name']."&gt; ".$row['company']." - ".$row['location'];
+								}
+						}else{
+								echo "<OPTION value='".$row['ID']."'>&lt;".$row['name']."&gt; ".$row['company']." - ".$row['location'];
+						}
+				}
+				echo "</SELECT>";
+			echo "</td></tr>";
+			echo "<tr><td>";
+			echo "Customer:&nbsp;</td><td>";
+				echo "<SELECT NAME='customer'>";
+	      foreach($pdo->query("SELECT * FROM customer order by ID") as $row){
+						if(isset($_POST['customer'])){
+								if($_POST['customer']==$row['ID']){
+										echo "<OPTION selected='selected' value='".$row['ID']."'>&lt;".$row['ID']."&gt; ".$row['firstname']." ".$row['lastname'];							
+								}else{
+										echo "<OPTION value='".$row['ID']."'>&lt;".$row['ID']."&gt; ".$row['firstname']." ".$row['lastname'];							
+								}
+						}else{
+								echo "<OPTION value='".$row['ID']."'>&lt;".$row['ID']."&gt; ".$row['firstname']." ".$row['lastname'];
+						}
+				}
+				echo "</SELECT>";
+			echo "</td></tr>";
 			
-			echo "<tr><td>Date: </td><td><input type='text' name='date'></td></tr>";														
+
+			echo "<tr><td>Date: </td><td><input type='text' name='date' value=".$date."></td></tr>";														
+
 
 			if(isset($_POST['position'])){
 					echo "<tr><td>Position:</td><td><input type='text' value='".$position."' name='position'></td><tr>";
@@ -94,6 +110,7 @@
 			}else{
 					echo "<tr><td>Aux Data:</td><td><input type='text' value='auxdata' name='auxdata'></td><tr>";
 			}
+
 			
 			echo "<tr><td>Status:</td><td>";
 			echo "<SELECT name='status'>";
@@ -105,64 +122,81 @@
 			echo "<tr><td><input name='Button' type='submit' value='Save'></td></tr>";							
 			echo "</table>";
 			echo "</form>";								
-													
+
+			//---------------------------------------------------------------------------------------------------------------
+			// Execuute!
+			//---------------------------------------------------------------------------------------------------------------
+
 			if($button=='Save'){
-					$querystring="INSERT INTO booking(customerID,resourceID,position,date,cost,rebate,status,auxdata) values ('".$_POST['customer']."','".$_POST['resourceID']."','".$_POST['position']."',DATE_FORMAT('".$_POST['date']."','%Y-%m-%d %H:%i'),'".$_POST['cost']."','".$_POST['rebate']."','".$_POST['status']."','".$_POST['auxdata']."');";
-					$innerresult=mysql_query($querystring);								
-					if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Insert Error!");
+					$querystring="INSERT INTO booking(customerID,resourceID,position,date,cost,rebate,status,auxdata) values (:CUSTOMER,:RESOURCEID,:POSITION,DATE_FORMAT(:DATE,'%Y-%m-%d %H:%i'),:COST,:REBATE,:STATUS,:AUXDATA);";
+					$stmt = $pdo->prepare($querystring);
+
+					$stmt->bindParam(':CUSTOMER',$customer);
+					$stmt->bindParam(':RESOURCEID',$resourceid);
+					$stmt->bindParam(':POSITION',$position);
+					$stmt->bindParam(':DATE',$date);
+					$stmt->bindParam(':COST',$cost);
+					$stmt->bindParam(':REBATE',$rebate);
+					$stmt->bindParam(':STATUS',$status);
+					$stmt->bindParam(':AUXDATA',$auxdata);
+
+					$stmt->execute();	
 			}
-			if($button=='Del'){			
-					$querystring="DELETE FROM booking WHERE resourceID='".$_POST['resourceID']."' and date='".$_POST['date']."' and position='".$_POST['position']."';";
-					$innerresult=mysql_query($querystring);													
-					if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Delete Error!");
+			if($button=='Del'){
+					$querystring="DELETE FROM booking WHERE resourceID=:RESOURCEID and date=:DATE and position=:POSITION;";
+					$stmt = $pdo->prepare($querystring);
+
+					$stmt->bindParam(':CUSTOMER',$customer);
+					$stmt->bindParam(':RESOURCEID',$resourceid);
+					$stmt->bindParam(':POSITION',$position);
+
+					$stmt->execute();	
 			}			
 
 			//---------------------------------------------------------------------------------------------------------------
 			// Search Query!
 			//---------------------------------------------------------------------------------------------------------------
 
-			$querystring="SELECT * FROM booking,resource WHERE resource.ID=booking.resourceID";
-			if(isset($_POST['filter'])) $querystring.=" and type='".$_POST['filter']."'";
-			$querystring.=" order by customerID,company,location,booking.date,position";
-			$innerresult=mysql_query($querystring);
-			
-			if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Query Error!");
-
+			$querystring="SELECT * FROM booking,resource WHERE resource.ID=booking.resourceID and type=:FILTER ORDER BY customerID,company,location,booking.date,position";
+			$stmt = $pdo->prepare($querystring);
+			$stmt->bindParam(':FILTER',$filter);
+			$stmt->execute();
+					
 			echo "<p>Press filter to update the resource list and the available booking list.</p>";
 
 			echo "<table cellspacing=0>\n";
 			echo "<tr><td style='border-left: 1px solid green;' class='head'>Customer</td><td class='head'>Resource</td><td class='head'>Name</td><td class='head'>Company</td><td class='head'>Location</td><td class='head'>Date</td><td class='head'>Date To</td><td class='head'>Position</td><td class='head'>Cost</td><td class='head'>Rebate</td><td class='head'>Status</td><td class='head'>Aux</td></tr>";
 			$i=0;
-			while ($innerrow = mysql_fetch_assoc($innerresult)) {
-					// At the moment do nothing!
+
+			foreach($stmt as $key => $row){
 					if($i%2==0){
 							echo "<tr style='background-color:#fff8f8;'>\n";
 					}else{
 							echo "<tr style='background-color:#ffffff;'>\n";					
 					}
-					echo "    <td class='result'>".$innerrow['customerID']."</id>\n";
-					echo "    <td class='result'>".$innerrow['resourceID']."</id>\n";
-					echo "    <td class='result'>".$innerrow['name']."</id>\n";
-					echo "    <td class='result'>".$innerrow['company']."</id>\n";
-					echo "    <td class='result'>".$innerrow['location']."</id>\n";
-					echo "    <td class='result'>".$innerrow['date']."</td>\n";
-					echo "    <td class='result'>".$innerrow['dateto']."</td>\n";
-					echo "    <td class='result'>".$innerrow['position']."</td>\n";
-					echo "    <td class='result'>".$innerrow['cost']."</td>\n";
-					echo "    <td class='result'>".$innerrow['rebate']."</td>\n";
-					echo "    <td class='result'>".$innerrow['status']."</td>\n";
-					echo "    <td class='result'>".$innerrow['auxdata']."</td>\n";
+					echo "    <td class='result'>".$row['customerID']."</id>\n";
+					echo "    <td class='result'>".$row['resourceID']."</id>\n";
+					echo "    <td class='result'>".$row['name']."</id>\n";
+					echo "    <td class='result'>".$row['company']."</id>\n";
+					echo "    <td class='result'>".$row['location']."</id>\n";
+					echo "    <td class='result'>".$row['date']."</td>\n";
+					echo "    <td class='result'>".$row['dateto']."</td>\n";
+					echo "    <td class='result'>".$row['position']."</td>\n";
+					echo "    <td class='result'>".$row['cost']."</td>\n";
+					echo "    <td class='result'>".$row['rebate']."</td>\n";
+					echo "    <td class='result'>".$row['status']."</td>\n";
+					echo "    <td class='result'>".$row['auxdata']."</td>\n";
 					echo "<td class='result'>";
 					echo "<form action='editbooking.php' method='POST'>";
-					echo "<input type='hidden' name='customer' value='".$innerrow['customerID']."'>";
-					echo "<input type='hidden' name='resourceID' value='".$innerrow['resourceID']."'>";
-					echo "<input type='hidden' name='date' value='".$innerrow['date']."'>";
-					echo "<input type='hidden' name='dateto' value='".$innerrow['dateto']."'>";
-					echo "<input type='hidden' name='position' value='".$innerrow['position']."'>";
-					echo "<input type='hidden' name='cost' value='".$innerrow['cost']."'>";
-					echo "<input type='hidden' name='rebate' value='".$innerrow['rebate']."'>";
-					echo "<input type='hidden' name='status' value='".$innerrow['status']."'>";
-					echo "<input type='hidden' name='auxdata' value='".$innerrow['auxdata']."'>";
+					echo "<input type='hidden' name='customer' value='".$row['customerID']."'>";
+					echo "<input type='hidden' name='resourceID' value='".$row['resourceID']."'>";
+					echo "<input type='hidden' name='date' value='".$row['date']."'>";
+					echo "<input type='hidden' name='dateto' value='".$row['dateto']."'>";
+					echo "<input type='hidden' name='position' value='".$row['position']."'>";
+					echo "<input type='hidden' name='cost' value='".$row['cost']."'>";
+					echo "<input type='hidden' name='rebate' value='".$row['rebate']."'>";
+					echo "<input type='hidden' name='status' value='".$row['status']."'>";
+					echo "<input type='hidden' name='auxdata' value='".$row['auxdata']."'>";
 
 					if (isset($_POST['filter']))echo "<input type='hidden' name='filter' value='".$_POST['filter']."'>";
 					echo "<input name='Button' type='submit' value='Del'>";
@@ -170,7 +204,9 @@
 					echo "</td>";
 					echo "</tr>\n";
 					$i++;
-			}				
+			
+			}
+
 			echo "</table>\n";
 			
 ?>
