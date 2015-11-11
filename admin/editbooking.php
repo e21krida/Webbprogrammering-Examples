@@ -55,7 +55,7 @@
 				echo "<SELECT NAME='resourceID'>";
 				foreach($stmt as $key => $row){
 						if(isset($_POST['resourceID'])){
-								if($resourceid==$sinnerrow['ID']){
+								if($resourceid==$row['ID']){
 										echo "<OPTION selected='selected' value='".$row['ID']."'>&lt;".$row['name']."&gt; ".$row['company']." - ".$row['location'];
 								}else{
 										echo "<OPTION value='".$row['ID']."'>&lt;".$row['name']."&gt; ".$row['company']." - ".$row['location'];
@@ -143,14 +143,21 @@
 					$stmt->execute();	
 			}
 			if($button=='Del'){
-					$querystring="DELETE FROM booking WHERE resourceID=:RESOURCEID and date=:DATE and position=:POSITION;";
-					$stmt = $pdo->prepare($querystring);
-
-					$stmt->bindParam(':CUSTOMER',$customer);
-					$stmt->bindParam(':RESOURCEID',$resourceid);
-					$stmt->bindParam(':POSITION',$position);
-
-					$stmt->execute();	
+					try{
+		
+							$querystring="DELETE FROM booking WHERE resourceID=:RESOURCEID and date=:DATE and position=:POSITION and customerID=:CUSTOMER;";
+							$stmt = $pdo->prepare($querystring);
+		
+							$stmt->bindParam(':DATE',$date);
+							$stmt->bindParam(':RESOURCEID',$resourceid);
+							$stmt->bindParam(':POSITION',$position);
+							$stmt->bindParam(':CUSTOMER',$customer);
+		
+							$stmt->execute();	
+							} catch (PDOException $e) {
+									echo("Error!: ".$e->getMessage()."<br/>");
+									die();
+							}
 			}			
 
 			//---------------------------------------------------------------------------------------------------------------

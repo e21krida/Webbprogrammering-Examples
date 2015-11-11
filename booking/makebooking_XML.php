@@ -27,7 +27,7 @@
 					// Retrieve size and cost from resource
 					$querystring="SELECT * FROM resource WHERE ID=:RESID";
 					$stmts = $pdo->prepare($querystring);
-					$stmts->bindParam(':RESID',$row['ID']);
+					$stmts->bindParam(':RESID',$resource);
 					$stmts->execute();
 					foreach($stmts as $kkey => $rrow){
 							$size=$row['size'];
