@@ -110,7 +110,7 @@
 							
 			}
 
-			define("DB_USER","LOGIN NAME FROM CONSTRUCTION COURSE");
+			define("DB_USER","USER NAME FROM CONSTRUCTION COURSE");
 			define("DB_PASSWORD","PASSWORD FROM CONSTRUCTION COURSE");
 			define("DB_HOST","localhost");
 			define("DB_NAME","BookingSystem");
