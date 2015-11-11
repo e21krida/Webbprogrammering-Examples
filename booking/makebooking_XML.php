@@ -31,7 +31,7 @@
 					$stmts = $pdo->prepare($querystring);
 					$stmts->bindParam(':RESID',$resource);
 					$stmts->execute();
-					foreach($stmts as $kkey => $rrow){
+					foreach($stmts as $key => $row){
 							$size=$row['size'];
 							$cost=$row['cost'];
 					}				
