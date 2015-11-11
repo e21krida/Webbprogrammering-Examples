@@ -25,6 +25,8 @@
 				
 					
 					// Retrieve size and cost from resource
+					$size=0;
+					$cost=0;
 					$querystring="SELECT * FROM resource WHERE ID=:RESID";
 					$stmts = $pdo->prepare($querystring);
 					$stmts->bindParam(':RESID',$resource);
