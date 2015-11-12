@@ -52,7 +52,7 @@
 			echo "</form>";									
 				
 			if($button=='Save'){
-					$stmt = $pdo->prepare("INSERT INTO resource (id,name,type,company,size,location,category,size,cost) VALUES (:ID,:NAME,:TYPE,:COMPANY,:SIZE,:LOCATION,:CATEGORY,:SIZE,:COST);");
+					$stmt = $pdo->prepare("INSERT INTO resource (id,name,type,company,location,category,size,cost) VALUES (:ID,:NAME,:TYPE,:COMPANY,:LOCATION,:CATEGORY,:SIZE,:COST);");
 					$stmt->bindParam(':ID',$ID);
 					$stmt->bindParam(':NAME',$name);
 					$stmt->bindParam(':TYPE',$type);
