@@ -65,7 +65,7 @@
 		
 					// Successfull booking
 					header ("Content-Type:text/xml; charset=utf-8");  
-					echo "<result size='".$size."' bookingcost='".$bookingcost."' remaining='".$remaining."'   />";		
+					echo "<result size='".$size."' bookingcost='".$cost."' remaining='".$remaining."'   />";		
 
 		} catch (PDOException $e) {
 				err("Error!: ".$e->getMessage()."<br/>");
