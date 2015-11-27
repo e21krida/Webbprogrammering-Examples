@@ -3,7 +3,7 @@
 		
 		$filename=getpostAJAX("filename");
 		
-		if(notset($filename)){
+		if($filename=="UNK"){
 				err("Must give a file name!");					
 		}
 		if(!endsWith($filename,"html")){
