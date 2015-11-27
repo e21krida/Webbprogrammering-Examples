@@ -50,6 +50,7 @@
 					err("Error!: ".$e->getMessage()."<br/>");
 					die();
 			}
+			
 			header ("Content-Type:text/xml; charset=utf-8");  
 			echo $output;						
 ?>

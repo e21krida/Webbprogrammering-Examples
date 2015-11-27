@@ -17,6 +17,26 @@
     var apptype="Hotel_Demo";
 
 		//------------------------------------------------------------------------
+		// fixChars
+		//------------------------------------------------------------------------
+		// Converts all attributes from a notation that uses "%" to "&" which 
+		// allows us to pass non-english characthers as XML
+		//------------------------------------------------------------------------
+
+		function fixChars(returnedData)
+		{
+			var resultset=returnedData.childNodes[0];
+	
+			// Iterate over all nodes in root node recursively and replace the strings inside attributes
+			x=returnedData.getElementsByTagName('*');
+			for (i=0;i<x.length;i++){
+					for(j=0;j<x[i].attributes.length;j++){
+						  x[i].attributes[j].nodeValue=x[i].attributes[j].nodeValue.replace(/%/g,"&");
+					}
+			} 
+		}
+		
+		//------------------------------------------------------------------------
 		// make customer
 		//------------------------------------------------------------------------
 		// Creates a new customer with a given id, name, address etc
@@ -82,7 +102,9 @@
 	
 		function ResultCustomers(returnedData)
 		{
-			// An XML DOM document is returned from AJAX
+			// Fix characters in XML notation to HTML notation
+			fixChars(returnedData);
+
 			var resultset=returnedData.childNodes[0];
 	
 			// Iterate over all nodes in root node (i.e. customers)
@@ -92,7 +114,13 @@
 							// Retrieve first name and last name for node
 							var customer=resultset.childNodes.item(i);
 							var div=document.getElementById('CustomerOutputDiv');
-							output=customer.attributes['id'].nodeValue+' '+customer.attributes['firstname'].nodeValue+' '+customer.attributes['lastname'].nodeValue+' '+customer.attributes['address'].nodeValue+' '+customer.attributes['email'].nodeValue+" "+customer.attributes['lastvisit'].nodeValue+" "+customer.attributes['auxdata'].nodeValue;
+							output=customer.attributes['id'].nodeValue;
+							output+=' '+customer.attributes['firstname'].nodeValue;
+							output+=' '+customer.attributes['lastname'].nodeValue;
+							output+=' '+customer.attributes['address'].nodeValue;
+							output+=' '+customer.attributes['email'].nodeValue;
+							output+=' '+customer.attributes['lastvisit'].nodeValue;
+							output+=' '+customer.attributes['auxdata'].nodeValue;
 							div.innerHTML=output;
 					}
 			}
@@ -136,6 +164,9 @@
 
 		function showResources(returnedData)
 		{
+				// Fix characters in XML notation to HTML notation
+				fixChars(returnedData);
+				
 				// An XML DOM document is returned from AJAX
 				var resultset=returnedData.childNodes[0];
 				var output="<table>";
@@ -200,6 +231,9 @@
 
 		function showAvailability(returnedData)
 		{
+				// Fix characters in XML notation to HTML notation
+				fixChars(returnedData);
+
 				// An XML DOM document is returned from AJAX
 				var resultset=returnedData.childNodes[0];
 				var output="<table>";
@@ -258,6 +292,9 @@
 
 		function ResultBooking(returnedData)
 		{
+				// Fix characters in XML notation to HTML notation
+				fixChars(returnedData);
+
 				// An XML DOM document is returned from AJAX
 				var resultset=returnedData.childNodes[0];
 
@@ -396,6 +433,9 @@
 
 		function ResultBookingCustomer(returnedData)
 		{
+			// Fix characters in XML notation to HTML notation
+			fixChars(returnedData);
+
 			// An XML DOM document is returned from AJAX
 			var resultset=returnedData.childNodes[0];
 
