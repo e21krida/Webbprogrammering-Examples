@@ -63,10 +63,10 @@
 					$stmt->bindParam(':CATEGORY',$category);
 					$stmt->execute();	
 			}
-			if($button=='Del'){			
-					$querystring="DELETE FROM resource where ID='".$_POST['ID']."'";
-					$innerresult=mysql_query($querystring);													
-					if (!$innerresult) err("SQL Query Error: ".mysql_error(),"Delete Error!");
+			if($button=='Del'){	
+					$stmt = $pdo->prepare("DELETE FROM resource where ID=:ID;");		
+					$stmt->bindParam(':ID',$ID);
+					$stmt->execute();	
 			}
 			
 			//---------------------------------------------------------------------------------------------------------------
