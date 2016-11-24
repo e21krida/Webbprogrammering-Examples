@@ -49,6 +49,7 @@
 							echo "    size='".$row['size']."'\n";
 							echo "    cost='".$row['cost']."'\n";
 							echo "    category='".$row['category']."'\n";
+							echo "    auxdata='".$row['auxdata']."'\n";
 							echo " />\n";
 							echo "\n";
 					}				

@@ -11,8 +11,8 @@
 			$position=getpostAJAX("position");
 			$auxdata=getpostAJAX("auxdata");
 
-			if($resource=="UNK"||$date=="UNK"){
-					err("Missing Form Data: (type)");					
+			if($user=="UNK"||$resource=="UNK"||$date=="UNK"){
+					err("Missing Form Data: (user/resource/date)");					
 			}
 
 			try{

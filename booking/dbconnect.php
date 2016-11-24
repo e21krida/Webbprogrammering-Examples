@@ -110,8 +110,8 @@
 							
 			}
 
-			define("DB_USER","wikiadmin");
-			define("DB_PASSWORD","kingfisher");
+			define("DB_USER","LOGIN FROM CONSTRUCTION COURSE");
+			define("DB_PASSWORD","PASSWORD FROM CONSTRUCTION COURSE");
 
 			define("DB_HOST","localhost");
 			define("DB_NAME","BookingSystem");

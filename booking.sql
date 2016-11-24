@@ -9,7 +9,7 @@ create table customer(
 		lastname		varchar(64),		
 		address			varchar(64),
 		email				varchar(64),
-		auxdata			varchar(256),
+		auxdata			varchar(2048),
 		primary key(ID)
 );
 
@@ -28,9 +28,10 @@ create table resource(
 		type				varchar(32),
 		company			varchar(64),
 		location		varchar(64),
-		category		integer,
+		category		varchar(64),
 		size				integer,
 		cost				integer,
+		auxdata			varchar(2048),
 		primary key(ID)
 );
 
@@ -50,6 +51,6 @@ create table booking(
 		status			integer,
 		rebate			integer,
 		customerID 	varchar(32),
-		auxdata			varchar(128),
+		auxdata			varchar(2048),
 		primary key(resourceID,date,position)
 );

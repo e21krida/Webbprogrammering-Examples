@@ -36,6 +36,7 @@
 						$stmt->bindParam(':LOCATION',$location);
 						$stmt->execute();
 				}
+				
 				$output="<avail>\n";
 				foreach($stmt as $key => $row){	
 						$output.="<availability \n";
