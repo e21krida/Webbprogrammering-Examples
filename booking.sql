@@ -1,6 +1,6 @@
 -- drop database BookingSystem;
 -- create database BookingSystem;
-use BookingSystem;
+use BookingSystemz;
 
 create table customer(
 		ID 					varchar(32),
