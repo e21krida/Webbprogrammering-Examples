@@ -1,0 +1,91 @@
+<html>
+<head>
+	<style>
+		table {border-collapse:collapse;box-shadow: 3px 3px 5px #444; border:1px solid #fff; }
+		.actionbox {border-radius: 6px;border:2px ridge #abd;padding:4px;background-color:#9AB;background: linear-gradient(to top, #89A , #ABC);margin-bottom:8px;box-shadow: 3px 3px 5px #456 inset; }
+		.actionheading {display:block;text-align:center;color:#fff;text-shadow:1px 1px 1px #000;font-family:Calibri;border-bottom:thin solid #456;margin-bottom:4px;}
+		.actiontablerow:nth-child(even) {background-color:#000;color:#fff;font-family:Calibri;}
+		.actiontablerow:nth-child(odd) {background-color:#888;color:#fff;font-family:Calibri;}
+		body {background-color:#CDE}
+	</style>
+
+	<script language="javascript" src="../jquery/jquery-1.8.2.min.js"></script>
+
+	<script language="javascript">
+		
+    // For students, User name of student to differentiate between different applications on the server
+    var apptype="Hotel_Demo";
+
+		//------------------------------------------------------------------------
+		// make customer
+		//------------------------------------------------------------------------
+		// Creates a new customer with a given id, name, address etc
+		// Customers are general for ALL booking systems, so no need to add type attribute
+		//------------------------------------------------------------------------
+
+		function storeCustomer()
+		{
+			var customerID=document.getElementById("customerIDC").value;
+			var firstname=document.getElementById("customerfnameC").value;
+			var lastname=document.getElementById("customerlnameC").value;
+			var email=document.getElementById("customeremailC").value;
+			var address=document.getElementById("customeraddressC").value;
+			var auxdata=document.getElementById("customerauxdataC").value;
+
+			$.ajax({
+				type: 'POST',
+				url: '../booking/makecustomer_XML.php',
+				data: { ID: escape(customerID),
+					firstname: escape(firstname),
+					lastname: escape(lastname),
+					email: escape(email),
+					address: escape(address),
+					auxdata: escape(auxdata),
+				},
+				success:  ResultCustomern,
+				error: errormsg		
+			});
+		}
+	
+		function ResultCustomern(returnedData)
+		{
+			// Iterate over all nodes in root node (i.e. the 'created' element in root which has an attribute called status)
+			for (i = 0; i < returnedData.childNodes.length; i++) {
+					if(returnedData.childNodes.item(i).nodeName=="created"){
+						alert(returnedData.childNodes.item(i).attributes['status'].nodeValue);
+					}
+			}
+		}				
+
+		//------------------------------------------------------------------------
+		// error message callback
+		//------------------------------------------------------------------------
+    // The errror message callback displays the error message and error code
+		//------------------------------------------------------------------------
+
+		function errormsg(jqXHR,textStatus,errorThrown)
+		{
+				console.log(jqXHR);
+				alert("AJAX Error:\n"+errorThrown);
+		}
+
+		// error message callback END
+		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
+		
+	</script>
+</head>
+<body>
+
+	<div class="actionbox">
+			<span class="actionheading">Create Customer</span>
+			CustID:<input type='text' name='customerIDC' id='customerIDC'>
+			Custfname:<input type='text' name='customerfnameC' id='customerfnameC'>
+			Custlname:<input type='text' name='customerlnameC' id='customerlnameC'><br/>
+			Custemail:<input type='text' name='customeremailC' id='customeremailC'>
+			Custaddress:<input type='text' name='customeraddressC' id='customeraddressC'><br/>
+			Cust Auxdata:<input type='text' name='customerauxdataC' id='customerauxdataC'><br/>
+			<input type="button" onclick="storeCustomer();" value="Store Customer">
+	</div>
+
+</body>
+</html>

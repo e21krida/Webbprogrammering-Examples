@@ -1,0 +1,121 @@
+<html>
+<head>
+	<style>
+		table {border-collapse:collapse;box-shadow: 3px 3px 5px #444; border:1px solid #fff; }
+		.actionbox {border-radius: 6px;border:2px ridge #abd;padding:4px;background-color:#9AB;background: linear-gradient(to top, #89A , #ABC);margin-bottom:8px;box-shadow: 3px 3px 5px #456 inset; }
+		.actionheading {display:block;text-align:center;color:#fff;text-shadow:1px 1px 1px #000;font-family:Calibri;border-bottom:thin solid #456;margin-bottom:4px;}
+		.actiontablerow:nth-child(even) {background-color:#000;color:#fff;font-family:Calibri;}
+		.actiontablerow:nth-child(odd) {background-color:#888;color:#fff;font-family:Calibri;}
+		body {background-color:#CDE}
+	</style>
+
+	<script language="javascript" src="../jquery/jquery-1.8.2.min.js"></script>
+
+	<script language="javascript">
+		
+    // For students, User name of student to differentiate between different applications on the server
+    var apptype="Hotel_Demo";
+
+		//------------------------------------------------------------------------
+		// fixChars
+		//------------------------------------------------------------------------
+		// Converts all attributes from a notation that uses "%" to "&" which 
+		// allows us to pass non-english characthers as XML
+		//------------------------------------------------------------------------
+
+		function fixChars(returnedData)
+		{
+			var resultset=returnedData.childNodes[0];
+	
+			// Iterate over all nodes in root node recursively and replace the strings inside attributes
+			x=returnedData.getElementsByTagName('*');
+			for (i=0;i<x.length;i++){
+					for(j=0;j<x[i].attributes.length;j++){
+						  x[i].attributes[j].nodeValue=x[i].attributes[j].nodeValue.replace(/%/g,"&");
+					}
+			} 
+		}
+		
+		//------------------------------------------------------------------------
+		// get customer bookings
+		//------------------------------------------------------------------------
+		// Returns the set of bookings made by a given customer
+		// This function thus implements a traditional shopping cart
+		//------------------------------------------------------------------------
+	
+		function processinputbox()
+		{
+			customer =document.getElementById("customerID").value;
+	  	$.ajax({
+				type: 'POST',
+				url: '../booking/getcustomerbookings_XML.php',
+				data: {
+					customerID: escape(customer),
+					type: apptype 	  // Filter out bookings made from other applications application.
+					                      // Most commonly user name of student
+				},
+				success:  ResultBookingCustomer,
+			  error: errormsg		
+			});
+		}
+
+		function ResultBookingCustomer(returnedData)
+		{
+			// Fix characters in XML notation to HTML notation
+			fixChars(returnedData);
+
+			// An XML DOM document is returned from AJAX
+			var resultset=returnedData.childNodes[0];
+
+			var output="<table>";
+			
+			// Iterate over all nodes in root node (i.e. bookings)
+			for (i = 0; i < resultset.childNodes.length; i++) {
+				// Iterate over all child nodes of that node that are booking nodes
+				if(resultset.childNodes.item(i).nodeName=="booking"){
+					// Retrieve first name and last name for node
+					var booking=resultset.childNodes.item(i);
+			
+					output+="<tr class='actiontablerow'>";
+					output+="<td>"+booking.attributes['company'].nodeValue+"</td>";
+					output+="<td>"+booking.attributes['name'].nodeValue+"</td>";
+					output+="<td>"+booking.attributes['location'].nodeValue+"</td>";
+					output+="<td>"+booking.attributes['date'].nodeValue+"</td>";
+					output+="</tr>";
+			
+				}
+			}
+
+			output+="</table>"
+			var div=document.getElementById('OutputDiv');
+			div.innerHTML=output;
+		}	
+
+		//------------------------------------------------------------------------
+		// error message callback
+		//------------------------------------------------------------------------
+    // The errror message callback displays the error message and error code
+		//------------------------------------------------------------------------
+
+		function errormsg(jqXHR,textStatus,errorThrown)
+		{
+				console.log(jqXHR);
+				alert("AJAX Error:\n"+errorThrown);
+		}
+
+		// error message callback END
+		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
+		
+	</script>
+</head>
+<body>
+	
+	<div class="actionbox">
+			<span class="actionheading">Bookings Shopping Cart (show bookings for a customer ID)</span>
+			CustID:<input type='text' name='customerID' id='customerID' onchange="processinputbox()" onkeyup="processinputbox()">
+			<span class="actionheading">Result</span>
+			<div id="OutputDiv" /></div>
+	</div>
+	
+</body>
+</html>
