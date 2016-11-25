@@ -19,8 +19,8 @@
 					$stmt->bindParam(':ID',$ID );
 					$stmt->bindParam(':NAME',$name );
 					$stmt->bindParam(':TYPE',$type );
-					$stmt->bindParam(':COMPANY',$address );
-					$stmt->bindParam(':LOCATION',$email );
+					$stmt->bindParam(':COMPANY',$company );
+					$stmt->bindParam(':LOCATION',$location );
 					$stmt->bindParam(':CATEGORY',$category );
 					$stmt->bindParam(':SIZE',$size );
 					$stmt->bindParam(':COST',$cost );
