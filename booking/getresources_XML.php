@@ -4,7 +4,6 @@
 			//---------------------------------------------------------------------------------------------------------------
 			
 			include 'dbconnect.php';
-			$querystring="SELECT * FROM resource";
 
 			$company="%".getpostAJAX("company")."%";
 			$type=getpostAJAX("type");
@@ -31,15 +30,20 @@
 			try{
 					if(getpostAJAX("company")!="UNK"||getpostAJAX("location")!="UNK"||getpostAJAX("fulltext")!="UNK"||getpostAJAX("name")!="UNK"||getpostAJAX("resID")!="UNK"){
 							$querystring="SELECT * FROM resource WHERE type=:TYPE AND (name like :NAME or company like :COMPANY or location like :LOCATION or id like :RESID)";
+							$stmt = $pdo->prepare($querystring);
+							$stmt->bindParam(':TYPE',$type);
+							$stmt->bindParam(':COMPANY',$company);
+							$stmt->bindParam(':NAME',$name);
+							$stmt->bindParam(':LOCATION',$location);
+							$stmt->bindParam(':RESID',$resID);
+							$stmt->execute();
+					}else{
+							$querystring="SELECT * FROM resource WHERE type=:TYPE";
+							$stmt = $pdo->prepare($querystring);
+							$stmt->bindParam(':TYPE',$type);					
+							$stmt->execute();
 					}
 				
-					$stmt = $pdo->prepare($querystring);
-					$stmt->bindParam(':TYPE',$type);
-					$stmt->bindParam(':COMPANY',$company);
-					$stmt->bindParam(':NAME',$name);
-					$stmt->bindParam(':LOCATION',$location);
-					$stmt->bindParam(':RESID',$resID);
-					$stmt->execute();
 												
 					header ("Content-Type:text/xml; charset=utf-8");  
 					echo "<resources>\n";
