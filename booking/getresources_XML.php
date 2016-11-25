@@ -29,7 +29,10 @@
 			//---------------------------------------------------------------------------------------------------------------					
 
 			try{
-					$querystring="SELECT * FROM resource WHERE type=:TYPE AND (name like :NAME or company like :COMPANY or location like :LOCATION or id like :RESID)";
+					if(getpostAJAX("company")!="UNK"||getpostAJAX("location")!="UNK"||getpostAJAX("fulltext")!="UNK"||getpostAJAX("name")!="UNK"||getpostAJAX("resID")!="UNK"){
+							$querystring="SELECT * FROM resource WHERE type=:TYPE AND (name like :NAME or company like :COMPANY or location like :LOCATION or id like :RESID)";
+					}
+				
 					$stmt = $pdo->prepare($querystring);
 					$stmt->bindParam(':TYPE',$type);
 					$stmt->bindParam(':COMPANY',$company);
