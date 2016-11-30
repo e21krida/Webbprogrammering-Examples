@@ -11,7 +11,7 @@
 
 			try{
 					// Set up query string
-					$querystring="SELECT resource.size,resource.type,booking.customerID,booking.resourceID,resource.name,resource.company,resource.location,DATE_FORMAT(booking.date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(booking.dateto,'%Y-%m-%d %H:%i') as dateto,booking.cost,booking.rebate,booking.position,booking.status,auxdata FROM booking,resource WHERE resource.ID=booking.resourceID AND type=:TYPE ";
+					$querystring="SELECT resource.size,resource.type,booking.customerID,booking.resourceID,resource.name,resource.company,resource.location,DATE_FORMAT(booking.date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(booking.dateto,'%Y-%m-%d %H:%i') as dateto,booking.cost,booking.rebate,booking.position,booking.status,booking.auxdata FROM booking,resource WHERE resource.ID=booking.resourceID AND type=:TYPE ";
 
 					if($date!="UNK") $querystring.=" AND date=:DATE";
 					if($resourceID!="UNK") $querystring.=" AND resourceID=:RESID";
