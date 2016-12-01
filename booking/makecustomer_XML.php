@@ -1,7 +1,6 @@
 <?PHP
 		include 'dbconnect.php';	
     		
-		$name=getpostAJAX("name");
 		$ID=getpostAJAX("ID");
 		$firstname=getpostAJAX("firstname");
 		$lastname=getpostAJAX("lastname");

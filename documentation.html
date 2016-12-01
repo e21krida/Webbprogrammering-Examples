@@ -1,0 +1,382 @@
+<html>
+<head>
+    <title>API Examples</title>
+    <style>
+
+        .group 
+        {
+
+            display: block;
+            padding: 1em;
+	    width: 50%;
+            margin: auto auto;
+        }
+
+        .group h1
+        {
+            font-weight: normal;
+            font-size: 1.8em;
+            margin-bottom: 1em;
+        }
+
+
+        .group h2
+        {
+            border-bottom: 1px dotted #444;
+            font-weight: normal;
+            font-size: 1.2em;
+            margin-top: 2em;
+	    margin-bottom: 0;
+        }
+
+        .group h3
+        {
+	    color: #558;
+            font-weight: normal;
+            font-size: 1.2em;
+	    left: -1em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+
+	.group .info
+	{	
+            margin-top: 1em;
+            margin-left: 2em;
+            margin-right: 2em;
+            font-size: 1em;
+	    overflow: hidden;
+	}
+
+	.group .param
+	{	
+	    display: block;
+	    padding: 0.2em;
+            margin-left: 1em;
+            font-size: 1em;
+	}
+
+
+	.param .name
+	{
+	    width: 20%;
+	    color: #5a5;	
+	    padding-left: 1em;
+	}
+
+	.param .type
+	{
+	    width: 20%;
+	    color: #a55;	
+	    padding-left: 1em;
+	}
+
+	.param .desc
+	{
+	    color: #555;	
+	    padding-left: 1em;
+	}
+
+	.example
+	{
+            border: 1px dotted #575;
+	    display: block;
+	    padding: 1em;
+	    margin: 1em;
+	    font-size: 0.8em;
+	    font-family: "Courier";
+	    color: #575;
+	}
+
+        a
+        {
+            line-height: 2em;
+            margin-left: 1em;
+            color: black;
+            text-decoration: none;
+            font-size: 1em;
+        }
+    
+        a:hover
+        {
+            text-decoration: underline;
+        }
+
+	.demo
+	{
+		color: #888;
+		clear: right;
+		float: right;
+	}
+    </style>
+</head>
+<body>
+    <div class="group">
+    	<h1>API Documentation</h1>	
+	<div>
+		All data is returned as XML.
+	</div>
+
+        <h2>booking/makecustomer_XML.php</h2>
+	<div class="info">
+		<h3>
+			Description
+		</h3>
+		Creates a customer
+		<h3>
+			Parameters
+		</h3>
+				
+		<div class="param"><span class="name">ID</span><span class ="type">REQUIRED</span><span class="desc">ID of the customer</span></div>
+		<div class="param"><span class="name">firstname</span><span class ="type">REQUIRED</span><span class="desc">Customers firstname</span></div>
+		<div class="param"><span class="name">lastname</span><span class ="type">REQUIRED</span><span class="desc">Customers lastname</span></div>
+		<div class="param"><span class="name">email</span><span class ="type">REQUIRED</span><span class="desc">Customers email</span></div>
+		<div class="param"><span class="name">address</span><span class ="type">REQUIRED</span><span class="desc">Customers address</span></div>
+		<div class="param"><span class="name">auxdata</span><span class ="type">OPTIONAL</span><span class="desc">Auxillary information about customer</span></div>
+		
+		
+		<h3>
+			Return data
+		</h3>
+		<span class="example">&lt;created status="OK"/&gt;</span>
+	
+	</div>
+
+        <h2>booking/getcustomer_XML.php</h2>
+	<div class="info">
+		<h3>
+			Description
+		</h3>
+		Reads all information about a customer and updates last visit date to current date and time. Is used for logging in to a customer account.
+		<h3>
+			Parameters
+		</h3>
+		<div class="param"><span class="name">customerID</span><span class ="type">REQUIRED</span><span class="desc">ID of the customer</span></div></br>
+
+		<h3>
+			Return data
+		</h3>
+		<span class="example">&lt;customers&gt;
+		&lt;customer id="test" firstname="test" lastname="test" address="test" lastvisit="2012-10-16 12:31:51" email="test" auxdata="None!" /&gt;&lt;/customers&gt;</span>
+	</div>
+
+        <h2>booking/makebooking_XML.php</h2>
+	<h3>
+		Description
+	</h3>
+
+		Makes a booking and stores it in the database. (Deletes all temporary bookings for the user with that customerID that does not have state=2)
+	<h3>
+		Parameters
+	</h3>
+		<div class="param"><span class="name">resourceID</span><span class ="type">REQUIRED</span><span class="desc">ID of the resource</span></div>
+		<div class="param"><span class="name">date</span><span class ="type">REQUIRED</span><span class="desc">Date of the booking. Format: 2012-10-02 (year-month-day)</span></div>
+		<div class="param"><span class="name">dateto</span><span class ="type">REQUIRED</span><span class="desc">End Date of the booking if there is one. Format: 2012-10-02 (year-month-day)</span></div>
+		<div class="param"><span class="name">customerID</span><span class ="type">REQUIRED</span><span class="desc">ID of the customer</span></div>
+		<div class="param"><span class="name">rebate</span><span class ="type">OPTIONAL</span><span class="desc">Rebate</span></div>
+		<div class="param"><span class="name">status</span><span class ="type">OPTIONAL</span><span class="desc">Temporary or "real" booking. (1 = temporary, 2 = permanent)</span></div>
+		<div class="param"><span class="name">position</span><span class ="type">OPTIONAL</span><span class="desc">Position of the booking (Integer)</span></div></br>
+		<div class="param"><span class="name">auxdata</span><span class ="type">OPTIONAL</span><span class="desc">Auxillary data</span></div></br>
+	<h3>
+		Return data
+	</h3>
+		<span class="example"></span>
+
+
+        <h2>booking/getbookings_XML.php</h2>
+	<div class="info">
+		<h3>
+			Description
+		</h3>
+		Reads bookings for a resource.
+			Parameters
+		</h3>
+		<div class="param"><span class="name">type</span><span class ="type">REQUIRED</span><span class="desc">Unique Application type. In this case Hotel_Demo for example login name of student</span></div>
+		<div class="param"><span class="name">resourceID</span><span class ="type">OPTIONAL</span><span class="desc">ID of the resource</span></div>
+		<div class="param"><span class="name">date</span><span class ="type">OPTIONAL</span><span class="desc">Date of the booking. Format: 2012-10-02 (year-month-day)</span></div></br>
+		<h3>
+			Return data
+		</h3>
+		<span class="example">
+			&lt;bookings&gt;
+
+			&lt;booking 
+			    application='Hotell_Demo'
+			    customerID='Leiflert'
+			    resourceID='1008'
+			    name='Karl Hotel and Resort'
+			    company='Karls'
+			    location='Exmouth'
+			    date='2001-07-20 00:00:00'
+			    dateto='2001-07-21 00:00:00'
+			    position='26'
+			    status='2'
+			    cost='40'
+			    size='24'
+			    auxdata=''
+			 /&gt;
+
+			&lt;/bookings&gt;
+		</span>
+	</div>
+
+        <h2>booking/getcustomerbookings_XML</h2>
+	<div class="info">
+		<h3>
+			Description
+		</h3>
+		Get all bookings made by a certain customer 
+		<h3>
+			Parameters
+		</h3>
+		<div class="param"><span class="name">type</span><span class ="type">REQUIRED</span><span class="desc">Unique Application type. In this case Hotel_Demo for example login name of student</span></div>
+		<div class="param"><span class="name">customerID</span><span class ="type">REQUIRED</span><span class="desc">ID of the customer</span></div>
+		<h3>
+			Return data
+		</h3>
+		<span class="example">
+			&lt;bookings&gt;
+			&lt;booking 
+			    application='Hotell_Demo'
+			    customerID='Haakon'
+			    resourceID='1008'
+			    name='Karl Hotel and Resort'
+			    company='Karls'
+			    location='Exmouth'
+			    date='2001-07-20 00:00:00'
+			    dateto='2001-07-20 00:00:00'
+			    position='13'
+			    cost='280'
+			    category='Hotel'
+			    size='200'
+			    auxdata='None'
+			 /&gt;
+			&lt;/bookings&gt;
+		</span>
+	</div>
+
+        <h2>booking/getresources_XML.php</h2>
+	<div class="info">
+		<h3>
+			Description
+		</h3>
+		The booking/getresources_XML.php performs a search using a set of search terms. If none is given, that search term is ignored. 
+		The terms name, location and company use a logical or if more than one term is given. The full text search works in isolation from the other terms.
+		<h3>
+			Parameters
+		</h3>
+		<div class="param"><span class="name">type</span><span class ="type">REQUIRED</span><span class="desc">Application type, in the example Hotel_Demo</span></div>
+		<div class="param"><span class="name">name</span><span class ="type">OPTIONAL</span><span class="desc">Name of the resource</span></div>
+		<div class="param"><span class="name">company</span><span class ="type">OPTIONAL</span><span class="desc">Company that used the resource</span></div>
+		<div class="param"><span class="name">location</span><span class ="type">OPTIONAL</span><span class="desc">Location of the resource</span></div>
+		<div class="param"><span class="name">fulltext</span><span class ="type">OPTIONAL</span><span class="desc">Tries to find a match from name, company or location</span></div></br>
+
+		<h3>
+			Return data
+		</h3>
+		<span class="example">
+			&lt;resources&gt;
+			&lt;resource 
+			    id='1001'
+			    name='Pilkington Inn'
+			    company='Sunside Hotels'
+			    location='Manchester'
+			    size='15'
+			    cost='350'
+			    category='Hostel'
+			    auxdata='None'
+			 /&gt;
+			&lt;/resource&gt;
+		</span>
+	</div>
+
+        <h2>booking/getavailability_search_XML.php</h2>
+	<div class="info">
+		<h3>
+			Description
+		</h3>
+		Shows the availability information for all available dates for the given resourceID
+		<h3>
+			Parameters
+		</h3>
+		<div class="param"><span class="name">type</span><span class ="type">Required</span><span class="desc">Application type in the demo application Hotel_Demo</span></div>
+		<div class="param"><span class="name">resid</span><span class ="type">OPTIONAL</span><span class="desc">The resource id</span></div>
+		<div class="param"><span class="name">name</span><span class ="type">OPTIONAL</span><span class="desc">The resource name</span></div>
+		<div class="param"><span class="name">location</span><span class ="type">OPTIONAL</span><span class="desc">The resource location</span></div>
+		<div class="param"><span class="name">company</span><span class ="type">OPTIONAL</span><span class="desc">The resource companty</span></div>
+		<div class="param"><span class="name">fulltext</span><span class ="type">OPTIONAL</span><span class="desc">Full text search much like for resource search, matches any search term.</span></div>
+
+		<h3>
+			Return data
+		</h3>
+		<span class="example">
+			&lt;avail&gt;
+			&lt;availability 
+			    resourceID='1008'
+			    name='The Laszlo Plaza'
+			    location='Athens'
+			    company='Laszlo Inc'
+			    size='96'
+			    cost='110'
+			    category='1'
+			    date='2001-01-01'
+			    dateto='2001-01-02'
+			    bookingcount='0'
+			    bookingcost='28.99'
+			    bookingclass='1'
+			    remaining='96'
+			 /&gt;
+		</span>
+	</div>
+	
+	<h2>booking/makeresource_XML.php</h2>
+	<div class="info">
+		<h3>
+			Description
+		</h3>
+		Makes a new resource for the cases when we need the application to create new resources e.g. peer-to-peer hotels.
+		<h3>
+			Parameters
+		</h3>
+		<div class="param"><span class="name">ID</span><span class ="type">REQUIRED</span><span class="desc">ID of the reresource</span></div>
+		<div class="param"><span class="name">name</span><span class ="type">REQUIRED</span><span class="desc">Name of the resource</span></div>
+		<div class="param"><span class="name">type</span><span class ="type">REQUIRED</span><span class="desc">Application type in the example Hotel_Demo</span></div>
+		<div class="param"><span class="name">company</span><span class ="type">REQUIRED</span><span class="desc">Company of the resource</span></div>
+		<div class="param"><span class="name">location</span><span class ="type">REQUIRED</span><span class="desc">Location of the resource</span></div>
+		<div class="param"><span class="name">category</span><span class ="type">REQUIRED</span><span class="desc">Category of the resource</span></div>
+		<div class="param"><span class="name">cost</span><span class ="type">REQUIRED</span><span class="desc">Cost of the resource</span></div>
+		<div class="param"><span class="name">auxdata</span><span class ="type">OPTIONAL</span><span class="desc">Auxillary information about resource</span></div>
+		
+		<h3>
+			Return data
+		</h3>
+		<span class="example">
+			&lt;created status="OK"/&gt;
+		</span>
+	</div>
+	
+	<h2>booking/deletebooking_XML.php</h2>
+	<div class="info">
+		<h3>
+			Description
+		</h3>
+		Deletes a booking, for the cases that a user wants to cancel a booking of a resource.
+		<h3>
+			Parameters
+		</h3>
+		<div class="param"><span class="name">ID</span><span class ="type">REQUIRED</span><span class="desc">ID of the reresource</span></div>
+		<div class="param"><span class="name">date</span><span class ="type">REQUIRED</span><span class="desc">Date of Booking</span></div>
+		<div class="param"><span class="name">customerID</span><span class ="type">REQUIRED</span><span class="desc">ID of Customer</span></div>
+		
+		<h3>
+			Return data
+		</h3>
+		<span class="example">
+			&lt;deleted status="OK"/&gt;
+		</span>
+	</div>
+
+  </div>
+
+</body>
+</html>
