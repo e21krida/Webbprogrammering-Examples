@@ -8,7 +8,7 @@
 
             display: block;
             padding: 1em;
-	    width: 50%;
+	    width: 80%;
             margin: auto auto;
         }
 
@@ -71,6 +71,13 @@
 	    padding-left: 1em;
 	}
 
+	.param .typeo
+	{
+	    width: 20%;
+	    color: #55a;	
+	    padding-left: 1em;
+	}
+	
 	.param .desc
 	{
 	    color: #555;	
@@ -79,13 +86,14 @@
 
 	.example
 	{
-            border: 1px dotted #575;
+      border: 1px dotted #575;
 	    display: block;
 	    padding: 1em;
 	    margin: 1em;
 	    font-size: 0.8em;
-	    font-family: "Courier";
+	    font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace;;
 	    color: #575;
+	    white-space: pre;	
 	}
 
         a
@@ -132,13 +140,15 @@
 		<div class="param"><span class="name">lastname</span><span class ="type">REQUIRED</span><span class="desc">Customers lastname</span></div>
 		<div class="param"><span class="name">email</span><span class ="type">REQUIRED</span><span class="desc">Customers email</span></div>
 		<div class="param"><span class="name">address</span><span class ="type">REQUIRED</span><span class="desc">Customers address</span></div>
-		<div class="param"><span class="name">auxdata</span><span class ="type">OPTIONAL</span><span class="desc">Auxillary information about customer</span></div>
+		<div class="param"><span class="name">auxdata</span><span class ="typeo">OPTIONAL</span><span class="desc">Auxillary information about customer</span></div>
 		
 		
 		<h3>
 			Return data
 		</h3>
-		<span class="example">&lt;created status="OK"/&gt;</span>
+		<span class="example">
+&lt;created status="OK"/&gt;
+</span>
 	
 	</div>
 
@@ -156,8 +166,11 @@
 		<h3>
 			Return data
 		</h3>
-		<span class="example">&lt;customers&gt;
-		&lt;customer id="test" firstname="test" lastname="test" address="test" lastvisit="2012-10-16 12:31:51" email="test" auxdata="None!" /&gt;&lt;/customers&gt;</span>
+		<span class="example">
+&lt;customers&gt;
+&lt;customer id="test" firstname="test" lastname="test" address="test" lastvisit="2012-10-16 12:31:51" email="test" auxdata="None!" /&gt;
+&lt;/customers&gt;
+</span>
 	</div>
 
         <h2>booking/makebooking_XML.php</h2>
@@ -173,14 +186,16 @@
 		<div class="param"><span class="name">date</span><span class ="type">REQUIRED</span><span class="desc">Date of the booking. Format: 2012-10-02 (year-month-day)</span></div>
 		<div class="param"><span class="name">dateto</span><span class ="type">REQUIRED</span><span class="desc">End Date of the booking if there is one. Format: 2012-10-02 (year-month-day)</span></div>
 		<div class="param"><span class="name">customerID</span><span class ="type">REQUIRED</span><span class="desc">ID of the customer</span></div>
-		<div class="param"><span class="name">rebate</span><span class ="type">OPTIONAL</span><span class="desc">Rebate</span></div>
-		<div class="param"><span class="name">status</span><span class ="type">OPTIONAL</span><span class="desc">Temporary or "real" booking. (1 = temporary, 2 = permanent)</span></div>
-		<div class="param"><span class="name">position</span><span class ="type">OPTIONAL</span><span class="desc">Position of the booking (Integer)</span></div></br>
-		<div class="param"><span class="name">auxdata</span><span class ="type">OPTIONAL</span><span class="desc">Auxillary data</span></div></br>
+		<div class="param"><span class="name">rebate</span><span class ="typeo">OPTIONAL</span><span class="desc">Rebate</span></div>
+		<div class="param"><span class="name">status</span><span class ="typeo">OPTIONAL</span><span class="desc">Temporary or "real" booking. (1 = temporary, 2 = permanent)</span></div>
+		<div class="param"><span class="name">position</span><span class ="typeo">OPTIONAL</span><span class="desc">Position of the booking (Integer)</span></div></br>
+		<div class="param"><span class="name">auxdata</span><span class ="typeo">OPTIONAL</span><span class="desc">Auxillary data</span></div></br>
 	<h3>
 		Return data
 	</h3>
-		<span class="example"></span>
+		<span class="example">
+&lt;result size='20' bookingcost='100' remaining='4'   /&gt;		
+		</span>
 
 
         <h2>booking/getbookings_XML.php</h2>
@@ -193,30 +208,30 @@
 		</h3>
 		<div class="param"><span class="name">type</span><span class ="type">REQUIRED</span><span class="desc">Unique Application type. In this case Hotel_Demo for example login name of student</span></div>
 		<div class="param"><span class="name">resourceID</span><span class ="type">OPTIONAL</span><span class="desc">ID of the resource</span></div>
-		<div class="param"><span class="name">date</span><span class ="type">OPTIONAL</span><span class="desc">Date of the booking. Format: 2012-10-02 (year-month-day)</span></div></br>
+		<div class="param"><span class="name">date</span><span class ="typeo">OPTIONAL</span><span class="desc">Date of the booking. Format: 2012-10-02 (year-month-day)</span></div></br>
 		<h3>
 			Return data
 		</h3>
 		<span class="example">
-			&lt;bookings&gt;
+&lt;bookings&gt;
 
-			&lt;booking 
-			    application='Hotell_Demo'
-			    customerID='Leiflert'
-			    resourceID='1008'
-			    name='Karl Hotel and Resort'
-			    company='Karls'
-			    location='Exmouth'
-			    date='2001-07-20 00:00:00'
-			    dateto='2001-07-21 00:00:00'
-			    position='26'
-			    status='2'
-			    cost='40'
-			    size='24'
-			    auxdata=''
-			 /&gt;
+&lt;booking 
+    application='Hotell_Demo'
+    customerID='Leiflert'
+    resourceID='1008'
+    name='Karl Hotel and Resort'
+    company='Karls'
+    location='Exmouth'
+    date='2001-07-20 00:00:00'
+    dateto='2001-07-21 00:00:00'
+    position='26'
+    status='2'
+    cost='40'
+    size='24'
+    auxdata=''
+ /&gt;
 
-			&lt;/bookings&gt;
+&lt;/bookings&gt;
 		</span>
 	</div>
 
@@ -235,23 +250,23 @@
 			Return data
 		</h3>
 		<span class="example">
-			&lt;bookings&gt;
-			&lt;booking 
-			    application='Hotell_Demo'
-			    customerID='Haakon'
-			    resourceID='1008'
-			    name='Karl Hotel and Resort'
-			    company='Karls'
-			    location='Exmouth'
-			    date='2001-07-20 00:00:00'
-			    dateto='2001-07-20 00:00:00'
-			    position='13'
-			    cost='280'
-			    category='Hotel'
-			    size='200'
-			    auxdata='None'
-			 /&gt;
-			&lt;/bookings&gt;
+&lt;bookings&gt;
+&lt;booking 
+    application='Hotell_Demo'
+    customerID='Haakon'
+    resourceID='1008'
+    name='Karl Hotel and Resort'
+    company='Karls'
+    location='Exmouth'
+    date='2001-07-20 00:00:00'
+    dateto='2001-07-20 00:00:00'
+    position='13'
+    cost='280'
+    category='Hotel'
+    size='200'
+    auxdata='None'
+ /&gt;
+&lt;/bookings&gt;
 		</span>
 	</div>
 
@@ -266,27 +281,27 @@
 			Parameters
 		</h3>
 		<div class="param"><span class="name">type</span><span class ="type">REQUIRED</span><span class="desc">Application type, in the example Hotel_Demo</span></div>
-		<div class="param"><span class="name">name</span><span class ="type">OPTIONAL</span><span class="desc">Name of the resource</span></div>
-		<div class="param"><span class="name">company</span><span class ="type">OPTIONAL</span><span class="desc">Company that used the resource</span></div>
-		<div class="param"><span class="name">location</span><span class ="type">OPTIONAL</span><span class="desc">Location of the resource</span></div>
-		<div class="param"><span class="name">fulltext</span><span class ="type">OPTIONAL</span><span class="desc">Tries to find a match from name, company or location</span></div></br>
+		<div class="param"><span class="name">name</span><span class ="typeo">OPTIONAL</span><span class="desc">Name of the resource</span></div>
+		<div class="param"><span class="name">company</span><span class ="typeo">OPTIONAL</span><span class="desc">Company that used the resource</span></div>
+		<div class="param"><span class="name">location</span><span class ="typeo">OPTIONAL</span><span class="desc">Location of the resource</span></div>
+		<div class="param"><span class="name">fulltext</span><span class ="typeo">OPTIONAL</span><span class="desc">Tries to find a match from name, company or location</span></div></br>
 
 		<h3>
 			Return data
 		</h3>
 		<span class="example">
-			&lt;resources&gt;
-			&lt;resource 
-			    id='1001'
-			    name='Pilkington Inn'
-			    company='Sunside Hotels'
-			    location='Manchester'
-			    size='15'
-			    cost='350'
-			    category='Hostel'
-			    auxdata='None'
-			 /&gt;
-			&lt;/resource&gt;
+&lt;resources&gt;
+&lt;resource 
+    id='1001'
+    name='Pilkington Inn'
+    company='Sunside Hotels'
+    location='Manchester'
+    size='15'
+    cost='350'
+    category='Hostel'
+    auxdata='None'
+ /&gt;
+&lt;/resource&gt;
 		</span>
 	</div>
 
@@ -300,32 +315,32 @@
 			Parameters
 		</h3>
 		<div class="param"><span class="name">type</span><span class ="type">Required</span><span class="desc">Application type in the demo application Hotel_Demo</span></div>
-		<div class="param"><span class="name">resid</span><span class ="type">OPTIONAL</span><span class="desc">The resource id</span></div>
-		<div class="param"><span class="name">name</span><span class ="type">OPTIONAL</span><span class="desc">The resource name</span></div>
-		<div class="param"><span class="name">location</span><span class ="type">OPTIONAL</span><span class="desc">The resource location</span></div>
-		<div class="param"><span class="name">company</span><span class ="type">OPTIONAL</span><span class="desc">The resource companty</span></div>
-		<div class="param"><span class="name">fulltext</span><span class ="type">OPTIONAL</span><span class="desc">Full text search much like for resource search, matches any search term.</span></div>
+		<div class="param"><span class="name">resid</span><span class ="typeo">OPTIONAL</span><span class="desc">The resource id</span></div>
+		<div class="param"><span class="name">name</span><span class ="typeo">OPTIONAL</span><span class="desc">The resource name</span></div>
+		<div class="param"><span class="name">location</span><span class ="typeo">OPTIONAL</span><span class="desc">The resource location</span></div>
+		<div class="param"><span class="name">company</span><span class ="typeo">OPTIONAL</span><span class="desc">The resource companty</span></div>
+		<div class="param"><span class="name">fulltext</span><span class ="typeo">OPTIONAL</span><span class="desc">Full text search much like for resource search, matches any search term.</span></div>
 
 		<h3>
 			Return data
 		</h3>
 		<span class="example">
-			&lt;avail&gt;
-			&lt;availability 
-			    resourceID='1008'
-			    name='The Laszlo Plaza'
-			    location='Athens'
-			    company='Laszlo Inc'
-			    size='96'
-			    cost='110'
-			    category='1'
-			    date='2001-01-01'
-			    dateto='2001-01-02'
-			    bookingcount='0'
-			    bookingcost='28.99'
-			    bookingclass='1'
-			    remaining='96'
-			 /&gt;
+&lt;avail&gt;
+&lt;availability 
+    resourceID='1008'
+    name='The Laszlo Plaza'
+    location='Athens'
+    company='Laszlo Inc'
+    size='96'
+    cost='110'
+    category='1'
+    date='2001-01-01'
+    dateto='2001-01-02'
+    bookingcount='0'
+    bookingcost='28.99'
+    bookingclass='1'
+    remaining='96'
+ /&gt;
 		</span>
 	</div>
 	
@@ -345,13 +360,13 @@
 		<div class="param"><span class="name">location</span><span class ="type">REQUIRED</span><span class="desc">Location of the resource</span></div>
 		<div class="param"><span class="name">category</span><span class ="type">REQUIRED</span><span class="desc">Category of the resource</span></div>
 		<div class="param"><span class="name">cost</span><span class ="type">REQUIRED</span><span class="desc">Cost of the resource</span></div>
-		<div class="param"><span class="name">auxdata</span><span class ="type">OPTIONAL</span><span class="desc">Auxillary information about resource</span></div>
+		<div class="param"><span class="name">auxdata</span><span class ="typeo">OPTIONAL</span><span class="desc">Auxillary information about resource</span></div>
 		
 		<h3>
 			Return data
 		</h3>
 		<span class="example">
-			&lt;created status="OK"/&gt;
+&lt;created status="OK"/&gt;
 		</span>
 	</div>
 	
@@ -372,7 +387,7 @@
 			Return data
 		</h3>
 		<span class="example">
-			&lt;deleted status="OK"/&gt;
+&lt;deleted status="OK"/&gt;
 		</span>
 	</div>
 
