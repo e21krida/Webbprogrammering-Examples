@@ -2,6 +2,7 @@
 			include 'dbconnect.php';
 			
 			$resourceID=getpostAJAX("resourceID");
+			$searchresource=getpostAJAX("searchresource");
 			$date=getpostAJAX("date");
 			$type=getpostAJAX("type");
 
@@ -11,10 +12,14 @@
 
 			try{
 					// Set up query string
-					$querystring="SELECT resource.size,resource.type,booking.customerID,booking.resourceID,resource.name,resource.company,resource.location,DATE_FORMAT(booking.date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(booking.dateto,'%Y-%m-%d %H:%i') as dateto,booking.cost,booking.rebate,booking.position,booking.status,booking.auxdata FROM booking,resource WHERE resource.ID=booking.resourceID AND type=:TYPE ";
+					$querystring="SELECT resource.size,resource.type,booking.customerID,booking.resourceID,resource.name,resource.company,resource.location,DATE_FORMAT(booking.date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(booking.dateto,'%Y-%m-%d %H:%i') as dateto,booking.cost,booking.rebate,booking.position,booking.status,booking.auxdata FROM booking,resource WHERE resource.ID=booking.resourceID AND type=:TYPE ";					
 
 					if($date!="UNK") $querystring.=" AND date=:DATE";
-					if($resourceID!="UNK") $querystring.=" AND resourceID=:RESID";
+					if($searchresource!="UNK") {
+							$querystring.=" AND resourceID like :RESID";
+					}else if ($resourceID!="UNK"){
+							$querystring.=" AND resourceID=:RESID";
+					}
 					$querystring.=" ORDER BY resourceid,position";
 					
 					$stmt = $pdo->prepare($querystring);

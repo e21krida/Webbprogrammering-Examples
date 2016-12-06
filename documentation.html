@@ -203,11 +203,13 @@
 		<h3>
 			Description
 		</h3>
-		Reads bookings for a resource.
+		Reads bookings for a resource given the resource ID. If the searchresource parameter is non-empty, uses LIKE to match the resource ID.
+		<h3>
 			Parameters
 		</h3>
 		<div class="param"><span class="name">type</span><span class ="type">REQUIRED</span><span class="desc">Unique Application type. In this case Hotel_Demo for example login name of student</span></div>
 		<div class="param"><span class="name">resourceID</span><span class ="type">OPTIONAL</span><span class="desc">ID of the resource</span></div>
+		<div class="param"><span class="name">searchresource</span><span class ="type">OPTIONAL</span><span class="desc">If not empty searches for resource ID using like</span></div>
 		<div class="param"><span class="name">date</span><span class ="typeo">OPTIONAL</span><span class="desc">Date of the booking. Format: 2012-10-02 (year-month-day)</span></div></br>
 		<h3>
 			Return data
