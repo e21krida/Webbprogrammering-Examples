@@ -1,4 +1,4 @@
-﻿<?PHP
+<?PHP
 			include 'dbconnect.php';
 			
 			$customerID=getpostAJAX("customerID");

@@ -1,4 +1,4 @@
-﻿<?PHP
+<?PHP
 			include 'dbconnect.php';
 			
 			// Get and escape the variables from post
