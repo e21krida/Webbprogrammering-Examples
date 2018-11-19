@@ -50,7 +50,7 @@
 				type: 'POST',
 				url: '../booking/getcustomerbookings_XML.php',
 				data: {
-					customerID: escape(customer),
+					customerID: encodeURIComponent(customer),
 					type: apptype 	  // Filter out bookings made from other applications application.
 					                      // Most commonly user name of student
 				},

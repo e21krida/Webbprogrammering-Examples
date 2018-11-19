@@ -55,12 +55,12 @@
 			$.ajax({
 				type: 'POST',
 				url: '../booking/makecustomer_XML.php',
-				data: { ID: escape(customerID),
-					firstname: escape(firstname),
-					lastname: escape(lastname),
-					email: escape(email),
-					address: escape(address),
-					auxdata: escape(auxdata),
+				data: { ID: encodeURIComponent(customerID),
+					firstname: encodeURIComponent(firstname),
+					lastname: encodeURIComponent(lastname),
+					email: encodeURIComponent(email),
+					address: encodeURIComponent(address),
+					auxdata: encodeURIComponent(auxdata),
 				},
 				success:  ResultCustomern,
 				error: errormsg		
@@ -94,7 +94,7 @@
 		  $.ajax({
 				type: 'POST',
 				url: '../booking/getcustomer_XML.php',
-				data: { customerID: escape(customerID)},
+				data: { customerID: encodeURIComponent(customerID)},
 				success:  ResultCustomers,
 				error: errormsg
 			});
@@ -149,11 +149,11 @@
 				$.ajax({
 					type: 'POST',
 					url: '../booking/getresources_XML.php',
-					data: { resID : escape(resID),
-						name: escape(resname),
-						location:  escape(reslocation),
-						company: escape(rescompany),
-						fulltext: escape(resfulltext),
+					data: { resID : encodeURIComponent(resID),
+						name: encodeURIComponent(resname),
+						location:  encodeURIComponent(reslocation),
+						company: encodeURIComponent(rescompany),
+						fulltext: encodeURIComponent(resfulltext),
 						type: apptype 	  // Filter out bookings made from other applications application.
 			                            // Most commonly user name of student					
 						},
@@ -216,11 +216,11 @@
 					type: 'POST',
 					url: '../booking/getavailability_search_XML.php',
 					data: { 
-						resid:  escape(resID),
-					  name: escape(resname),
-						location:  escape(reslocation),
-						company: escape(rescompany),
-						fulltext: escape(resfulltext),
+						resid:  encodeURIComponent(resID),
+					  name: encodeURIComponent(resname),
+						location:  encodeURIComponent(reslocation),
+						company: encodeURIComponent(rescompany),
+						fulltext: encodeURIComponent(resfulltext),
 						type: apptype 	  // Filter out bookings made from other applications application.
 			                        // Most commonly user name of student					
 						},
@@ -422,7 +422,7 @@
 				type: 'POST',
 				url: '../booking/getcustomerbookings_XML.php',
 				data: {
-					customerID: escape(customer),
+					customerID: encodeURIComponent(customer),
 					type: apptype 	  // Filter out bookings made from other applications application.
 					                      // Most commonly user name of student
 				},
@@ -481,7 +481,7 @@
 				dataType: "text",				
 				url: '../booking/getfile_XML.php',
 				data: {
-					filename: escape(filename),
+					filename: encodeURIComponent(filename),
 				},
 				success:  fileread,
 			  error: errormsg		

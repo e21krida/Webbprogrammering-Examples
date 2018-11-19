@@ -35,12 +35,12 @@
 			$.ajax({
 				type: 'POST',
 				url: '../booking/makecustomer_XML.php',
-				data: { ID: escape(customerID),
-					firstname: escape(firstname),
-					lastname: escape(lastname),
-					email: escape(email),
-					address: escape(address),
-					auxdata: escape(auxdata),
+				data: { ID: encodeURIComponent(customerID),
+					firstname: encodeURIComponent(firstname),
+					lastname: encodeURIComponent(lastname),
+					email: encodeURIComponent(email),
+					address: encodeURIComponent(address),
+					auxdata: encodeURIComponent(auxdata),
 				},
 				success:  ResultCustomern,
 				error: errormsg		
