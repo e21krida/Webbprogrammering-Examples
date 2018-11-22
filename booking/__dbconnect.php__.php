@@ -1,5 +1,18 @@
 <?PHP
-			$pdo=null;
+			//---------------------------------------------------------------------------------------------------------------
+			// THIS FILE MUST BE RENAMED TO dbconnect.php AND YOU MUST UPDATE WITH CORRECT DB CREDENTIALS BELOW
+			// THIS FILE MUST BE RENAMED TO dbconnect.php AND YOU MUST UPDATE WITH CORRECT DB CREDENTIALS BELOW
+			// THIS FILE MUST BE RENAMED TO dbconnect.php AND YOU MUST UPDATE WITH CORRECT DB CREDENTIALS BELOW
+			//---------------------------------------------------------------------------------------------------------------
+			define("DB_USER","USER FROM CONSTRUCTION COURSE");
+			define("DB_PASSWORD","PASSWORD FROM CONSTRUCTION COURSE");
+
+			define("DB_HOST","localhost");
+			define("DB_NAME","BookingSystem");
+			//---------------------------------------------------------------------------------------------------------------
+
+
+      $pdo=null;
 			
 			//---------------------------------------------------------------------------------------------------------------
 			// endsWith - does string start with?
@@ -109,12 +122,6 @@
 				}
 							
 			}
-
-			define("DB_USER","USER FROM CONSTRUCTION COURSE");
-			define("DB_PASSWORD","PASSWORD FROM CONSTRUCTION COURSE");
-
-			define("DB_HOST","localhost");
-			define("DB_NAME","BookingSystem");
 
 			dbConnect();
 ?>
