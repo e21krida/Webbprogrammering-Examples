@@ -1,7 +1,23 @@
 # Webbprogrammering-API-2014-
-
-API Documentation
 All data is returned as XML.
+
+Call the appropropriate service with the required (and optional) parameters. For example, to create a new customer the following AJAX-call using jQuery can be used:
+~~~
+$.ajax({
+  type: 'POST',
+  url: '../booking/makecustomer_XML.php',
+  data: { ID: escape(customerID),
+          firstname: escape(firstname),
+          lastname: escape(lastname),
+          email: escape(email),
+          address: escape(address),
+          auxdata: escape(auxdata),
+        },
+  success:  ResultCustomern,
+  error: errormsg
+  });
+}
+~~~
 ## booking/makecustomer_XML.php
 ### Description
 Creates a customer
