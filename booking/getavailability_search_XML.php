@@ -23,18 +23,29 @@
 
 		try{
 				// Search either for ID or for resource!
-				if($resid!="UNK"){
-						$querystring="SELECT DATE_FORMAT(date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(dateto,'%Y-%m-%d %H:%i') as dateto,resourceID,name,location,company,size,cost,category FROM resource,resourceavailability where resourceavailability.resourceID=resource.ID and resource.ID=:RESID order by resourceID,date";
-						$stmt = $pdo->prepare($querystring);
-						$stmt->bindParam(':RESID',$resid);
-						$stmt->execute();				
+				if($fulltext!="UNK"){
+					$querystring="SELECT DATE_FORMAT(date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(dateto,'%Y-%m-%d %H:%i') as dateto,resourceID,name,location,company,size,cost,category FROM resource,resourceavailability where resourceavailability.resourceID=resource.ID and (resource.company like :COMPANY or resource.name like :NAME or resource.location like :LOCATION or resource.ID=:RESID) and resource.type=:TYPE order by resourceID,date";
+					$stmt = $pdo->prepare($querystring);
+					$stmt->bindParam(':TYPE',$type);
+					$stmt->bindParam(':RESID',$resid);
+					$stmt->bindParam(':COMPANY',$company);
+					$stmt->bindParam(':NAME',$name);
+					$stmt->bindParam(':LOCATION',$location);
+					$stmt->execute();
+				}else if($resid!="UNK"){
+					$querystring="SELECT DATE_FORMAT(date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(dateto,'%Y-%m-%d %H:%i') as dateto,resourceID,name,location,company,size,cost,category FROM resource,resourceavailability where resourceavailability.resourceID=resource.ID and resource.ID=:RESID and resource.type=:TYPE order by resourceID,date";
+					$stmt = $pdo->prepare($querystring);
+					$stmt->bindParam(':TYPE',$type);
+					$stmt->bindParam(':RESID',$resid);
+					$stmt->execute();				
 				}else{
-						$querystring="SELECT DATE_FORMAT(date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(dateto,'%Y-%m-%d %H:%i') as dateto,resourceID,name,location,company,size,cost,category FROM resource,resourceavailability where resourceavailability.resourceID=resource.ID and (resource.company like :COMPANY or resource.name like :NAME or resource.location like :LOCATION) order by resourceID,date";
-						$stmt = $pdo->prepare($querystring);
-						$stmt->bindParam(':COMPANY',$company);
-						$stmt->bindParam(':NAME',$name);
-						$stmt->bindParam(':LOCATION',$location);
-						$stmt->execute();
+					$querystring="SELECT DATE_FORMAT(date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(dateto,'%Y-%m-%d %H:%i') as dateto,resourceID,name,location,company,size,cost,category FROM resource,resourceavailability where resourceavailability.resourceID=resource.ID and (resource.company like :COMPANY or resource.name like :NAME or resource.location like :LOCATION) and resource.type=:TYPE  order by resourceID,date";
+					$stmt = $pdo->prepare($querystring);
+					$stmt->bindParam(':TYPE',$type);
+					$stmt->bindParam(':COMPANY',$company);
+					$stmt->bindParam(':NAME',$name);
+					$stmt->bindParam(':LOCATION',$location);
+					$stmt->execute();
 				}
 				
 				$output="<avail>\n";
