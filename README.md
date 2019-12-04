@@ -144,14 +144,16 @@ fulltext _OPTIONAL_ Tries to find a match from name, company or location\
 ### Description
 Shows the availability information for all available dates for a given resourceID. There are 3 different ways to select resourse.
 ### Parameters
-type **REQUIRED** Application type in the demo application Hotel_Demo\
-*Alt 1 - Search by resource id*
+*Alt 1 - Search by resource id*\
+type **REQUIRED** Application type\
 resid **REQUIRED** The resource id\
-*Alt 2 - Search by name,location,and company*
+*Alt 2 - Search by name,location,and company*\
+type **REQUIRED** Application type\
 name **REQUIRED** The resource name\
 location **REQUIRED** The resource location\
 company **REQUIRED** The resource companty\
-*Alt 3 - Search with one search term for name,location, and company*
+*Alt 3 - Search with one search term for name,location, and company*\
+type **REQUIRED** Application type\
 fulltext _OPTIONAL_ Full text search much like for resource search, matches any search term.\
 ### Return data
 ~~~
