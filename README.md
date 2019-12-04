@@ -154,7 +154,7 @@ location **REQUIRED** The resource location\
 company **REQUIRED** The resource companty\
 *Alt 3 - Search with one search term for name,location, and company*\
 type **REQUIRED** Application type\
-fulltext _OPTIONAL_ Full text search much like for resource search, matches any search term.\
+fulltext **REQUIRED** Full text search much like for resource search, matches any search term.
 ### Return data
 ~~~
 <avail>
