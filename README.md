@@ -142,13 +142,16 @@ fulltext _OPTIONAL_ Tries to find a match from name, company or location\
 ~~~
 ## booking/getavailability_search_XML.php
 ### Description
-Shows the availability information for all available dates for the given resourceID
+Shows the availability information for all available dates for a given resourceID. There are 3 different ways to select resourse.
 ### Parameters
 type **REQUIRED** Application type in the demo application Hotel_Demo\
-resid _OPTIONAL_ The resource id\
-name _OPTIONAL_ The resource name\
-location _OPTIONAL_ The resource location\
-company _OPTIONAL_ The resource companty\
+*Alt 1 - Search by resource id*
+resid **REQUIRED** The resource id\
+*Alt 2 - Search by name,location,and company*
+name **REQUIRED** The resource name\
+location **REQUIRED** The resource location\
+company **REQUIRED** The resource companty\
+*Alt 3 - Search with one search term for name,location, and company*
 fulltext _OPTIONAL_ Full text search much like for resource search, matches any search term.\
 ### Return data
 ~~~
