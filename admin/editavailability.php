@@ -21,7 +21,8 @@
 			echo "<table>";
 
 			echo "<tr><td>Application:&nbsp;&nbsp;</td><td>";
-			echo "<SELECT NAME='filter'>";
+			echo "<SELECT NAME='filter' onchange='this.form.submit()' >";
+			echo "<option>&laquo;Select Application&raquo;</option>";
 		      foreach($pdo->query("SELECT DISTINCT type FROM resource order by type") as $row){
 							if($filter==$row['type']){
 									echo "<OPTION selected='selected'>".$row['type'];
