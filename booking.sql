@@ -1,6 +1,10 @@
+-- Important: Only use on personal server do not run on wwwlab 
+
 -- drop database BookingSystem;
 -- create database BookingSystem;
-use BookingSystemz;
+-- use BookingSystemz;
+
+-- Important: Only use on personal server do not run on wwwlab 
 
 create table customer(
 		ID 					varchar(32),

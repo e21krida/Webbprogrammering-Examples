@@ -23,6 +23,10 @@
 			$category=getpost("category");
 			$auxdata=getpost("auxdata");
 	
+			if($filter==""){
+					$filter="No filter applied";
+			}
+	
 			if($button=='Save'){
 					$stmt = $pdo->prepare("INSERT INTO resource (id,name,type,company,location,category,size,cost,auxdata) VALUES (:ID,:NAME,:TYPE,:COMPANY,:LOCATION,:CATEGORY,:SIZE,:COST,:AUXDATA);");
 					$stmt->bindParam(':ID',$ID);
@@ -46,7 +50,7 @@
 			echo "<table>";
 
 			echo "<tr><td>Application:&nbsp;&nbsp;</td><td>";
-			echo "<SELECT NAME='filter'>";
+			echo "<SELECT NAME='filter' onchange='this.form.submit()' >";
       foreach($pdo->query("SELECT DISTINCT type FROM resource order by type") as $row){
 					if($filter==$row['type']){
 							echo "<OPTION selected='selected'>".$row['type'];
@@ -113,6 +117,8 @@
 					$i++;
 			}				
 			echo "</table>\n";
+	
+			echo "<div style='width:300px;border:1px solid red; background:#fed;margin:10px'>$i lines found for &quot;$filter&quot; application</div>"
 			
 ?>
 </body>

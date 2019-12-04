@@ -34,7 +34,7 @@
 			echo "<table>";
 
 			echo "<tr><td>Application:&nbsp;&nbsp;</td><td>";
-			echo "<SELECT NAME='filter'>";
+			echo "<SELECT NAME='filter' onchange='this.form.submit()' >";
       foreach($pdo->query("SELECT DISTINCT type FROM resource order by type") as $row){
 					if($filter==$row['type']){
 							echo "<OPTION selected='selected'>".$row['type'];
@@ -164,7 +164,7 @@
 			// Search Query!
 			//---------------------------------------------------------------------------------------------------------------
 
-			$querystring="SELECT * FROM booking,resource WHERE resource.ID=booking.resourceID and type=:FILTER ORDER BY customerID,company,location,booking.date,position";
+			$querystring="SELECT * FROM booking,resource WHERE resource.ID=booking.resourceID AND type=:FILTER ORDER BY customerID,company,location,booking.date,position";
 			$stmt = $pdo->prepare($querystring);
 			$stmt->bindParam(':FILTER',$filter);
 			$stmt->execute();
@@ -173,8 +173,8 @@
 
 			echo "<table cellspacing=0>\n";
 			echo "<tr><td style='border-left: 1px solid green;' class='head'>Customer</td><td class='head'>Resource</td><td class='head'>Name</td><td class='head'>Company</td><td class='head'>Location</td><td class='head'>Date</td><td class='head'>Date To</td><td class='head'>Position</td><td class='head'>Cost</td><td class='head'>Rebate</td><td class='head'>Status</td><td class='head'>Aux</td></tr>";
+			
 			$i=0;
-
 			foreach($stmt as $key => $row){
 					if($i%2==0){
 							echo "<tr style='background-color:#fff8f8;'>\n";
@@ -193,6 +193,7 @@
 					echo "    <td class='result'>".$row['rebate']."</td>\n";
 					echo "    <td class='result'>".$row['status']."</td>\n";
 					echo "    <td class='result'>".$row['auxdata']."</td>\n";
+					echo "    <td class='result'>".$row['type']."</td>\n";				
 					echo "<td class='result'>";
 					echo "<form action='editbooking.php' method='POST'>";
 					echo "<input type='hidden' name='customer' value='".$row['customerID']."'>";
@@ -215,7 +216,63 @@
 			}
 
 			echo "</table>\n";
+
+			echo "<div style='width:300px;border:1px solid red; background:#fed;margin:10px;padding:10px;'>$i lines found for &quot;$filter&quot; application</div>";	
+				
+			$querystring="SELECT * FROM booking WHERE NOT EXISTS (SELECT * FROM resource where booking.resourceID=resource.id) ORDER BY customerID,resourceID,booking.date,position";
+			$stmt = $pdo->prepare($querystring);
+			$stmt->execute();				
+	
+			$str="<div style='width:300px;border:1px solid navy; background:#def;margin:10px;padding:10px;'>Orphaned bookings</div>";
+
+			$str.= "<table cellspacing=0>\n";
+			$str.= "<tr><td style='border-left: 1px solid green;' class='head'>Customer</td><td class='head'>Resource</td><td class='head'>Date</td><td class='head'>Date To</td><td class='head'>Position</td><td class='head'>Cost</td><td class='head'>Rebate</td><td class='head'>Status</td><td class='head'>Aux</td></tr>";			
+
+			$i=0;
+			foreach($stmt as $key => $row){
+					if($i%2==0){
+							$str.= "<tr style='background-color:#fff8f8;'>\n";
+					}else{
+							$str.= "<tr style='background-color:#ffffff;'>\n";					
+					}
+					$str.= "    <td class='result'>".$row['customerID']."</id>\n";
+					$str.= "    <td class='result'>".$row['resourceID']."</id>\n";
+					$str.= "    <td class='result'>".$row['date']."</td>\n";
+					$str.= "    <td class='result'>".$row['dateto']."</td>\n";
+					$str.= "    <td class='result'>".$row['position']."</td>\n";
+					$str.= "    <td class='result'>".$row['cost']."</td>\n";
+					$str.= "    <td class='result'>".$row['rebate']."</td>\n";
+					$str.= "    <td class='result'>".$row['status']."</td>\n";
+					$str.= "    <td class='result'>".$row['auxdata']."</td>\n";
+					$str.= "<td class='result'>";
+					$str.= "<form action='editbooking.php' method='POST'>";
+					$str.= "<input type='hidden' name='customer' value='".$row['customerID']."'>";
+					$str.= "<input type='hidden' name='resourceID' value='".$row['resourceID']."'>";
+					$str.= "<input type='hidden' name='date' value='".$row['date']."'>";
+					$str.= "<input type='hidden' name='dateto' value='".$row['dateto']."'>";
+					$str.= "<input type='hidden' name='position' value='".$row['position']."'>";
+					$str.= "<input type='hidden' name='cost' value='".$row['cost']."'>";
+					$str.= "<input type='hidden' name='rebate' value='".$row['rebate']."'>";
+					$str.= "<input type='hidden' name='status' value='".$row['status']."'>";
+					$str.= "<input type='hidden' name='auxdata' value='".$row['auxdata']."'>";
+
+					if (isset($_POST['filter'])) $str.= "<input type='hidden' name='filter' value='".$_POST['filter']."'>";
+					$str.= "<input name='Button' type='submit' value='Del'>";
+					$str.= "</form>";
+					$str.= "</td>";
+					$str.= "</tr>\n";
+					$i++;
+
+			}
+
+			$str.= "</table>";
+
+			$str.= "<div style='width:300px;border:1px solid red; background:#fed;margin:10px'>$i orphaned bookings found</div>";			
 			
+			if($i>0){
+					echo $str;
+			}
+	
 ?>
 </body>
 </html>
