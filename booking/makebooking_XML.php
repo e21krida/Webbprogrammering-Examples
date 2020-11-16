@@ -47,19 +47,6 @@
 									$cost=$row['cost'];
 							}				
 
-							// Count number of booked resources
-							$querystring="SELECT count(*) as counted FROM booking where resourceid=:RESID and date=:DATE";
-							$stmts = $pdo->prepare($querystring);
-							$stmts->bindParam(':RESID',$resource);
-							$stmts->bindParam(':DATE',$date);
-							$stmts->execute();
-
-							// Compute Remaining Resources for Date (equals)
-							foreach($stmts as $kkey => $row){
-									$counted=$row['counted'];
-							}	
-							$remaining=$size-$counted;
-
 							// Save booking.
 							$querystring="INSERT INTO booking(customerID,resourceID,position,date,dateto,cost,rebate,status,auxdata) values (:USER,:RESID,:POSITION,DATE_FORMAT(:DATE,'%Y-%m-%d %H:%i'),DATE_FORMAT(:DATETO,'%Y-%m-%d %H:%i'),:COST,:REBATE,:STATUS,:AUXDATA);";
 							$stmts = $pdo->prepare($querystring);
@@ -74,6 +61,19 @@
 							$stmts->bindParam(':AUXDATA',$auxdata);
 							$stmts->execute();
 
+							// Count number of booked resources
+							$querystring="SELECT count(*) as counted FROM booking where resourceid=:RESID and date=:DATE";
+							$stmts = $pdo->prepare($querystring);
+							$stmts->bindParam(':RESID',$resource);
+							$stmts->bindParam(':DATE',$date);
+							$stmts->execute();
+
+							// Compute Remaining Resources for Date (equals)
+							foreach($stmts as $kkey => $row){
+									$counted=$row['counted'];
+							}	
+							$remaining=$size-$counted;
+						
 							// Successfull booking
 							header ("Content-Type:text/xml; charset=utf-8");  
 							echo "<result size='".$size."' bookingcost='".$cost."' remaining='".$remaining."'   />";		
