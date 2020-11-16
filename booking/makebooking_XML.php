@@ -50,8 +50,8 @@
 							// Count number of booked resources
 							$querystring="SELECT count(*) as counted FROM booking where resourceid=:RESID and date=:DATE";
 							$stmts = $pdo->prepare($querystring);
-							$stmts->bindParam(':RESID',$row['ID']);
-							$stmts->bindParam(':DATE',$row['Date']);
+							$stmts->bindParam(':RESID',$resource);
+							$stmts->bindParam(':DATE',$date);
 							$stmts->execute();
 
 							// Compute Remaining Resources for Date (equals)
