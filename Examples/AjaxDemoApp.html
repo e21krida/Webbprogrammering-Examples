@@ -1,8 +1,8 @@
 <html>
 <head>
 		<link rel="stylesheet" href="style.css">
-		<script src="../jquery/jquery-1.8.2.min.js"></script>
-		<script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+ 		<script>
 		
     // For students, User name of student to differentiate between different applications on the server
     var apptype="Hotel_Demo";
@@ -36,26 +36,42 @@
 
 		function storeCustomer()
 		{
-			var customerID=document.getElementById("customerIDC").value;
-			var firstname=document.getElementById("customerfnameC").value;
-			var lastname=document.getElementById("customerlnameC").value;
-			var email=document.getElementById("customeremailC").value;
-			var address=document.getElementById("customeraddressC").value;
-			var auxdata=document.getElementById("customerauxdataC").value;
+				var customerID=document.getElementById("customerIDC").value;
+				var firstname=document.getElementById("customerfnameC").value;
+				var lastname=document.getElementById("customerlnameC").value;
+				var email=document.getElementById("customeremailC").value;
+				var address=document.getElementById("customeraddressC").value;
+				var auxdata=document.getElementById("customerauxdataC").value;
 
-			$.ajax({
-				type: 'POST',
-				url: '../booking/makecustomer_XML.php',
-				data: { ID: encodeURIComponent(customerID),
-					firstname: encodeURIComponent(firstname),
-					lastname: encodeURIComponent(lastname),
-					email: encodeURIComponent(email),
-					address: encodeURIComponent(address),
-					auxdata: encodeURIComponent(auxdata),
-				},
-				success:  ResultCustomern,
-				error: errormsg		
-			});
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '../booking/makecustomer_XML.php',
+				// 	data: { ID: encodeURIComponent(customerID),
+				// 		firstname: encodeURIComponent(firstname),
+				// 		lastname: encodeURIComponent(lastname),
+				// 		email: encodeURIComponent(email),
+				// 		address: encodeURIComponent(address),
+				// 		auxdata: encodeURIComponent(auxdata),
+				// 	},
+				// 	success:  ResultCustomern,
+				// 	error: errormsg		
+				// });
+				var jqxhr = $.ajax( "../booking/makecustomer_XML.php", {
+						type: 'POST',
+						data: { 
+								ID: encodeURIComponent(customerID),
+								firstname: encodeURIComponent(firstname),
+								lastname: encodeURIComponent(lastname),
+								email: encodeURIComponent(email),
+								address: encodeURIComponent(address),
+								auxdata: encodeURIComponent(auxdata)
+						}
+				})
+				.done(ResultBookingCustomer)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request for storing customer "+firstname+" "+lastname+" has completed." );
+				});
 		}
 	
 		function ResultCustomern(returnedData)
@@ -80,41 +96,52 @@
 
 		function showCustomer()
 		{
-			var customerID=document.getElementById("customerIDG").value;
-	
-		  $.ajax({
-				type: 'POST',
-				url: '../booking/getcustomer_XML.php',
-				data: { customerID: encodeURIComponent(customerID)},
-				success:  ResultCustomers,
-				error: errormsg
-			});
+				var customerID=document.getElementById("customerIDG").value;
+		
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '../booking/getcustomer_XML.php',
+				// 	data: { customerID: encodeURIComponent(customerID)},
+				// 	success:  ResultCustomers,
+				// 	error: errormsg
+				// });
+				var jqxhr = $.ajax( "../booking/getcustomer_XML.php", {
+						type: 'POST',
+						data: { 
+								customerID: encodeURIComponent(customerID)
+						}
+				})
+				.done(ResultCustomers)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request for showing customers complete." );
+				});
 		}
 	
 		function ResultCustomers(returnedData)
 		{
-			// Fix characters in XML notation to HTML notation
-			fixChars(returnedData);
+				// Fix characters in XML notation to HTML notation
+				fixChars(returnedData);
 
-			var resultset=returnedData.childNodes[0];
-	
-			// Iterate over all nodes in root node (i.e. customers)
-			for (i = 0; i < resultset.childNodes.length; i++) {
-					// Iterate over all child nodes of that node that are customer nodes
-					if(resultset.childNodes.item(i).nodeName=="customer"){
-							// Retrieve first name and last name for node
-							var customer=resultset.childNodes.item(i);
-							var div=document.getElementById('CustomerOutputDiv');
-							output=customer.attributes['id'].nodeValue;
-							output+=' '+customer.attributes['firstname'].nodeValue;
-							output+=' '+customer.attributes['lastname'].nodeValue;
-							output+=' '+customer.attributes['address'].nodeValue;
-							output+=' '+customer.attributes['email'].nodeValue;
-							output+=' '+customer.attributes['lastvisit'].nodeValue;
-							output+=' '+customer.attributes['auxdata'].nodeValue;
-							div.innerHTML=output;
-					}
-			}
+				var resultset=returnedData.childNodes[0];
+		
+				// Iterate over all nodes in root node (i.e. customers)
+				for (i = 0; i < resultset.childNodes.length; i++) {
+						// Iterate over all child nodes of that node that are customer nodes
+						if(resultset.childNodes.item(i).nodeName=="customer"){
+								// Retrieve first name and last name for node
+								var customer=resultset.childNodes.item(i);
+								var div=document.getElementById('CustomerOutputDiv');
+								output=customer.attributes['id'].nodeValue;
+								output+=' '+customer.attributes['firstname'].nodeValue;
+								output+=' '+customer.attributes['lastname'].nodeValue;
+								output+=' '+customer.attributes['address'].nodeValue;
+								output+=' '+customer.attributes['email'].nodeValue;
+								output+=' '+customer.attributes['lastvisit'].nodeValue;
+								output+=' '+customer.attributes['auxdata'].nodeValue;
+								div.innerHTML=output;
+						}
+				}
 		}				
 
 		// get customer END
@@ -137,19 +164,35 @@
 				var resfulltext=document.getElementById("resFulltextS").value;
 				var resID=document.getElementById("resIDS").value;
 
-				$.ajax({
-					type: 'POST',
-					url: '../booking/getresources_XML.php',
-					data: { resID : encodeURIComponent(resID),
-						name: encodeURIComponent(resname),
-						location:  encodeURIComponent(reslocation),
-						company: encodeURIComponent(rescompany),
-						fulltext: encodeURIComponent(resfulltext),
-						type: apptype 	  // Filter out bookings made from other applications application.
-			                            // Most commonly user name of student					
-						},
-					success:  showResources,
-    	    error: errormsg		
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '../booking/getresources_XML.php',
+				// 	data: { resID : encodeURIComponent(resID),
+				// 		name: encodeURIComponent(resname),
+				// 		location:  encodeURIComponent(reslocation),
+				// 		company: encodeURIComponent(rescompany),
+				// 		fulltext: encodeURIComponent(resfulltext),
+				// 		type: apptype 	  // Filter out bookings made from other applications application.
+			  //                           // Most commonly user name of student					
+				// 		},
+				// 	success:  showResources,
+    	  //   error: errormsg		
+				// });
+				var jqxhr = $.ajax( "../booking/getresources_XML.php", {
+						type: 'POST',
+						data: { 
+								resID:encodeURIComponent(resID),
+								name:encodeURIComponent(resname),
+								location:encodeURIComponent(reslocation),
+								company:encodeURIComponent(rescompany),
+								fulltext:encodeURIComponent(resfulltext),
+								type:apptype		// Only show bookings for your webbapplication using the apptype
+						}
+				})
+				.done(showResources)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request all resources for webbapplication "+apptype+" complete." );
 				});
 		}
 
@@ -203,20 +246,36 @@
 				var rescompany=document.getElementById("resCompanyA").value;
 				var resfulltext=document.getElementById("resFulltextA").value;
 
-				$.ajax({
-					type: 'POST',
-					url: '../booking/getavailability_search_XML.php',
-					data: { 
-						resid:  encodeURIComponent(resID),
-					  name: encodeURIComponent(resname),
-						location:  encodeURIComponent(reslocation),
-						company: encodeURIComponent(rescompany),
-						fulltext: encodeURIComponent(resfulltext),
-						type: apptype 	  // Filter out bookings made from other applications application.
-			                        // Most commonly user name of student					
-						},
-					success:  showAvailability,
-    	    error: errormsg		
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '../booking/getavailability_search_XML.php',
+				// 	data: { 
+				// 		resid:  encodeURIComponent(resID),
+				// 	  name: encodeURIComponent(resname),
+				// 		location:  encodeURIComponent(reslocation),
+				// 		company: encodeURIComponent(rescompany),
+				// 		fulltext: encodeURIComponent(resfulltext),
+				// 		type: apptype 	  // Filter out bookings made from other applications application.
+				//                       // Most commonly user name of student					
+				// 		},
+				// 	success:  showAvailability,
+				//   error: errormsg		
+				// });
+				var jqxhr = $.ajax( "../booking/getavailability_search_XML.php", {
+						type: 'POST',
+						data: { 
+								resID:encodeURIComponent(resID),
+								name:encodeURIComponent(resname),
+								location:encodeURIComponent(reslocation),
+								company:encodeURIComponent(rescompany),
+								fulltext:encodeURIComponent(resfulltext),
+								type:apptype		// Only show bookings for your webbapplication using the apptype
+						}
+				})
+				.done(showAvailability)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request for resource availability for webbapplication "+apptype+" complete." );
 				});
 		}
 
@@ -267,18 +326,31 @@
 				resource=document.getElementById("resNameGB").value;
 				bookingdate=document.getElementById("dateGB").value;
 									        
-        $.ajax({
-		      type: 'POST',
-		      url: '../booking/getbookings_XML.php',
-		      data: {
-		      	 resourceID: resource,
-		         date:  bookingdate,
-						 type: apptype 	  // Filter out bookings made from other applications application.
-	                                  // Most commonly user name of student														         
-		         },
-		         success:  ResultBooking,
-	    			 error: errormsg		
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '../booking/getbookings_XML.php',
+				// 	data: {
+				// 			resourceID: resource,
+				// 			date:  bookingdate,
+				// 			type: apptype 	  // Filter out bookings made from other applications application.
+				// 														// Most commonly user name of student														         
+				// 			},
+				// 			success:  ResultBooking,
+				// 			error: errormsg		
+				// })
+				var jqxhr = $.ajax( "../booking/getbookings_XML.php", {
+						type: 'POST',
+						data: { 
+								resourceID:resource,
+								date:bookingdate,
+								type:apptype		// Only show bookings for your webbapplication using the apptype
+						}
 				})
+				.done(ResultBooking)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request bookings for resource "+resource+" for webbapplication "+apptype+" complete." );
+				});
 		}
 
 		function ResultBooking(returnedData)
@@ -324,33 +396,51 @@
  
 		function makeBooking()
 		{
-			var customerID=document.getElementById("customerIDB").value;
-			var resourceID=document.getElementById("resourceIDB").value;
-			var date=document.getElementById("dateB").value;
-			var dateto=document.getElementById("dateToB").value;
-			var rebate=document.getElementById("rebateB").value;
-			var statusb=document.getElementById("statusB").value;
-			var position=document.getElementById("positionB").value;
-			var auxdata=document.getElementById("auxDataB").value;
-			
-			alert(customerID+" "+resourceID+" "+date+" "+rebate+" "+statusb+" "+position+" "+auxdata);
+				var customerID=document.getElementById("customerIDB").value;
+				var resourceID=document.getElementById("resourceIDB").value;
+				var date=document.getElementById("dateB").value;
+				var dateto=document.getElementById("dateToB").value;
+				var rebate=document.getElementById("rebateB").value;
+				var statusb=document.getElementById("statusB").value;
+				var position=document.getElementById("positionB").value;
+				var auxdata=document.getElementById("auxDataB").value;
+				
+				alert(customerID+" "+resourceID+" "+date+" "+rebate+" "+statusb+" "+position+" "+auxdata);
 
-			$.ajax({
-		    type: 'POST',
-		    url: '../booking/makebooking_XML.php',
-		    data: {
-	      	resourceID: resourceID,
-	      	date: date,
-	      	dateto: dateto,
-	      	customerID: customerID,
-	      	rebate: rebate,
-	      	status: statusb, // 2 = "Real" booking.
-	      	position: position,
-				  type: apptype 	  // Filter out bookings made from other applications.
-		    },
-		    success:  bookingmade,
-				error: errormsg
-	  	});
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '../booking/makebooking_XML.php',
+				// 	data: {
+				// 		resourceID: resourceID,
+				// 		date: date,
+				// 		dateto: dateto,
+				// 		customerID: customerID,
+				// 		rebate: rebate,
+				// 		status: statusb, // 2 = "Real" booking.
+				// 		position: position,
+				// 		type: apptype 	  // Filter out bookings made from other applications.
+				// 	},
+				// 	success:  bookingmade,
+				// 	error: errormsg
+				// });
+				var jqxhr = $.ajax( "../booking/makebooking_XML.php", {
+						type: 'POST',
+						data: { 
+								resourceID:resourceID,
+								date:date,
+								dateto:dateto,
+								customerID:customerID,
+								rebate:rebate,
+								status:statusb, // 2 = "Real" booking.
+								position:position,
+								type:apptype		// Only show bookings for your webbapplication using the apptype
+						}
+				})
+				.done(ResultBooking)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request bookings for resource "+resource+" for webbapplication "+apptype+" complete." );
+				});
 		}
 
 		function bookingmade(returnedData)
@@ -370,29 +460,40 @@
 
 		function deleteBooking()
 		{
-			//alert("caller is " + arguments.callee.caller.toString());
-			var customerID = document.getElementById("customerIDD").value;
-			var resourceID = document.getElementById("resourceIDD").value;
-			var date = document.getElementById("dateD").value;
-			
-			//console.log("CustomerID: " + customerID + " ResourceID: " + resourceID + " Date: " + date);
-			alert("CustomerID: " + customerID + " ResourceID: " + resourceID + " Date: " + date);
-			$.ajax({
-				type: 'POST',
-				url: '../booking/deletebooking_XML.php',
-				data: {
-					resourceID: resourceID,
-					date: date,
-					customerID: customerID  		// Filter out bookings made from other applications application.
-				},
-				success: deletemade,
-				error: errormsg
-			});
+				var customerID = document.getElementById("customerIDD").value;
+				var resourceID = document.getElementById("resourceIDD").value;
+				var date = document.getElementById("dateD").value;
+				
+				alert("CustomerID: " + customerID + " ResourceID: " + resourceID + " Date: " + date);
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '../booking/deletebooking_XML.php',
+				// 	data: {
+				// 		resourceID: resourceID,
+				// 		date: date,
+				// 		customerID: customerID  		// Filter out bookings made from other applications application.
+				// 	},
+				// 	success: deletemade,
+				// 	error: errormsg
+				// });
+				var jqxhr = $.ajax( "../booking/deletebooking_XML.php", {
+						type: 'POST',
+						data: { 
+								resourceID: resourceID,
+								date: date,
+								customerID: customerID
+						}
+				})
+				.done(deletemade)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request to delete booking for webbapplication "+apptype+" complete." );
+				});
 		}
 		
 		function deletemade()
 		{
-			alert("Delete was a success");
+				alert("Delete was a success");
 		}
 		
 		// delete booking END
@@ -408,18 +509,30 @@
 	
 		function processinputbox()
 		{
-			customer =document.getElementById("customerID").value;
-	  	$.ajax({
-				type: 'POST',
-				url: '../booking/getcustomerbookings_XML.php',
-				data: {
-					customerID: encodeURIComponent(customer),
-					type: apptype 	  // Filter out bookings made from other applications application.
-					                      // Most commonly user name of student
-				},
-				success:  ResultBookingCustomer,
-			  error: errormsg		
-			});
+				customer =document.getElementById("customerID").value;
+				// $.ajax({
+				// 	type: 'POST',
+				// 	url: '../booking/getcustomerbookings_XML.php',
+				// 	data: {
+				// 		customerID: encodeURIComponent(customer),
+				// 		type: apptype 	  // Filter out bookings made from other applications application.
+				// 													// Most commonly user name of student
+				// 	},
+				// 	success:  ResultBookingCustomer,
+				// 	error: errormsg		
+				// });
+				var jqxhr = $.ajax( "../booking/getcustomerbookings_XML.php", {
+						type: 'POST',
+						data: { 
+								customerID: encodeURIComponent(customer),
+								type:apptype		// Only show bookings for your webbapplication using the apptype
+						}
+				})
+				.done(ResultBookingCustomer)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request bookings for customer "+customer+" for webbapplication "+apptype+" complete." );
+				});
 		}
 
 		function ResultBookingCustomer(returnedData)
@@ -465,18 +578,29 @@
 	
 		function readFile()
 		{
-			filename = document.getElementById("fileR").value;
-			
-	  	$.ajax({
-				type: 'POST',
-				dataType: "text",				
-				url: '../booking/getfile_XML.php',
-				data: {
-					filename: encodeURIComponent(filename),
-				},
-				success:  fileread,
-			  error: errormsg		
-			});
+				filename = document.getElementById("fileR").value;
+				
+				// $.ajax({
+				// 	type: 'POST',
+				// 	dataType: "text",				
+				// 	url: '../booking/getfile_XML.php',
+				// 	data: {
+				// 		filename: encodeURIComponent(filename),
+				// 	},
+				// 	success:  fileread,
+				// 	error: errormsg		
+				// });
+				var jqxhr = $.ajax( "../booking/getfile_XML.php", {
+						type: 'POST',
+						data: { 
+								filename: encodeURIComponent(filename),
+						}
+				})
+				.done(fileread)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request to read file complete." );
+				});
 		}
 
 		function fileread(returnedData)

@@ -1,7 +1,7 @@
 <html>
 <head>
 		<link rel="stylesheet" href="style.css">
-		<script src="../jquery/jquery-1.8.2.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 		<script>
 		
     // For students, User name of student to differentiate between different applications on the server
@@ -37,17 +37,23 @@
 		function processinputbox()
 		{
 			customer =document.getElementById("customerID").value;
-	  	$.ajax({
-				type: 'POST',
-				url: '../booking/getcustomerbookings_XML.php',
-				data: {
-					customerID: encodeURIComponent(customer),
-					type: apptype 	  // Filter out bookings made from other applications application.
-					                      // Most commonly user name of student
-				},
-				success:  ResultBookingCustomer,
-			  error: errormsg		
-			});
+	  	// $.ajax({
+			// 	type: 'POST',
+			// 	url: '../booking/getcustomerbookings_XML.php',
+			// 	data: {
+			// 		customerID: encodeURIComponent(customer),
+			// 		type: apptype 	  // Filter out bookings made from other applications application.
+			// 		                      // Most commonly user name of student
+			// 	},
+			// 	success:  ResultBookingCustomer,
+			//   error: errormsg		
+			// });
+			var jqxhr = $.ajax( "../booking/getcustomerbookings_XML.php" )
+				.done(ResultBookingCustomer)
+				.fail(errormsg)
+				.always(function() {
+					console.log( "Request bookings for customer "+customer+" has completed." );
+				});
 		}
 
 		function ResultBookingCustomer(returnedData)
