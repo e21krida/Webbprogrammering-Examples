@@ -36,8 +36,14 @@
 	
 		function processinputbox()
 		{
-			customer =document.getElementById("customerID").value;
-			var jqxhr = $.ajax( "../booking/getcustomerbookings_XML.php" )
+				customer =document.getElementById("customerID").value;
+				var jqxhr = $.ajax( "../booking/getcustomerbookings_XML.php", {
+						method:"POST",
+						data:{
+								customerID: encodeURIComponent(customer),
+								type:apptype		// Only show bookings for your webbapplication using the apptype
+						}
+				})
 				.done(ResultBookingCustomer)
 				.fail(errormsg)
 				.always(function() {
