@@ -1,7 +1,7 @@
 <html>
 <head>
 		<link rel="stylesheet" href="style.css">
-		<script src="../jquery/jquery-1.8.2.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 		<script>
 		
     // For students, User name of student to differentiate between different applications on the server
@@ -16,36 +16,39 @@
 
 		function storeCustomer()
 		{
-			var customerID=document.getElementById("customerIDC").value;
-			var firstname=document.getElementById("customerfnameC").value;
-			var lastname=document.getElementById("customerlnameC").value;
-			var email=document.getElementById("customeremailC").value;
-			var address=document.getElementById("customeraddressC").value;
-			var auxdata=document.getElementById("customerauxdataC").value;
+				var customerID=document.getElementById("customerIDC").value;
+				var firstname=document.getElementById("customerfnameC").value;
+				var lastname=document.getElementById("customerlnameC").value;
+				var email=document.getElementById("customeremailC").value;
+				var address=document.getElementById("customeraddressC").value;
+				var auxdata=document.getElementById("customerauxdataC").value;
 
-			$.ajax({
-				type: 'POST',
-				url: '../booking/makecustomer_XML.php',
-				data: { ID: encodeURIComponent(customerID),
-					firstname: encodeURIComponent(firstname),
-					lastname: encodeURIComponent(lastname),
-					email: encodeURIComponent(email),
-					address: encodeURIComponent(address),
-					auxdata: encodeURIComponent(auxdata),
-				},
-				success:  ResultCustomern,
-				error: errormsg		
-			});
+				var jqxhr = $.ajax( "../booking/makecustomer_XML.php", {
+						type: 'POST',
+						data: { 
+								ID: encodeURIComponent(customerID),
+								firstname: encodeURIComponent(firstname),
+								lastname: encodeURIComponent(lastname),
+								email: encodeURIComponent(email),
+								address: encodeURIComponent(address),
+								auxdata: encodeURIComponent(auxdata)
+						}
+				})
+				.done(ResultBookingCustomer)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request for storing customer "+firstname+" "+lastname+" has completed." );
+				});
 		}
 	
 		function ResultCustomern(returnedData)
 		{
-			// Iterate over all nodes in root node (i.e. the 'created' element in root which has an attribute called status)
-			for (i = 0; i < returnedData.childNodes.length; i++) {
-					if(returnedData.childNodes.item(i).nodeName=="created"){
-						alert(returnedData.childNodes.item(i).attributes['status'].nodeValue);
-					}
-			}
+				// Iterate over all nodes in root node (i.e. the 'created' element in root which has an attribute called status)
+				for (i = 0; i < returnedData.childNodes.length; i++) {
+						if(returnedData.childNodes.item(i).nodeName=="created"){
+							alert(returnedData.childNodes.item(i).attributes['status'].nodeValue);
+						}
+				}
 		}				
 
 		//------------------------------------------------------------------------
@@ -63,7 +66,7 @@
 		// error message callback END
 		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
 		
-	</script>
+		</script>
 </head>
 <body>
 
