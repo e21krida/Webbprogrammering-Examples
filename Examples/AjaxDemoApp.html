@@ -43,19 +43,6 @@
 				var address=document.getElementById("customeraddressC").value;
 				var auxdata=document.getElementById("customerauxdataC").value;
 
-				// $.ajax({
-				// 	type: 'POST',
-				// 	url: '../booking/makecustomer_XML.php',
-				// 	data: { ID: encodeURIComponent(customerID),
-				// 		firstname: encodeURIComponent(firstname),
-				// 		lastname: encodeURIComponent(lastname),
-				// 		email: encodeURIComponent(email),
-				// 		address: encodeURIComponent(address),
-				// 		auxdata: encodeURIComponent(auxdata),
-				// 	},
-				// 	success:  ResultCustomern,
-				// 	error: errormsg		
-				// });
 				var jqxhr = $.ajax( "../booking/makecustomer_XML.php", {
 						type: 'POST',
 						data: { 
@@ -98,13 +85,6 @@
 		{
 				var customerID=document.getElementById("customerIDG").value;
 		
-				// $.ajax({
-				// 	type: 'POST',
-				// 	url: '../booking/getcustomer_XML.php',
-				// 	data: { customerID: encodeURIComponent(customerID)},
-				// 	success:  ResultCustomers,
-				// 	error: errormsg
-				// });
 				var jqxhr = $.ajax( "../booking/getcustomer_XML.php", {
 						type: 'POST',
 						data: { 
@@ -164,20 +144,6 @@
 				var resfulltext=document.getElementById("resFulltextS").value;
 				var resID=document.getElementById("resIDS").value;
 
-				// $.ajax({
-				// 	type: 'POST',
-				// 	url: '../booking/getresources_XML.php',
-				// 	data: { resID : encodeURIComponent(resID),
-				// 		name: encodeURIComponent(resname),
-				// 		location:  encodeURIComponent(reslocation),
-				// 		company: encodeURIComponent(rescompany),
-				// 		fulltext: encodeURIComponent(resfulltext),
-				// 		type: apptype 	  // Filter out bookings made from other applications application.
-			  //                           // Most commonly user name of student					
-				// 		},
-				// 	success:  showResources,
-    	  //   error: errormsg		
-				// });
 				var jqxhr = $.ajax( "../booking/getresources_XML.php", {
 						type: 'POST',
 						data: { 
@@ -246,21 +212,6 @@
 				var rescompany=document.getElementById("resCompanyA").value;
 				var resfulltext=document.getElementById("resFulltextA").value;
 
-				// $.ajax({
-				// 	type: 'POST',
-				// 	url: '../booking/getavailability_search_XML.php',
-				// 	data: { 
-				// 		resid:  encodeURIComponent(resID),
-				// 	  name: encodeURIComponent(resname),
-				// 		location:  encodeURIComponent(reslocation),
-				// 		company: encodeURIComponent(rescompany),
-				// 		fulltext: encodeURIComponent(resfulltext),
-				// 		type: apptype 	  // Filter out bookings made from other applications application.
-				//                       // Most commonly user name of student					
-				// 		},
-				// 	success:  showAvailability,
-				//   error: errormsg		
-				// });
 				var jqxhr = $.ajax( "../booking/getavailability_search_XML.php", {
 						type: 'POST',
 						data: { 
@@ -326,18 +277,6 @@
 				resource=document.getElementById("resNameGB").value;
 				bookingdate=document.getElementById("dateGB").value;
 									        
-				// $.ajax({
-				// 	type: 'POST',
-				// 	url: '../booking/getbookings_XML.php',
-				// 	data: {
-				// 			resourceID: resource,
-				// 			date:  bookingdate,
-				// 			type: apptype 	  // Filter out bookings made from other applications application.
-				// 														// Most commonly user name of student														         
-				// 			},
-				// 			success:  ResultBooking,
-				// 			error: errormsg		
-				// })
 				var jqxhr = $.ajax( "../booking/getbookings_XML.php", {
 						type: 'POST',
 						data: { 
@@ -407,22 +346,6 @@
 				
 				alert(customerID+" "+resourceID+" "+date+" "+rebate+" "+statusb+" "+position+" "+auxdata);
 
-				// $.ajax({
-				// 	type: 'POST',
-				// 	url: '../booking/makebooking_XML.php',
-				// 	data: {
-				// 		resourceID: resourceID,
-				// 		date: date,
-				// 		dateto: dateto,
-				// 		customerID: customerID,
-				// 		rebate: rebate,
-				// 		status: statusb, // 2 = "Real" booking.
-				// 		position: position,
-				// 		type: apptype 	  // Filter out bookings made from other applications.
-				// 	},
-				// 	success:  bookingmade,
-				// 	error: errormsg
-				// });
 				var jqxhr = $.ajax( "../booking/makebooking_XML.php", {
 						type: 'POST',
 						data: { 
@@ -465,17 +388,6 @@
 				var date = document.getElementById("dateD").value;
 				
 				alert("CustomerID: " + customerID + " ResourceID: " + resourceID + " Date: " + date);
-				// $.ajax({
-				// 	type: 'POST',
-				// 	url: '../booking/deletebooking_XML.php',
-				// 	data: {
-				// 		resourceID: resourceID,
-				// 		date: date,
-				// 		customerID: customerID  		// Filter out bookings made from other applications application.
-				// 	},
-				// 	success: deletemade,
-				// 	error: errormsg
-				// });
 				var jqxhr = $.ajax( "../booking/deletebooking_XML.php", {
 						type: 'POST',
 						data: { 
@@ -510,17 +422,6 @@
 		function processinputbox()
 		{
 				customer =document.getElementById("customerID").value;
-				// $.ajax({
-				// 	type: 'POST',
-				// 	url: '../booking/getcustomerbookings_XML.php',
-				// 	data: {
-				// 		customerID: encodeURIComponent(customer),
-				// 		type: apptype 	  // Filter out bookings made from other applications application.
-				// 													// Most commonly user name of student
-				// 	},
-				// 	success:  ResultBookingCustomer,
-				// 	error: errormsg		
-				// });
 				var jqxhr = $.ajax( "../booking/getcustomerbookings_XML.php", {
 						type: 'POST',
 						data: { 
@@ -580,16 +481,6 @@
 		{
 				filename = document.getElementById("fileR").value;
 				
-				// $.ajax({
-				// 	type: 'POST',
-				// 	dataType: "text",				
-				// 	url: '../booking/getfile_XML.php',
-				// 	data: {
-				// 		filename: encodeURIComponent(filename),
-				// 	},
-				// 	success:  fileread,
-				// 	error: errormsg		
-				// });
 				var jqxhr = $.ajax( "../booking/getfile_XML.php", {
 						type: 'POST',
 						data: { 
@@ -627,7 +518,7 @@
 		// error message callback END
 		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
 		
-	</script>
+		</script>
 </head>
 <body>
 

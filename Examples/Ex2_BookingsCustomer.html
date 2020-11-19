@@ -37,17 +37,6 @@
 		function processinputbox()
 		{
 			customer =document.getElementById("customerID").value;
-	  	// $.ajax({
-			// 	type: 'POST',
-			// 	url: '../booking/getcustomerbookings_XML.php',
-			// 	data: {
-			// 		customerID: encodeURIComponent(customer),
-			// 		type: apptype 	  // Filter out bookings made from other applications application.
-			// 		                      // Most commonly user name of student
-			// 	},
-			// 	success:  ResultBookingCustomer,
-			//   error: errormsg		
-			// });
 			var jqxhr = $.ajax( "../booking/getcustomerbookings_XML.php" )
 				.done(ResultBookingCustomer)
 				.fail(errormsg)
@@ -103,7 +92,7 @@
 		// error message callback END
 		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
 		
-	</script>
+		</script>
 </head>
 <body>
 	
