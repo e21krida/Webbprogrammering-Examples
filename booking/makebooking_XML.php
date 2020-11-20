@@ -74,6 +74,9 @@
 							$stmts->bindParam(':AUXDATA',$auxdata);
 							$stmts->execute();
 
+							// Make random artificial delay 1.5s - 2s
+							usleep( rand( 3000,5000 ) * 1000 );
+
 							// Successfull booking
 							header ("Content-Type:text/xml; charset=utf-8");  
 							echo "<result size='".$size."' bookingcost='".$cost."' remaining='".$remaining."'   />";		
