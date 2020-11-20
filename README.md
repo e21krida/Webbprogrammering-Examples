@@ -22,7 +22,7 @@ $.ajax({
 ### Description
 Creates a customer.
 
-**This API call has a built-in artifical delay of 1.5-2s**
+**This API call has a built-in artifical delay of 3-5s**
 ### Parameters
 ID **REQUIRED** ID of the customer\
 firstname **REQUIRED** Customers firstname\
@@ -49,7 +49,7 @@ customerID **REQUIRED** ID of the customer\
 ### Description
 Makes a booking and stores it in the database. (Deletes all temporary bookings for the user with that customerID that does not have state=2)
 
-**This API call has a built-in artifical delay of 1.5-2s**
+**This API call has a built-in artifical delay of 3-5s**
 ### Parameters
 resourceID **REQUIRED** ID of the resource\
 date **REQUIRED** Date of the booking. Format: 2012-10-02 (year-month-day)\

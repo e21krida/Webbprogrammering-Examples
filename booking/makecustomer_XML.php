@@ -24,7 +24,7 @@
 				$stmt->execute();
 				
 				// Make random artificial delay 1.5s - 2s
-				usleep( rand( 1500,2000 ) * 1000 );
+				usleep( rand( 300,5000 ) * 1000 );
 
 				header ("Content-Type:text/xml; charset=utf-8");  
 				echo '<created status="OK"/>';
