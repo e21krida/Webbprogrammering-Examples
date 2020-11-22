@@ -1,20 +1,11 @@
 <html>
 <head>
-	<style>
-		table {border-collapse:collapse;box-shadow: 3px 3px 5px #444; border:1px solid #fff; }
-		.actionbox {border-radius: 6px;border:2px ridge #abd;padding:4px;background-color:#9AB;background: linear-gradient(to top, #89A , #ABC);margin-bottom:8px;box-shadow: 3px 3px 5px #456 inset; }
-		.actionheading {display:block;text-align:center;color:#fff;text-shadow:1px 1px 1px #000;font-family:Calibri;border-bottom:thin solid #456;margin-bottom:4px;}
-		.actiontablerow:nth-child(even) {background-color:#000;color:#fff;font-family:Calibri;}
-		.actiontablerow:nth-child(odd) {background-color:#888;color:#fff;font-family:Calibri;}
-		body {background-color:#CDE}
-	</style>
-
-	<script language="javascript" src="../jquery/jquery-1.8.2.min.js"></script>
-
-	<script language="javascript">
+		<link rel="stylesheet" href="style.css">
+		<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+		<script>
 		
-    // For students, User name of student to differentiate between different applications on the server
-    var apptype="Hotel_Demo";
+		// For students, User name of student to differentiate between different applications on the server
+		var apptype="Hotel_Demo";
 
 		//------------------------------------------------------------------------
 		// make customer
@@ -25,54 +16,57 @@
 
 		function storeCustomer()
 		{
-			var customerID=document.getElementById("customerIDC").value;
-			var firstname=document.getElementById("customerfnameC").value;
-			var lastname=document.getElementById("customerlnameC").value;
-			var email=document.getElementById("customeremailC").value;
-			var address=document.getElementById("customeraddressC").value;
-			var auxdata=document.getElementById("customerauxdataC").value;
+				var customerID=document.getElementById("customerIDC").value;
+				var firstname=document.getElementById("customerfnameC").value;
+				var lastname=document.getElementById("customerlnameC").value;
+				var email=document.getElementById("customeremailC").value;
+				var address=document.getElementById("customeraddressC").value;
+				var auxdata=document.getElementById("customerauxdataC").value;
 
-			$.ajax({
-				type: 'POST',
-				url: '../booking/makecustomer_XML.php',
-				data: { ID: encodeURIComponent(customerID),
-					firstname: encodeURIComponent(firstname),
-					lastname: encodeURIComponent(lastname),
-					email: encodeURIComponent(email),
-					address: encodeURIComponent(address),
-					auxdata: encodeURIComponent(auxdata),
-				},
-				success:  ResultCustomern,
-				error: errormsg		
-			});
+				var jqxhr = $.ajax( "../booking/makecustomer_XML.php", {
+						type: 'POST',
+						data: { 
+								ID: encodeURIComponent(customerID),
+								firstname: encodeURIComponent(firstname),
+								lastname: encodeURIComponent(lastname),
+								email: encodeURIComponent(email),
+								address: encodeURIComponent(address),
+								auxdata: encodeURIComponent(auxdata)
+						}
+				})
+				.done(ResultCustomern)
+				.fail(errormsg)
+				.always(function() {
+						console.log( "Request for storing customer "+firstname+" "+lastname+" has completed." );
+				});
 		}
-	
+
 		function ResultCustomern(returnedData)
 		{
-			// Iterate over all nodes in root node (i.e. the 'created' element in root which has an attribute called status)
-			for (i = 0; i < returnedData.childNodes.length; i++) {
-					if(returnedData.childNodes.item(i).nodeName=="created"){
-						alert(returnedData.childNodes.item(i).attributes['status'].nodeValue);
-					}
-			}
+				// Iterate over all nodes in root node (i.e. the 'created' element in root which has an attribute called status)
+				for (i = 0; i < returnedData.childNodes.length; i++) {
+						if(returnedData.childNodes.item(i).nodeName=="created"){
+							alert(returnedData.childNodes.item(i).attributes['status'].nodeValue);
+						}
+				}
 		}				
 
 		//------------------------------------------------------------------------
 		// error message callback
 		//------------------------------------------------------------------------
-    // The errror message callback displays the error message and error code
+		// The errror message callback displays the error message and error code
 		//------------------------------------------------------------------------
 
 		function errormsg(jqXHR,textStatus,errorThrown)
 		{
 				console.log(jqXHR);
-				alert("AJAX Error:\n"+errorThrown);
+				alert("AJAX Error:"+errorThrown);
 		}
 
 		// error message callback END
 		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
 		
-	</script>
+		</script>
 </head>
 <body>
 
@@ -86,6 +80,5 @@
 			Cust Auxdata:<input type='text' name='customerauxdataC' id='customerauxdataC'><br/>
 			<input type="button" onclick="storeCustomer();" value="Store Customer">
 	</div>
-
 </body>
 </html>
