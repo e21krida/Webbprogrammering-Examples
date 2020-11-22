@@ -34,7 +34,6 @@
 							$stmt->bindParam(':CUSTID',$user);
 							$stmt->execute();
 
-
 							// Retrieve size and cost from resource
 							$size=0;
 							$cost=0;
@@ -81,10 +80,10 @@
 							header ("Content-Type:text/xml; charset=utf-8");  
 							echo "<result size='".$size."' bookingcost='".$cost."' remaining='".$remaining."'   />";		
 
-				} catch (PDOException $e) {
+					} catch (PDOException $e) {
 						err("Error!: ".$e->getMessage()."<br/>");
 						die();
-				}
+					}
 			
 			}
 
