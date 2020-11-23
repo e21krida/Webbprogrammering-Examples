@@ -16,6 +16,7 @@
 
 		function storeCustomer()
 		{
+				document.getElementById("output").innerHTML+="<br>AJAX CALL Started.";
 				var customerID=document.getElementById("customerIDC").value;
 				var firstname=document.getElementById("customerfnameC").value;
 				var lastname=document.getElementById("customerlnameC").value;
@@ -23,6 +24,7 @@
 				var address=document.getElementById("customeraddressC").value;
 				var auxdata=document.getElementById("customerauxdataC").value;
 
+				document.getElementById("output").innerHTML+="<br>Creating a new customer...";
 				var jqxhr = $.ajax( "../booking/makecustomer_XML.php", {
 						type: 'POST',
 						data: { 
@@ -38,6 +40,7 @@
 				.fail(errormsg)
 				.always(function() {
 						console.log( "Request for storing customer "+firstname+" "+lastname+" has completed." );
+						document.getElementById("output").innerHTML+="<br> AJAX CALL Finished."
 				});
 		}
 
@@ -46,6 +49,7 @@
 				// Iterate over all nodes in root node (i.e. the 'created' element in root which has an attribute called status)
 				for (i = 0; i < returnedData.childNodes.length; i++) {
 						if(returnedData.childNodes.item(i).nodeName=="created"){
+							document.getElementById("output").innerHTML+="SUCCESSFUL!";
 							alert(returnedData.childNodes.item(i).attributes['status'].nodeValue);
 						}
 				}
@@ -60,6 +64,7 @@
 		function errormsg(jqXHR,textStatus,errorThrown)
 		{
 				console.log(jqXHR);
+				document.getElementById("output").innerHTML+="FAILED!";
 				alert("AJAX Error:"+errorThrown);
 		}
 
@@ -80,5 +85,7 @@
 			Cust Auxdata:<input type='text' name='customerauxdataC' id='customerauxdataC'><br/>
 			<input type="button" onclick="storeCustomer();" value="Store Customer">
 	</div>
+	<h3>API Response</h3>
+	<div id="output"></div>
 </body>
 </html>
