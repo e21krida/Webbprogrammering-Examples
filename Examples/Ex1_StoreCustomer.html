@@ -50,7 +50,7 @@
 				for (i = 0; i < returnedData.childNodes.length; i++) {
 						if(returnedData.childNodes.item(i).nodeName=="created"){
 							document.getElementById("output").innerHTML+="SUCCESSFUL!";
-							alert(returnedData.childNodes.item(i).attributes['status'].nodeValue);
+							alert(returnedData.childNodes.item(i).attributes['status'].value);
 						}
 				}
 		}				

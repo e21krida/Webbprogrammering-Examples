@@ -66,7 +66,7 @@
 			// Iterate over all nodes in root node (i.e. the 'created' element in root which has an attribute called status)
 			for (i = 0; i < returnedData.childNodes.length; i++) {
 					if(returnedData.childNodes.item(i).nodeName=="created"){
-						alert(returnedData.childNodes.item(i).attributes['status'].nodeValue);
+						alert(returnedData.childNodes.item(i).attributes['status'].value);
 					}
 			}
 		}				
@@ -112,13 +112,13 @@
 								// Retrieve first name and last name for node
 								var customer=resultset.childNodes.item(i);
 								var div=document.getElementById('CustomerOutputDiv');
-								output=customer.attributes['id'].nodeValue;
-								output+=' '+customer.attributes['firstname'].nodeValue;
-								output+=' '+customer.attributes['lastname'].nodeValue;
-								output+=' '+customer.attributes['address'].nodeValue;
-								output+=' '+customer.attributes['email'].nodeValue;
-								output+=' '+customer.attributes['lastvisit'].nodeValue;
-								output+=' '+customer.attributes['auxdata'].nodeValue;
+								output=customer.attributes['id'].value;
+								output+=' '+customer.attributes['firstname'].value;
+								output+=' '+customer.attributes['lastname'].value;
+								output+=' '+customer.attributes['address'].value;
+								output+=' '+customer.attributes['email'].value;
+								output+=' '+customer.attributes['lastvisit'].value;
+								output+=' '+customer.attributes['auxdata'].value;
 								div.innerHTML=output;
 						}
 				}
@@ -177,11 +177,11 @@
 								// Retrieve data from resource nodes
 								var resource=resultset.childNodes.item(i);
 								output+="<tr class='actiontablerow' onclick='alert(\""+resource.attributes['id'].value+"\")'>";
-								output+="<td>"+resource.attributes['id'].nodeValue+"</td>";
-								output+="<td>"+resource.attributes['company'].nodeValue+"</td>";
-								output+="<td>"+resource.attributes['name'].nodeValue+"</td>";
-								output+="<td>"+resource.attributes['location'].nodeValue+"</td>";
-								output+="<td>"+resource.attributes['category'].nodeValue+"</td>";
+								output+="<td>"+resource.attributes['id'].value+"</td>";
+								output+="<td>"+resource.attributes['company'].value+"</td>";
+								output+="<td>"+resource.attributes['name'].value+"</td>";
+								output+="<td>"+resource.attributes['location'].value+"</td>";
+								output+="<td>"+resource.attributes['category'].value+"</td>";
 								output+="</tr>";
 										
 						}
@@ -245,17 +245,17 @@
 								// Retrieve data from resource nodes
 								var avail=resultset.childNodes.item(i);
 								output+="<tr class='actiontablerow' onclick='alert(\""+avail.attributes['resourceID'].value+"\")'>";
-								output+="<td>"+avail.attributes['resourceID'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['company'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['name'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['location'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['size'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['cost'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['category'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['date'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['dateto'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['bookingcount'].nodeValue+"</td>";
-								output+="<td>"+avail.attributes['remaining'].nodeValue+"</td>";
+								output+="<td>"+avail.attributes['resourceID'].value+"</td>";
+								output+="<td>"+avail.attributes['company'].value+"</td>";
+								output+="<td>"+avail.attributes['name'].value+"</td>";
+								output+="<td>"+avail.attributes['location'].value+"</td>";
+								output+="<td>"+avail.attributes['size'].value+"</td>";
+								output+="<td>"+avail.attributes['cost'].value+"</td>";
+								output+="<td>"+avail.attributes['category'].value+"</td>";
+								output+="<td>"+avail.attributes['date'].value+"</td>";
+								output+="<td>"+avail.attributes['dateto'].value+"</td>";
+								output+="<td>"+avail.attributes['bookingcount'].value+"</td>";
+								output+="<td>"+avail.attributes['remaining'].value+"</td>";
 								output+="</tr>";										
 						}
 				}
@@ -308,9 +308,9 @@
 								// Retrieve position from the returned booking
 								var booking=resultset.childNodes.item(i);
 								output+="<tr>";
-								output+="<td>"+booking.attributes['position'].nodeValue+"</td>";
-								output+="<td>"+booking.attributes['date'].nodeValue+"</td>";
-								output+="<td>"+booking.attributes['dateto'].nodeValue+"</td>";
+								output+="<td>"+booking.attributes['position'].value+"</td>";
+								output+="<td>"+booking.attributes['date'].value+"</td>";
+								output+="<td>"+booking.attributes['dateto'].value+"</td>";
 								output+="</tr>";
 						}
 				}
@@ -454,10 +454,10 @@
 					var booking=resultset.childNodes.item(i);
 			
 					output+="<tr class='actiontablerow'>";
-					output+="<td>"+booking.attributes['company'].nodeValue+"</td>";
-					output+="<td>"+booking.attributes['name'].nodeValue+"</td>";
-					output+="<td>"+booking.attributes['location'].nodeValue+"</td>";
-					output+="<td>"+booking.attributes['date'].nodeValue+"</td>";
+					output+="<td>"+booking.attributes['company'].value+"</td>";
+					output+="<td>"+booking.attributes['name'].value+"</td>";
+					output+="<td>"+booking.attributes['location'].value+"</td>";
+					output+="<td>"+booking.attributes['date'].value+"</td>";
 					output+="</tr>";
 			
 				}
