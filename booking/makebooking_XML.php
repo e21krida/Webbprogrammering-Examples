@@ -13,7 +13,7 @@
 			$type=getpostAJAX("type");
 
 			if($user=="UNK"||$resource=="UNK"||$date=="UNK"){
-					err("Missing Form Data: (user/resource/date)");					
+					err("Missing Form Data: (customerID/resourceID/date)");					
 			}
 
 			$querystring="SELECT count(*) AS cnt FROM resource WHERE ID=:RESID and type=:TYPE;";
