@@ -5,8 +5,6 @@
 			
 				var mx,my,mb=0;
 				var v=0;
-				var dmx,dmy;
-			
 				var boxes=[];
 			
 				function setup()
@@ -34,16 +32,18 @@
 				{
 						var rect = e.target.getBoundingClientRect();
             mx = e.clientX - rect.left; //x position within the element.
-            my = e.clientY - rect.top;  //y position within the element
-					
-						dmx=Math.floor((mx-50)/100);
-						dmy=Math.floor((my-50)/100);					
+            my = e.clientY - rect.top;  //y position within the element					
 				}
 			
 				function mouseUp(e)
 				{
 						if(mb==1){
-								alert("Du klickade i "+((dmx*8)+dmy));
+								for(var i=0;i<boxes.length;i++){
+										var item=boxes[i];
+										if(mx>item.x1&&mx<item.x2&&my>item.y1&&my<item.y2){
+												alert("Du klickade i "+i);
+										}
+								}
 						}
 							
 						mb=0;
