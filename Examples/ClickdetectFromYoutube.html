@@ -2,23 +2,17 @@
 <head>
 		<script>
 				var c;
-			
-				var mx,my,mb=0;
-				var v=0;
+			  var mx,my,mb=0;
 				var boxes=[];
-				var curr=-1;
 			
 				function setup()
 				{
 						var cc = document.getElementById("myCanvas");
 				    c = cc.getContext("2d");
-
-						for(var i=0;i<8;i++){
-								for(var j=0;j<5;j++){
-										boxes.push({x1:50+(i*100),y1:50+(j*100),x2:150+(i*100),y2:150+(j*100),v:0.5});
-								}
-						}					
 					
+						boxes.push({x1:100,y1:0,x2:200,y2:100,v:0.5,vx:1.5,vy:0.0});
+						boxes.push({x1:300,y1:700,x2:400,y2:800,v:0.5,vx:2.0,vy:0.0});					
+						
 						setInterval(updatestate,20);
 					
 						drawit();
@@ -26,36 +20,25 @@
 								
 				function updatestate()
 				{
-						v=v+0.1;
-
-						curr=-1;
+						var player=boxes[1];
+						if(player.x2<mx) player.vx=2.0;
+						if(player.x1>mx) player.vx=-2.0;					
+					
 						for(var i=0;i<boxes.length;i++){
 								var item=boxes[i];
-								if(mx>item.x1&&mx<item.x2&&my>item.y1&&my<item.y2){
-										item.v+=0.02;
-										if(item.v>0.7) item.v=0.7;
-										curr=i;
-								}else{
-										item.v-=0.02;
-										if(item.v<0.4) item.v=0.4;
-								}
+							
+								if(item.x1<0) item.vx=-item.vx;
+								if(item.x1>800) item.vx=-item.vx;
+								
+								item.y1+=item.vy;
+								item.y2+=item.vy;
+								item.x1+=item.vx;
+								item.x2+=item.vy;
 						}
-						
-				}
-			
-				function mouseMove(e,t)
-				{
-						var rect = e.target.getBoundingClientRect();
-            mx = e.clientX - rect.left; //x position within the element.
-            my = e.clientY - rect.top;  //y position within the element					
 				}
 			
 				function mouseUp(e)
 				{
-						if(mb==1){
-								alert("du klickade i "+curr);
-						}		
-							
 						mb=0;
 				}
 			
@@ -64,18 +47,25 @@
 						mb=e.which;
 				}
 			
+				function mouseMove(e,t)
+				{
+						var rect = e.target.getBoundingClientRect();
+            mx = e.clientX - rect.left; //x position within the element.
+            my = e.clientY - rect.top;  //y position within the element
+				}
+			
 				function drawit()
 				{	
 						c.clearRect(0,0,900,900);
-						
+					
 						c.font="20px Arial Narrow";
-						c.fillText("Mb:"+mb,100,50);					
+						c.fillText("Mb:"+mb,100,50);
 					
 						c.beginPath();
 						c.moveTo(0,0);
-						c.lineTo(mx,my);					
+						c.lineTo(mx,my);
 						c.stroke();
-
+					
 						for(var i=0;i<boxes.length;i++){
 								var item=boxes[i];
 								
@@ -99,7 +89,6 @@
 						window.requestAnimationFrame(drawit);
 				} 			
 			
-						
 				function Box(){
 					 c.globalAlpha=1.0;
 							//--==## Rightside_1_ polygon ##==--
@@ -154,8 +143,8 @@
 					 c.lineTo(2,-37);
 					 c.lineTo(-66,-18);
 					 c.fill();
-				}
-			
+				}						
+
 		</script>
 </head>
 <body onload="setup();">
