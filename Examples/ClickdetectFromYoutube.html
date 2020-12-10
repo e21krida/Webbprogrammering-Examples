@@ -25,11 +25,24 @@
 						var rect = e.target.getBoundingClientRect();
             mx = e.clientX - rect.left; //x position within the element.
             my = e.clientY - rect.top;  //y position within the element
-				}		
+				}
+			
+				function mouseUp(e)
+				{
+						mb=0;
+				}
+			
+				function mouseDown(e)
+				{
+						mb=e.which;
+				}
 			
 				function drawit()
 				{	
 						c.clearRect(0,0,900,900);
+					
+						c.font="20px Arial Narrow";
+						c.fillText("Mb:"+mb,100,50);					
 					
 						c.save();
 
@@ -47,5 +60,5 @@
 		</script>
 </head>
 <body onload="setup();">
- 	<canvas id="myCanvas" onmousedown="mouseDown(event);" width="900" height="900" style="border:1px solid #000000;"></canvas> 
+ 	<canvas id="myCanvas" onmousedown="mouseDown(event);" onmouseup="mouseUp(event);" onmousemove="mouseMove(event,this);" width="900" height="900" style="border:1px solid #000000;"></canvas> 
 </body>
