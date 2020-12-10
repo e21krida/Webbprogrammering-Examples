@@ -1,10 +1,13 @@
+-- Important: 
 -- Important: Only use on personal server do not run on wwwlab 
+-- Important: 
 
--- drop database BookingSystem;
 -- create database BookingSystem;
--- use BookingSystemz;
+-- use BookingSystem;
 
+-- Important: 
 -- Important: Only use on personal server do not run on wwwlab 
+-- Important: 
 
 create table customer(
 		ID 					varchar(32),
