@@ -44,16 +44,22 @@
 						c.font="20px Arial Narrow";
 						c.fillText("Mb:"+mb,100,50);					
 					
-						c.save();
-
 						c.beginPath();
-						c.rect(100,100,100,100);
 						c.moveTo(0,0);
 						c.lineTo(mx,my);					
 						c.stroke();
 
-						c.restore();
-					
+						for(var i=0;i<boxes.length;i++){
+							  c.save();
+								
+							  c.translate(50+(i*100),50+(j*100));
+
+								c.beginPath();
+								c.rect(5,5,95,95);
+								c.stroke();
+
+								c.restore();
+						}					
 						window.requestAnimationFrame(drawit);
 				} 			
 			
