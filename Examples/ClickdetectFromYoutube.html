@@ -4,6 +4,7 @@
 				var c;
 			
 				var mx,my,mb=0;
+				var v=0;
 			
 				function setup()
 				{
@@ -17,7 +18,7 @@
 								
 				function updatestate()
 				{
-
+						v=v+0.1;
 				}
 			
 				function mouseMove(e,t)
@@ -40,6 +41,9 @@
 				function drawit()
 				{	
 						c.clearRect(0,0,900,900);
+						
+						var dmx=Math.floor((mx-50)/100);
+						var dmy=Math.floor((my-50)/100);
 					
 						c.font="20px Arial Narrow";
 						c.fillText("Mb:"+mb,100,50);					
@@ -59,8 +63,14 @@
 										c.rect(5,5,95,95);
 										c.stroke();
 									
-										c.translate(50,50);								
-										c.scale(0.7,0.7);
+										c.translate(50,50);
+									
+										if(i==dmx&&j==dmy){
+												c.scale(0.6+(Math.sin(v)*0.1),0.6+(Math.sin(v)*0.1))
+										}else{
+												c.scale(0.7,0.7);
+										}
+									
 										Box();
 
 										c.restore();
