@@ -6,6 +6,7 @@
 				var mx,my,mb=0;
 				var v=0;
 				var boxes=[];
+				var curr=-1;
 			
 				function setup()
 				{
@@ -26,6 +27,20 @@
 				function updatestate()
 				{
 						v=v+0.1;
+
+						curr=-1;
+						for(var i=0;i<boxes.length;i++){
+								var item=boxes[i];
+								if(mx>item.x1&&mx<item.x2&&my>item.y1&&my<item.y2){
+										item.v+=0.02;
+										if(item.v>0.7) item.v=0.7;
+										curr=i;
+								}else{
+										item.v-=0.02;
+										if(item.v<0.4) item.v=0.4;
+								}
+						}
+						
 				}
 			
 				function mouseMove(e,t)
@@ -38,13 +53,8 @@
 				function mouseUp(e)
 				{
 						if(mb==1){
-								for(var i=0;i<boxes.length;i++){
-										var item=boxes[i];
-										if(mx>item.x1&&mx<item.x2&&my>item.y1&&my<item.y2){
-												alert("Du klickade i "+i);
-										}
-								}
-						}
+								alert("du klickade i "+curr);
+						}		
 							
 						mb=0;
 				}
@@ -79,7 +89,7 @@
 
 								c.translate(50,50);								
 
-								c.scale(0.7,0.7);
+								c.scale(item.v,item.v);
 
 								Box();
 
