@@ -4,6 +4,8 @@
 				var c;
 			  var mx,my,mb=0;
 				var boxes=[];
+				var v=0;
+				var delay=Math.random()*200;
 			
 				function setup()
 				{
@@ -20,6 +22,14 @@
 								
 				function updatestate()
 				{
+						v++;
+						if(v>delay){
+								v=0;
+								var box=boxes[0];
+								boxes.push({x1:box.x1,y1:box.y1,x2:box.x2,y2:box.y2,v:0.5,vx:box.vx*0.2,vy:Math.random()*0.5});
+								delay=Math.random()*200;							
+						}
+					
 						var player=boxes[1];
 						if(player.x2<mx) player.vx=2.0;
 						if(player.x1>mx) player.vx=-2.0;					
