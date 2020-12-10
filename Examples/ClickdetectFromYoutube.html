@@ -49,16 +49,18 @@
 						c.lineTo(mx,my);					
 						c.stroke();
 
-						for(var i=0;i<boxes.length;i++){
-							  c.save();
-								
-							  c.translate(50+(i*100),50+(j*100));
+						for(var i=0;i<8;i++){
+								for(var j=0;j<5;j++){
+										c.save();
 
-								c.beginPath();
-								c.rect(5,5,95,95);
-								c.stroke();
+										c.translate(50+(i*100),50+(j*100));
 
-								c.restore();
+										c.beginPath();
+										c.rect(5,5,95,95);
+										c.stroke();
+
+										c.restore();
+								}
 						}					
 						window.requestAnimationFrame(drawit);
 				} 			
