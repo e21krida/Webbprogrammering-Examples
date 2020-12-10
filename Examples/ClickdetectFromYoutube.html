@@ -3,6 +3,8 @@
 		<script>
 				var c;
 			
+				var mx,my,mb=0;
+			
 				function setup()
 				{
 						var cc = document.getElementById("myCanvas");
@@ -20,8 +22,10 @@
 			
 				function mouseMove(e,t)
 				{
-						alert("mousemove");
-				}			
+						var rect = e.target.getBoundingClientRect();
+            mx = e.clientX - rect.left; //x position within the element.
+            my = e.clientY - rect.top;  //y position within the element
+				}		
 			
 				function drawit()
 				{	
