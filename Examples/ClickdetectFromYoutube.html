@@ -5,6 +5,7 @@
 			
 				var mx,my,mb=0;
 				var v=0;
+				var dmx,dmy;
 			
 				function setup()
 				{
@@ -26,10 +27,17 @@
 						var rect = e.target.getBoundingClientRect();
             mx = e.clientX - rect.left; //x position within the element.
             my = e.clientY - rect.top;  //y position within the element
+					
+						dmx=Math.floor((mx-50)/100);
+						dmy=Math.floor((my-50)/100);					
 				}
 			
 				function mouseUp(e)
 				{
+						if(mb==1){
+								alert("Du klickade i "+((dmx*8)+dmy));
+						}
+							
 						mb=0;
 				}
 			
@@ -42,9 +50,6 @@
 				{	
 						c.clearRect(0,0,900,900);
 						
-						var dmx=Math.floor((mx-50)/100);
-						var dmy=Math.floor((my-50)/100);
-					
 						c.font="20px Arial Narrow";
 						c.fillText("Mb:"+mb,100,50);					
 					
