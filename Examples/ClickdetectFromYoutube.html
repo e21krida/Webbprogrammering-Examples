@@ -58,12 +58,73 @@
 										c.beginPath();
 										c.rect(5,5,95,95);
 										c.stroke();
+									
+										c.translate(50,50);								
+										c.scale(0.7,0.7);
+										Box();
 
 										c.restore();
 								}
 						}					
 						window.requestAnimationFrame(drawit);
 				} 			
+			
+						
+				function Box(){
+					 c.globalAlpha=1.0;
+							//--==## Rightside_1_ polygon ##==--
+					 c.fillStyle='#009444';
+					 c.beginPath();
+					 c.moveTo(-66,-18);
+					 c.lineTo(-66,54);
+					 c.lineTo(1,69);
+					 c.lineTo(2,-10);
+					 c.lineTo(-66,-18);
+					 c.fill();
+							//--==## Leftside_1_ polygon ##==--
+					 c.fillStyle='#006838';
+					 c.beginPath();
+					 c.moveTo(67,55);
+					 c.lineTo(1,69);
+					 c.lineTo(2,-10);
+					 c.lineTo(66,-23);
+					 c.lineTo(67,55);
+					 c.fill();
+							//--==## Ribbon_3_ polygon ##==--
+					 c.fillStyle='#FBB040';
+					 c.beginPath();
+					 c.moveTo(-42,-15);
+					 c.lineTo(-25,-13);
+					 c.lineTo(-25,63);
+					 c.lineTo(-41,60);
+					 c.lineTo(-42,-15);
+					 c.fill();
+							//--==## Ribbon_2_ polygon ##==--
+					 c.fillStyle='#F15A29';
+					 c.beginPath();
+					 c.moveTo(28,-15);
+					 c.lineTo(44,-18);
+					 c.lineTo(45,60);
+					 c.lineTo(28,63);
+					 c.lineTo(28,-15);
+					 c.fill();
+							//--==## BackII polygon ##==--
+					 c.fillStyle='#58595B';
+					 c.beginPath();
+					 c.moveTo(66,-23);
+					 c.lineTo(2,-37);
+					 c.lineTo(2,-10);
+					 c.lineTo(66,-23);
+					 c.fill();
+							//--==## Back polygon ##==--
+					 c.fillStyle='#414042';
+					 c.beginPath();
+					 c.moveTo(-66,-18);
+					 c.lineTo(2,-10);
+					 c.lineTo(2,-37);
+					 c.lineTo(-66,-18);
+					 c.fill();
+				}
 			
 		</script>
 </head>
