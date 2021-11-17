@@ -38,7 +38,7 @@
 					$stmt->bindParam(':TYPE',$type);
 					$stmt->bindParam(':RESID',$resid);
 					$stmt->execute();
-				}else if(($resid=="UNK")&&($name=="UNK")&&($location=="UNK")&&($company=="UNK")&&($fulltext!="UNK")){
+				}else if(($resid=="UNK")&&($name=="UNK")&&($location=="UNK")&&($company=="UNK")&&($fulltext=="UNK")){
 					$querystring="SELECT DATE_FORMAT(date,'%Y-%m-%d %H:%i') as date,DATE_FORMAT(dateto,'%Y-%m-%d %H:%i') as dateto,resourceID,name,location,company,size,cost,category,auxdata FROM resource,resourceavailability where resourceavailability.resourceID=resource.ID and resource.type=:TYPE order by resourceID,date";
 					$stmt = $pdo->prepare($querystring);
 					$stmt->bindParam(':TYPE',$type);
