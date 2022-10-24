@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML Example CSS Iteration</title>
+</head>
+
+<script type="text/javascript" >
+  function loaded()
+  {
+    var tstelements = document.getElementsByClassName("tstclass");
+    for (var i = 0;i<tstelements.length; i++) {
+        tstelements[i].style.backgroundColor = "#def";
+    }
+  }
+</script>
+
+</head>
+<body onload="loaded()">
+<span id="tstA" class="tstclass">Content A</span>
+<span id="tstB" class="tstclass">Content B</span>
+<span id="tstC" class="tstclass">Content C</span>
+</body>
+</html>
