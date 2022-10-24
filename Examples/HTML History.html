@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript History Tabs</title>
+    <script lang="Javascript">    
+        function historyChange(event) 
+        {
+            alert('hash changed!');
+            document.getElementById("outputValue").value+=JSON.stringify(event.state);
+        }    
+       
+        function updateHistory(token)
+        {
+          history.pushState(token, "Titel: "+token, "");
+        }
+       
+        function setupHistory()
+        {
+          document.getElementById("outputValue").value=history.state;  
+          window.onpopstate = function(event) { historyChange(event); };
+        }
+    </script>
+  </head>       
+  <body onload="setupHistory();" >
+    <input type="button" value="A" onclick="updateHistory('A');">
+    <input type="button" value="B" onclick="updateHistory('B');">
+    <input type="button" value="C" onclick="updateHistory('C');">
+    <input type="text" id="outputValue"></div>
+  </body>
+</html>

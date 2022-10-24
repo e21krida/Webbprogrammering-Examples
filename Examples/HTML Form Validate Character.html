@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript Form Validate Character</title>
+    <script type="text/javascript">
+      function clicked()
+      {
+        var textinput = document.getElementById("input1");
+        if(textinput.value.indexOf("@")==-1){
+          alert("Email must contain @");
+        }
+       }
+    </script>
+  </head>
+  <body>
+    <input id="input1" type="text" value="Must contain at character" />
+    <button onclick="clicked()" >Click here</button>
+  </body>
+  </html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript History Tabs</title>
+    <script type="text/javascript">
+        function checksessionStorage()
+        {
+            var username = sessionStorage.getItem("username");
+            if (username!=null && username!=""){
+                alert('Welcome again '+username+'!');
+            }else{
+                username=prompt('Please enter your name:',"");
+                sessionStorage.setItem("username",username);
+            }
+        }
+
+        function clearsessionStorage()
+        {
+            sessionStorage.setItem('username','');
+        }
+    </script>
+  </head>
+       
+  <body onload="checkLocalStorage()">
+      <input type="button" value="clear" onclick="clearLocalStorage();">
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Javascript History Tabs</title>
+    <script type="text/javascript">
+ 
+      function checkLocalStorage()
+      {
+        var username = localStorage.getItem("username");
+       
+        if (username!=null && username!=""){
+            alert('Welcome again '+username+'!');
+        }else{
+            username=prompt('Please enter your name:',"");
+            localStorage.setItem("username",username);
+        }
+      }
+       
+      function clearLocalStorage()
+      {
+          localStorage.setItem('username','');
+      }
+       
+    </script>
+  </head>
+       
+  <body onload="checkLocalStorage()">
+      <input type="button" value="clear" onclick="clearLocalStorage();">
+  </body>
+</html>
