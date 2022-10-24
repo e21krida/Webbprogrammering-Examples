@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>With Form element example</title>
+    <script>
+        function submitForm(event)
+        {
+            event.preventDefault(); // This prevents the traditional submitting of the form
+            var fname=document.getElementById("fname").value;
+            var lname=document.getElementById("lname").value;
+ 
+            alert("You sent |"+fname+"| |"+lname+"|.");
+        }
+    </script>
+</head>
+<body>
+    <h2>With form element</h2>
+    <form>
+        <div>
+            <label for="fname">First name</label>
+            <input type="text" id="fname" placeholder="Type your first name here">
+        </div>
+        <div>
+            <label for="lname">Last name</label>
+            <input type="text" id="lname" placeholder="Type your last name here">
+        </div>
+        <div>
+            <input type="submit" id="form-submit" onclick="submitForm(event)" value="Submit form" >
+        </div>
+    </form>
+</body>
+</html>
