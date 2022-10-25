@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML Example Timers</title>
+
+    <script type="text/javascript" >
+
+    function timeoutFunc(){ 
+        console.log("Hello Time");
+        clearInterval(interval);
+    };
+
+    function intervalFunc(){ 
+        console.log("Hello Interval")
+    };
+
+    function animationFunc(){ console.log("Hello Graphics") };
+
+    var timeout = setTimeout(timeoutFunc, 4000);
+
+    var interval = setInterval(intervalFunc, 500);
+
+    window.requestAnimationFrame(animationFunc);
+
+    </script>
+ 
+</head>
+<body onload="">
+
+</body>
+</html>
+

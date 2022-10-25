@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML Example Declare Variable</title>
+
+    <script type="text/javascript" >
+
+function loaded(a)
+{
+    alert(addhundred(200));
+}
+
+function addhundred(a)
+{
+    return a+100;
+}
+
+var addhundred = (function (a) {
+  return a+100;
+});
+
+addhundred = (a) => {
+  return a+100;
+};
+
+addhundred = (a) => a + 100;
+
+    </script>
+ 
+</head>
+<body onload="loaded();">
+
+</body>
+</html>
+
