@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>HTML Example CSS</title>
-</head>
+    <title>HTML Example Call Javascript</title>
 
-<script type="text/javascript" >
-    function loaded()
-    {
-      var tstelement = document.getElementById("tst");
-      tstelement.innerHTML="Changed!";
-    }
-</script>
+    <script type="text/javascript" >
+        function loaded()
+        {
+            alert("Hello Head");
+        }
+    </script>
+
+    <script src="extern.js" > </script>
  
 </head>
 <body onload="loaded()">
-    <span id="tst">Content!</span>
+    <script>alert('Hello Scripttag')</script>
 </body>
 </html>
