@@ -9,6 +9,8 @@
 -- Important: Only use on personal server do not run on wwwlab 
 -- Important: 
 
+use BookingSystem;
+
 create table customer(
 		ID 					varchar(32),
 		lastvisit 	datetime,

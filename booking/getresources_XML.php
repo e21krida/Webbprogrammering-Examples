@@ -1,6 +1,4 @@
 <?php
-			header ("Content-Type:text/xml; charset=utf-8");  
-
 			//---------------------------------------------------------------------------------------------------------------
 			// Build Search Query!
 			//---------------------------------------------------------------------------------------------------------------
@@ -46,6 +44,7 @@
 							$stmt->execute();
 					}
 
+					header ("Content-Type:text/xml; charset=utf-8");
 					echo "<resources>\n";
 							foreach($stmt as $key => $row){
 							echo "<resource \n";
