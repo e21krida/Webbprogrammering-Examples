@@ -1,0 +1,46 @@
+<html>
+	<style>
+			#page1{background:#fed;display:block;left:0%;}
+			#page2{background:#def;}
+			#page3{background:#fde;}
+
+			.page{position:fixed;left:100%;top:0%;width:100%;height:100%;z-index:500;}		
+			.leftclicker{position:absolute;left:0px;font-size:160px;}
+			.rightclicker{position:absolute;right:0px;font-size:160px;}
+ 
+			@keyframes inleft {0% { left: -100%; } 100% { left: 0%;} }		
+			@keyframes inright {0% { left: 100%; } 100% { left: 0%;} }		
+			@keyframes outleft {0% { left: 0%; } 100% { left: -100%;} }		
+			@keyframes outright {0% { left: 0%; } 100% { left: 100%;} }		
+		
+	</style>
+	
+	<script>
+
+			function showpage(pageidin,animin,pageidout,animout)
+			{
+					document.getElementById(pageidin).style.animation=animin+" 1s ease-in-out 0s 1 forwards";
+					document.getElementById(pageidout).style.animation=animout+" 1s ease-in-out 0s 1 forwards";
+			}
+	
+	</script>
+
+	<body>
+			<div id="page1" class="page">
+					<h1>PAGE 1</h1>
+					<div class="leftclicker" onclick="showpage('page2','inright','page1','outleft')">&lt;</div>
+					<div class="rightclicker" onclick="showpage('page1','outright','page3','inleft')">&gt;</div>
+			</div>
+			<div id="page2" class="page">
+					<h1>PAGE 2</h1>
+					<div class="leftclicker" onclick="showpage('page3','inright','page2','outleft')">&lt;</div>
+					<div class="rightclicker" onclick="showpage('page2','outright','page1','inleft')">&gt;</div>
+			</div>
+			<div id="page3" class="page">
+					<h1>PAGE 3</h1>
+					<div class="leftclicker" onclick="showpage('page1','inright','page3','outleft')">&lt;</div>
+					<div class="rightclicker" onclick="showpage('page3','outright','page2','inleft')">&gt;</div>
+			</div>
+	</body>
+</html>
+

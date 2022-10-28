@@ -1,0 +1,55 @@
+<html>
+<style>
+			#page1{background:#fed;}
+			#page2{background:#def;}
+			#page3{background:#fde;}
+		
+		.page{height:100%;}
+    .menu {height:64px;background:#f84}
+
+</style>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+	<script>
+
+	function showpage(pageid)
+	{
+			var pos=$("#"+pageid).position().top;
+			$("body").animate({ scrollTop: pos }, 1500, "easeOutElastic"); 
+	}
+	
+	</script>
+
+	<body>
+			<div id="page1" class="page">
+				<div class="menu">
+						<button onclick="showpage('page1');">Page1</button>
+						<button onclick="showpage('page2');">Page2</button>
+						<button onclick="showpage('page3');">Page3</button>
+				</div>
+				<h1>PAGE 1</h1>
+			</div>
+
+			<div id="page2" class="page">
+				<div class="menu">
+						<button onclick="showpage('page1');">Page1</button>
+						<button onclick="showpage('page2');">Page2</button>
+						<button onclick="showpage('page3');">Page3</button>
+				</div>
+				<h1>PAGE 2</h1>
+			</div>
+
+			<div id="page3" class="page">
+				<div class="menu">
+						<button onclick="showpage('page1');">Page1</button>
+						<button onclick="showpage('page2');">Page2</button>
+						<button onclick="showpage('page3');">Page3</button>
+				</div>
+				<h1>PAGE 3</h1>
+			</div>
+
+	</body>
+</html>
+

@@ -1,0 +1,47 @@
+<html>
+	<style>
+			#page1{display:block;background:#fed;}
+			#page2{display:none;background:#def;}
+			#page3{display:none;background:#fde;}
+		
+		.page{position:absolute;left:0px;top:60px;right:0px;bottom:0px;}
+    #menu {left:0px;top:0px;z-index:500;position:absolute;height:64px;background:#f84;right:0%;}
+
+</style>
+	
+	<script>
+
+			function showpage(pageid)
+			{
+					var pages = document.getElementsByClassName("page");
+					for(var i = 0; i < pages.length; i++)
+					{
+						 pages[i].style.display="none";
+					}
+					document.getElementById(pageid).style.display="block";
+			}
+	
+	</script>
+
+	<body>
+			<div id="menu">
+					<button onclick="showpage('page1');">Page1</button>
+					<button onclick="showpage('page2');">Page2</button>
+					<button onclick="showpage('page3');">Page3</button>
+</div>
+			
+			<div id="page1" class="page">
+					<h1>PAGE 1</h1>
+			</div>
+
+			<div id="page2" class="page">
+					<h1>PAGE 2</h1>
+			</div>
+
+			<div id="page3" class="page">
+					<h1>PAGE 3</h1>
+			</div>
+
+	</body>
+</html>
+
