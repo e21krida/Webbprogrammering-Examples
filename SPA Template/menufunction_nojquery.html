@@ -14,9 +14,9 @@
 			function showpage(pageid)
 			{
 					var pages = document.getElementsByClassName("page");
-					for(var i = 0; i < pages.length; i++)
+					for(page of pages)
 					{
-						 pages[i].style.display="none";
+						 page.style.display="none";
 					}
 					document.getElementById(pageid).style.display="block";
 			}
