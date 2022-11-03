@@ -1,13 +1,16 @@
 <?PHP
 		include 'dbconnect.php';	
 
+		if(empty($_POST)){
+				$_POST=json_decode(file_get_contents('php://input', false),true);
+		}
+
 		$ID=getpostAJAX("ID");
 		$firstname=getpostAJAX("firstname");
 		$lastname=getpostAJAX("lastname");
 		$address=getpostAJAX("address");
 		$email=getpostAJAX("email");
 		$auxdata=getpostAJAX("auxdata");
-
 		
 		if ($ID=="UNK" || $firstname=="UNK" || $lastname=="UNK" || $address=="UNK" || $email=="UNK") err("Missing Form Data: (ID/firstname/lastname/address/email)");
 
