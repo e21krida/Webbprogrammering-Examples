@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>HTML Example CSS Iteration</title>
+
+<style>
+    .box{height:120px;margin:8px;background:#def;padding:12px;box-shadow: inset 2px 2px 4px #000;}
+    .dialog{height:120px;padding:8px;background:#fed;padding:12px;box-shadow: 2px 2px 6px #000;}
+    .tstclass{margin:4px;padding:4px;background:#f9f;}
+</style>
+
+<script type="text/javascript" >
+  function loaded()
+  {
+    
+    var tstelements = document.getElementsByClassName("tstclass");
+    for(let element of tstelements){
+        element.style.border = "2px solid green";
+    }
+
+    document.getElementById("tstE").style.border="4px dotted blue";
+
+    var tstelements = document.querySelectorAll(".dialog span");
+    for(let element of tstelements){
+        element.style.background = "#9df";
+    }
+
+  }
+</script>
+
+</head>
+<body onload="loaded()">
+
+<div class="box">
+<span id="tstA" class="tstclass">Content A</span>
+<span id="tstB" class="tstclass">Content B</span>
+<span id="tstC" class="tstclass">Content C</span>
+<span>Box</span>
+</div>
+
+<div class="dialog">
+<span id="tstD" class="tstclass">Content A</span>
+<span id="tstE" class="tstclass">Content B</span>
+<span id="tstF" class="tstclass">Content C</span>
+<span>Dialog</span>
+</div>
+
+</body>
+</html>

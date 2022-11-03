@@ -1,0 +1,25 @@
+<html xmlns = "http://www.w3.org/1999/xhtml">
+<head>
+  <style>
+    .fade { 
+        opacity: 1;
+        transition: opacity 2.25s ease-in-out; 
+    } 
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" >
+    function clicked()
+    {
+        fadelem = document.getElementById("fadelement");
+        fadelem.style.opacity=0.1;
+        fadelem.addEventListener("transitionend", function(e){alert("Done!")}, false);
+    }
+  </script>
+ 
+</head>
+<body>
+    <div id="fadelement" class="fade" onclick="clicked()">
+      Hello!
+    </div>
+</body>
+</html>
