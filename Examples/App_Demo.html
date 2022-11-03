@@ -146,39 +146,22 @@
 
 				fetch('../booking/getresources_XML.php', {
 					  method: 'POST', // or 'PUT'
-					  headers: {
-					    'Content-Type': 'application/json',
-					  },
-					  body: JSON.stringify({type:apptype})
+					  headers: {'Content-Type': 'application/json'},
+					  body: JSON.stringify({type:apptype, name:resname})
 					})
 					.then(function(response) {                      // first then()
-				      if(response.ok) showResources(response.text());
+				      if(response.ok) return(response.text());
       				throw new Error(response.statusText);
-  				}).catch(function(error) {                        // catch
+  				}).then(function(text){
+							showResources(new window.DOMParser().parseFromString(text, "text/xml"));
+					}).catch(function(error) {                        // catch
     					console.log('Request failed', error);
   				});
-
-				/*
-				var jqxhr = $.ajax( "../booking/getresources_XML.php", {
-						type: 'POST',
-						data: { 
-								resID:encodeURIComponent(resID),
-								name:encodeURIComponent(resname),
-								location:encodeURIComponent(reslocation),
-								company:encodeURIComponent(rescompany),
-								fulltext:encodeURIComponent(resfulltext),
-								type:apptype		// Only show bookings for your webbapplication using the apptype
-						}
-				})
-				.done(showResources)
-				.fail(errormsg)
-				.always(function() {
-						console.log( "Request all resources for webbapplication "+apptype+" complete." );
-				});*/
 		}
 
 		function showResources(returnedData)
 		{
+				console.log(returnedData);
 				// Fix characters in XML notation to HTML notation
 				fixChars(returnedData);
 				

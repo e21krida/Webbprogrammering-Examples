@@ -15,11 +15,10 @@
 	function showpage(pageid)
 	{
 			var pages = document.getElementsByClassName("page");
-			for(var i = 0; i < pages.length; i++)
+			for(page of pages)
 			{
-				 pages[i].style.top="-136px";
+					pages.style.top="-136px";
 			}
-
 			document.getElementById(pageid).style.top="64px";
 	}
 	
