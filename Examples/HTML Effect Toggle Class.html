@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .group{
+        border:2px solid green;
+        border-radius:6px;
+        padding:4px;
+    }
+    .clickable{
+        border:2px solid red;
+        background-color:#2d2;    
+        border-radius:6px;
+        padding:4px;
+    }
+    .on{
+        border:2px solid green;
+        background-color:#f44;
+        border-radius:6px;
+        padding:4px;
+    }    
+  </style>
+  <script type="text/javascript" >
+    function loaded()
+    {
+        var clickables=document.getElementsByClassName("clickable");
+        for(clickable of clickables){
+            console.log(clickable.innerHTML);
+            clickable.addEventListener("click", function(event){
+                alert(event.target.innerHTML);
+                event.target.classList.toggle("on");
+            });
+        }
+    }
+  </script>
+ 
+</head>
+<body onload="loaded()">
+    <div id="group1" class="group">
+        <span id="e1" class="clickable on">A</span>
+        <span id="e2" class="clickable">B</span>
+    </div>
+    <div id="group2" class="group">
+        <span id="e3" class="clickable">C</span>
+        <span id="e4" class="clickable">D</span>
+    </div>
+</body>
+</html>

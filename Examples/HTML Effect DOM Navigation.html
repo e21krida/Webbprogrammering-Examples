@@ -1,0 +1,43 @@
+<html xmlns = "http://www.w3.org/1999/xhtml">
+<head>
+  <style>
+    .clickable{
+        color:#fff;
+        background-color:#f44;
+        border-radius:3px;
+        padding:4px;
+    }
+    .group{
+        border:2px solid green;
+        border-radius:6px;
+        padding:4px;
+    }
+    
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" >
+    function loaded()
+    {
+        var clickables=document.getElementsByClassName("clickable");
+        for(clickable of clickables){
+            console.log(clickable.innerHTML);
+            clickable.addEventListener("click", function(event){
+              alert(event.target.id+" "+event.target.parentElement.id);
+              event.target.parentElement.style.border="4px dotted red";
+            });
+        }
+    }
+  </script>
+ 
+</head>
+<body onload="loaded()">
+    <div id="group1" class="group">
+        <span id="e1" class="clickable">A</span>
+        <span id="e2" class="clickable">B</span>
+    </div>
+    <div id="group2" class="group">
+        <span id="e3" class="clickable">C</span>
+        <span id="e4" class="clickable">D</span>
+    </div>
+</body>
+</html>
