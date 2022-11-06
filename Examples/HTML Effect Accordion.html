@@ -4,8 +4,9 @@
     body{font-family: Arial Narrow, Arial, sans-serif;}
 
     .accordion-container {
-      margin-bottom:10px;
+      margin-bottom:16px;
       width:330px;
+      box-shadow: 2px 2px 10px #444;      
       display: grid;
       grid-template-areas: 
             "accordion-button accordion-header"
@@ -14,9 +15,9 @@
     .accordion-body{
         grid-area: accordion-body;
         height: 20px;
-        box-shadow: 0px 10px 5px #444;
         transition: height 0.2s cubic-bezier(0,1.4, 0.8, 1); 
         overflow:hidden;
+        width:330px;
       }
     .accordion-button{
         grid-area: accordion-button;
@@ -28,8 +29,8 @@
     .accordion-header{
         grid-area: accordion-header;
         background-color:#f44;
-        width:330px;
-      }
+        width:300px;
+    }
     .hog{
         height:200px;
       }
