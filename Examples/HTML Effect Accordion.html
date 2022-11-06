@@ -1,0 +1,75 @@
+<html xmlns = "http://www.w3.org/1999/xhtml">
+<head>
+  <style>
+    body{font-family: Arial Narrow, Arial, sans-serif;}
+
+    .accordion-container {
+      width:330px;
+      display: grid;
+      grid-template-areas: 
+            "accordion-button accordion-header"
+            "accordion-body"     
+    }
+    .accordion-body{
+        grid-area: accordion-body;
+    }
+    .accordion-button{
+        grid-area: accordion-button;
+        width:30px;
+        height:30px;
+        background-color:#e76;
+        text-align:center;
+    }
+    .accordion-header{
+        grid-area: accordion-header;
+        background-color:#f44;
+        padding:4px;
+        width:300px;
+        transition: height 0.2s cubic-bezier(0,1.4, 0.8, 1); 
+        width:330px;
+        overflow:hidden;
+        margin-bottom:4px;
+        box-shadow: 0px 10px 5px #649 inset;
+      }
+    .hog{
+        height:200px;
+      }
+  </style>
+  <script type="text/javascript" >
+    function loaded()
+    {
+        var clickables=document.getElementsByClassName("accordion-header");
+        for(clickable of clickables){
+            clickable.addEventListener("click", function(event){  
+                alert(event.target.id);
+            });
+        }      
+        /*
+        $(".butt").click(function(e) {
+            $(e.target).parent().css("display","none");
+        });
+        
+        $(".head").click(function(e) {
+          $(e.target).parent().find(".datas").toggleClass("hog")});
+        */
+    }
+
+  </script>
+ 
+</head>
+<body onload="loaded()">
+
+    <div id="accordion1" class="accordion-container">
+        <span id="e1" class="accordion-button">X</span>
+        <span id="e2" class="accordion-header">Expand</span>
+        <div id="e3" class="accordion-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+    </div>
+
+    <div id="accordion2" class="accordion-container">
+        <span id="e3" class="accordion-button">X</span>
+        <span id="e4" class="accordion-header">Expand</span>
+        <div id="e3" class="accordion-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+    </div>
+
+</body>
+</html>
