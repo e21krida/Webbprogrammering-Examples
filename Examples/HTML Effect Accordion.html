@@ -4,15 +4,20 @@
     body{font-family: Arial Narrow, Arial, sans-serif;}
 
     .accordion-container {
+      margin-bottom:10px;
       width:330px;
       display: grid;
       grid-template-areas: 
             "accordion-button accordion-header"
-            "accordion-body"     
+            "accordion-body accordion-body"     
     }
     .accordion-body{
         grid-area: accordion-body;
-    }
+        height: 20px;
+        box-shadow: 0px 10px 5px #444;
+        transition: height 0.2s cubic-bezier(0,1.4, 0.8, 1); 
+        overflow:hidden;
+      }
     .accordion-button{
         grid-area: accordion-button;
         width:30px;
@@ -23,13 +28,7 @@
     .accordion-header{
         grid-area: accordion-header;
         background-color:#f44;
-        padding:4px;
-        width:300px;
-        transition: height 0.2s cubic-bezier(0,1.4, 0.8, 1); 
         width:330px;
-        overflow:hidden;
-        margin-bottom:4px;
-        box-shadow: 0px 10px 5px #649 inset;
       }
     .hog{
         height:200px;
