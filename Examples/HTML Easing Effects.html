@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .popover {
+            position:fixed;
+            border:1px solid blue; 
+            background:#def; 
+            height:200px; 
+            top: 200px;
+            width:200px;
+            left:-200px;
+        }
+
+        .enter {
+            opacity: 1;
+            left: 200px;
+            transition: all 1500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .exit {
+            opacity: 1;
+            left: -200px;
+            transition: all 1500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+    </style>
+    <script>
+        function goShow()
+        {
+            document.querySelector("#popover").classList.remove("exit"); 
+            document.querySelector("#popover").classList.add("enter"); 
+        }
+
+        function goHide()
+        {
+            document.querySelector("#popover").classList.remove("enter"); 
+            document.querySelector("#popover").classList.add("exit"); 
+        }
+
+    </script>
+</head>
+<body>
+    <div id="popover" class="popover" >Popover</div>
+ 
+    <button onclick="goShow();" id="topbutton" >Go Show!</button>
+     
+    <button onclick="goHide();" id="bottombutton">Go Hide!</button>        
+</body>
+</html>
