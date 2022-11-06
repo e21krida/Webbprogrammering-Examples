@@ -40,17 +40,16 @@
         var clickables=document.getElementsByClassName("accordion-header");
         for(clickable of clickables){
             clickable.addEventListener("click", function(event){  
-                alert(event.target.id);
+                document.querySelector("#"+event.target.parentElement.id+" .accordion-body").classList.toggle("hog");
             });
-        }      
-        /*
-        $(".butt").click(function(e) {
-            $(e.target).parent().css("display","none");
-        });
-        
-        $(".head").click(function(e) {
-          $(e.target).parent().find(".datas").toggleClass("hog")});
-        */
+        }
+
+        var clickables=document.getElementsByClassName("accordion-button");
+        for(clickable of clickables){
+            clickable.addEventListener("click", function(event){  
+                document.getElementById(event.target.parentElement.id).style.display="none";
+            });
+        }
     }
 
   </script>
