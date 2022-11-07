@@ -9,11 +9,9 @@
     .over {
         background-color:#c9f;
     }
-
     #High td{
         border:2px solid red;
     }
-
     .bord{
         border:2px solid green;
     }
@@ -32,8 +30,10 @@
     }
     
     var tstelements = document.querySelectorAll("#High td");
+    console.log(tstelements);
     for(element of tstelements){
         element.addEventListener("mouseenter", function(event){  
+            console.log(event.target.innerHTML);
             event.target.classList.add("bord");
         });       
         element.addEventListener("mouseout", function(event){  
@@ -47,7 +47,7 @@
 
 </head>
 <body onload="loaded()">
-    <table class="High">
+    <table id="High">
         <tr class="rolltable"><td>Yell</td><td>Better</td><td>Butter</td><td>Gutter</td></tr>
         <tr class="rolltable"><td>Swell</td><td>Flutter</td><td>Cutter</td><td>Smutter</td></tr>
         <tr class="rolltable"><td>Quell</td><td>Quill</td><td>Gill</td><td>Trill</td></tr>
