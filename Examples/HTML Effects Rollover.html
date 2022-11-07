@@ -2,16 +2,28 @@
 <html xmlns = "http://www.w3.org/1999/xhtml">
 <head>
   <style> 
+    table {
+      margin: auto;
+      border-spacing: 0;
+      font-size: 2rem;
+    }
     tr {
-          background-color:#fff;
-          transition: background-color 2s ease-out;
+      background-color:#fff;
+      transition: background-color 2s ease-out;
     }
     tr:nth-child(even){
-       background: #dedede;
+      background: #dedede;
     }       
-    .over {
-        background-color:#c9f !important;
+    td {
+      padding: 8px 20px;
     }
+    th {
+      border-bottom:4px solid RGBA(0,0,0,1);
+    }
+    .over {
+      background-color:#c9f !important;
+    }
+
 
   </style>
 <script type="text/javascript" >
@@ -22,7 +34,7 @@
         element.addEventListener("mouseenter", function(event){  
             event.currentTarget.classList.add("over");
         });        
-        element.addEventListener("mouseout", function(event){         
+        element.addEventListener("mouseleave", function(event){         
             event.currentTarget.classList.remove("over");
         });        
     }
@@ -32,6 +44,7 @@
 </head>
 <body onload="loaded()">
     <table>
+        <tr><th>Col 1</th><th>Col 2</th><th>Col 3</th><th>Col 4</th></tr>
         <tr class="rolltable"><td>Yell</td><td>Better</td><td>Butter</td><td>Gutter</td></tr>
         <tr class="rolltable"><td>Swell</td><td>Flutter</td><td>Cutter</td><td>Smutter</td></tr>
         <tr class="rolltable"><td>Quell</td><td>Quill</td><td>Gill</td><td>Trill</td></tr>
@@ -41,4 +54,3 @@
     </table>
 </body>
 </html>
-
