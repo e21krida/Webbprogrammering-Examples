@@ -59,7 +59,6 @@
 					}).catch(function(error) {                        // catch
     					alert('Request failed\n'+error);
   				});				
-
 		}
 	
 		function ResultCustomern(returnedData)
@@ -85,18 +84,24 @@
 		function showCustomer()
 		{
 				var customerID=document.getElementById("customerIDG").value;
-		
-				var jqxhr = $.ajax( "../booking/getcustomer_XML.php", {
-						type: 'POST',
-						data: { 
-								customerID: encodeURIComponent(customerID)
-						}
-				})
-				.done(ResultCustomers)
-				.fail(errormsg)
-				.always(function() {
-						console.log( "Request for showing customers complete." );
-				});
+
+				var input={ 
+						customerID: encodeURIComponent(customerID)
+				};
+
+				fetch('../booking/getcustomer_XML.php', {
+					  method: 'POST', // or 'PUT'
+					  headers: {'Content-Type': 'application/json'},
+					  body: JSON.stringify(input)
+					})
+					.then(function(response) {                      // first then()
+				      if(response.ok) return(response.text());
+      				throw new Error(response.statusText);
+  				}).then(function(text){
+							ResultCustomers(new window.DOMParser().parseFromString(text, "text/xml"));
+					}).catch(function(error) {                        // catch
+    					alert('Request failed\n'+error);
+  				});	
 		}
 	
 		function ResultCustomers(returnedData)
@@ -139,16 +144,19 @@
 		
 		function searchResources()
 		{
-				var resname=document.getElementById("resNameS").value;
-				var reslocation=document.getElementById("resLocationS").value;
-				var rescompany=document.getElementById("resCompanyS").value;
-				var resfulltext=document.getElementById("resFulltextS").value;
-				var resID=document.getElementById("resIDS").value;
+				var input={
+						type:apptype,
+						name:document.getElementById("resNameS").value,
+						location:document.getElementById("resLocationS").value,
+						company:document.getElementById("resCompanyS").value,
+						fulltext:document.getElementById("resFulltextS").value,
+						id:document.getElementById("resIDS").value;
+				};
 
 				fetch('../booking/getresources_XML.php', {
 					  method: 'POST', // or 'PUT'
 					  headers: {'Content-Type': 'application/json'},
-					  body: JSON.stringify({type:apptype, name:resname})
+					  body: JSON.stringify(input)
 					})
 					.then(function(response) {                      // first then()
 				      if(response.ok) return(response.text());
@@ -205,28 +213,29 @@
 		
 		function searchAvailability()
 		{
-				var resID=document.getElementById("resIDA").value;	
-				var resname=document.getElementById("resNameA").value;
-				var reslocation=document.getElementById("resLocationA").value;
-				var rescompany=document.getElementById("resCompanyA").value;
-				var resfulltext=document.getElementById("resFulltextA").value;
-
-				var jqxhr = $.ajax( "../booking/getavailability_search_XML.php", {
-						type: 'POST',
-						data: { 
-								resid:encodeURIComponent(resID),
-								name:encodeURIComponent(resname),
-								location:encodeURIComponent(reslocation),
-								company:encodeURIComponent(rescompany),
-								fulltext:encodeURIComponent(resfulltext),
-								type:apptype		// Only show bookings for your webbapplication using the apptype
-						}
-				})
-				.done(showAvailability)
-				.fail(errormsg)
-				.always(function() {
-						console.log( "Request for resource availability for webbapplication "+apptype+" complete." );
-				});
+			var input={
+					resid:document.getElementById("resIDA").value,
+					name:document.getElementById("resNameA").value,
+					location:document.getElementById("resLocationA").value,
+					company:document.getElementById("resCompanyA").value,
+					fulltext:document.getElementById("resFulltextA").value,
+					type:apptype		// Only show bookings for your webbapplication using the apptype				
+			};
+			
+			fetch("../booking/getavailability_search_XML.php", {
+					  method: 'POST', // or 'PUT'
+					  headers: {'Content-Type': 'application/json'},
+					  body: JSON.stringify(input)
+					})
+					.then(function(response) {                      // first then()
+				      if(response.ok) return(response.text());
+      				throw new Error(response.statusText);
+  				}).then(function(text){
+							showAvailability(new window.DOMParser().parseFromString(text, "text/xml"));
+					}).catch(function(error) {                        // catch
+    					alert('Request failed\n'+error);
+  				});				
+			
 		}
 
 		function showAvailability(returnedData)
@@ -270,25 +279,30 @@
 		//------------------------------------------------------------------------
 		// Get Bookings
 		//------------------------------------------------------------------------
+		// Get bookings for given resource id
 
 		function getBookings()
 		{
-				resource=document.getElementById("resNameGB").value;
-				bookingdate=document.getElementById("dateGB").value;
-									        
-				var jqxhr = $.ajax( "../booking/getbookings_XML.php", {
-						type: 'POST',
-						data: { 
-								resourceID:resource,
-								date:bookingdate,
-								type:apptype		// Only show bookings for your webbapplication using the apptype
-						}
-				})
-				.done(ResultBooking)
-				.fail(errormsg)
-				.always(function() {
-						console.log( "Request bookings for resource "+resource+" for webbapplication "+apptype+" complete." );
-				});
+				var input={
+						resourceID:document.getElementById("resNameGB").value,
+						date:document.getElementById("dateGB").value,
+						type:apptype		// Only show bookings for your webbapplication using the apptype
+				};	
+			
+				fetch("../booking/getbookings_XML.php", {
+					  method: 'POST', // or 'PUT'
+					  headers: {'Content-Type': 'application/json'},
+					  body: JSON.stringify(input)
+					})
+					.then(function(response) {                      // first then()
+				      if(response.ok) return(response.text());
+      				throw new Error(response.statusText);
+  				}).then(function(text){
+							ResultBooking(new window.DOMParser().parseFromString(text, "text/xml"));
+					}).catch(function(error) {                        // catch
+    					alert('Request failed\n'+error);
+  				});		
+
 		}
 
 		function ResultBooking(returnedData)
@@ -334,35 +348,32 @@
  
 		function makeBooking()
 		{
-				var customerID=document.getElementById("customerIDB").value;
-				var resourceID=document.getElementById("resourceIDB").value;
-				var date=document.getElementById("dateB").value;
-				var dateto=document.getElementById("dateToB").value;
-				var rebate=document.getElementById("rebateB").value;
-				var statusb=document.getElementById("statusB").value;
-				var position=document.getElementById("positionB").value;
-				var auxdata=document.getElementById("auxDataB").value;
-				
-				alert(customerID+" "+resourceID+" "+date+" "+rebate+" "+statusb+" "+position+" "+auxdata);
+				var input={
+						resourceID:document.getElementById("resourceIDB").value,
+						date:document.getElementById("dateB").value,
+						dateto:document.getElementById("dateToB").value,
+						customerID:document.getElementById("customerIDB").value,
+						rebate:document.getElementById("rebateB").value,
+						status:document.getElementById("statusB").value, // 2 = "Real" booking.
+						position:document.getElementById("positionB").value,
+						auxdata:document.getElementById("auxDataB").value,
+						type:apptype		// Only show bookings for your webbapplication using the apptype
+				}
 
-				var jqxhr = $.ajax( "../booking/makebooking_XML.php", {
-						type: 'POST',
-						data: { 
-								resourceID:resourceID,
-								date:date,
-								dateto:dateto,
-								customerID:customerID,
-								rebate:rebate,
-								status:statusb, // 2 = "Real" booking.
-								position:position,
-								type:apptype		// Only show bookings for your webbapplication using the apptype
-						}
-				})
-				.done(ResultBooking)
-				.fail(errormsg)
-				.always(function() {
-						console.log( "Request bookings for resource "+resource+" for webbapplication "+apptype+" complete." );
-				});
+				fetch("../booking/makebooking_XML.php", {
+					  method: 'POST', // or 'PUT'
+					  headers: {'Content-Type': 'application/json'},
+					  body: JSON.stringify(input)
+					})
+					.then(function(response) {                      // first then()
+				      if(response.ok) return(response.text());
+      				throw new Error(response.statusText);
+  				}).then(function(text){
+							bookingmade(new window.DOMParser().parseFromString(text, "text/xml"));
+					}).catch(function(error) {                        // catch
+    					alert('Request failed\n'+error);
+  				});		
+					
 		}
 
 		function bookingmade(returnedData)
@@ -382,24 +393,26 @@
 
 		function deleteBooking()
 		{
-				var customerID = document.getElementById("customerIDD").value;
-				var resourceID = document.getElementById("resourceIDD").value;
-				var date = document.getElementById("dateD").value;
-				
-				alert("CustomerID: " + customerID + " ResourceID: " + resourceID + " Date: " + date);
-				var jqxhr = $.ajax( "../booking/deletebooking_XML.php", {
-						type: 'POST',
-						data: { 
-								resourceID: resourceID,
-								date: date,
-								customerID: customerID
+			var input= { 
+								resourceID: document.getElementById("resourceIDD").value,
+								date: document.getElementById("dateD").value,
+								customerID: custodocument.getElementById("customerIDD").valuemerID
 						}
-				})
-				.done(deletemade)
-				.fail(errormsg)
-				.always(function() {
-						console.log( "Request to delete booking for webbapplication "+apptype+" complete." );
-				});
+			console.log(input);
+				
+			fetch("../booking/deletebooking_XML.php", {
+					  method: 'POST', // or 'PUT'
+					  headers: {'Content-Type': 'application/json'},
+					  body: JSON.stringify(input)
+					})
+					.then(function(response) {                      // first then()
+				      if(response.ok) return(response.text());
+      				throw new Error(response.statusText);
+  				}).then(function(text){
+							deletemade(new window.DOMParser().parseFromString(text, "text/xml"));
+					}).catch(function(error) {                        // catch
+    					alert('Request failed\n'+error);
+  				});		
 		}
 		
 		function deletemade()
@@ -420,19 +433,25 @@
 	
 		function processinputbox()
 		{
-				customer =document.getElementById("customerID").value;
-				var jqxhr = $.ajax( "../booking/getcustomerbookings_XML.php", {
-						type: 'POST',
-						data: { 
-								customerID: encodeURIComponent(customer),
-								type:apptype		// Only show bookings for your webbapplication using the apptype
-						}
-				})
-				.done(ResultBookingCustomer)
-				.fail(errormsg)
-				.always(function() {
-						console.log( "Request bookings for customer "+customer+" for webbapplication "+apptype+" complete." );
-				});
+				var input={
+						customerID: document.getElementById("customerID").value,
+						type:apptype		// Only show bookings for your webbapplication using the apptype
+				}
+
+				fetch("../booking/getcustomerbookings_XML.php", {
+					  method: 'POST', // or 'PUT'
+					  headers: {'Content-Type': 'application/json'},
+					  body: JSON.stringify(input)
+					})
+					.then(function(response) {                      // first then()
+				      if(response.ok) return(response.text());
+      				throw new Error(response.statusText);
+  				}).then(function(text){
+							ResultBookingCustomer(new window.DOMParser().parseFromString(text, "text/xml"));
+					}).catch(function(error) {                        // catch
+    					alert('Request failed\n'+error);
+  				});		
+
 		}
 
 		function ResultBookingCustomer(returnedData)
@@ -466,57 +485,7 @@
 			var div=document.getElementById('OutputDiv');
 			div.innerHTML=output;
 		}	
-		
-		// get customer bookings END
-		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
-		
-		//------------------------------------------------------------------------
-		// get html file contents
-		//------------------------------------------------------------------------
-		// Returns the text of a html file
-		//------------------------------------------------------------------------
-	
-		function readFile()
-		{
-				filename = document.getElementById("fileR").value;
-				
-				var jqxhr = $.ajax( "../booking/getfile_XML.php", {
-						type: 'POST',
-						data: { 
-								filename: encodeURIComponent(filename),
-						}
-				})
-				.done(fileread)
-				.fail(errormsg)
-				.always(function() {
-						console.log( "Request to read file complete." );
-				});
-		}
-
-		function fileread(returnedData)
-		{
-			var div=document.getElementById('OutputDivFile');
-			div.innerHTML=returnedData;
-		}	
-		
-		// get file contents END
-		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
-
-		//------------------------------------------------------------------------
-		// error message callback
-		//------------------------------------------------------------------------
-    // The errror message callback displays the error message and error code
-		//------------------------------------------------------------------------
-
-		function errormsg(jqXHR,textStatus,errorThrown)
-		{
-				console.log(jqXHR);
-				alert("AJAX Error:\n"+errorThrown);
-		}
-
-		// error message callback END
-		//--=--=--=--=--=--=--=--=--=--====######====--=--=--=--=--=--=--=--=--=--
-		
+			
 		</script>
 </head>
 <body>
