@@ -1,5 +1,9 @@
 <?PHP
 			include 'dbconnect.php';
+
+			if(empty($_POST)){
+					$_POST=json_decode(file_get_contents('php://input', false),true);
+			}			
 			
 			$resourceID=getpostAJAX("resourceID");
 			$searchresource=getpostAJAX("searchresource");
