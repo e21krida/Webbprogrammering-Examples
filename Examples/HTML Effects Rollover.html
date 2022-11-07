@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html xmlns = "http://www.w3.org/1999/xhtml">
 <head>
-  <style>
+  <style> 
     tr {
           background-color:#fff;
           transition: background-color 2s ease-out;
     }
+    tr:nth-child(even){
+       background: #dedede;
+    }       
     .over {
-        background-color:#c9f;
+        background-color:#c9f !important;
     }
+
   </style>
 <script type="text/javascript" >
   function loaded()
@@ -18,8 +22,7 @@
         element.addEventListener("mouseenter", function(event){  
             event.currentTarget.classList.add("over");
         });        
-        element.addEventListener("mouseout", function(event){  
-            console.log("mouseout",event.target);          
+        element.addEventListener("mouseout", function(event){         
             event.currentTarget.classList.remove("over");
         });        
     }
