@@ -11,7 +11,7 @@ All data is returned as XML.
 
 ## Sample usage Fetch API and JSON parameters
 Call the appropropriate service with the required (and optional) parameters. For example, to create a new customer the following Fetch-call can be used:
-~~~
+~~~ js
 try {
     const url = "../booking/makecustomer_XML.php";
 
@@ -44,7 +44,7 @@ try {
 ~~~
 ## Sample usage Fetch API and FormData paramters
 Call the appropropriate service with the required (and optional) parameters. For example, to create a new customer the following Fetch-call can be used:
-~~~
+~~~ js
 try {
     const url = "../booking/makecustomer_XML.php";
 
@@ -74,7 +74,7 @@ try {
 
 ## Sample usage Parsing XML response
 When we have received a response from the API we can parse and use the data to create our dynamic web page. Here is an example of how you can parse the XML:
-~~~
+~~~ js
 ...
 const response_text = await response.text();
 
@@ -95,7 +95,7 @@ for (const xml_node of xml_nodes) {
 
 ## Sample usage jQuery (obsolete)
 Call the appropropriate service with the required (and optional) parameters. For example, to create a new customer the following AJAX-call using jQuery can be used:
-~~~
+~~~ js
 $.ajax({
   type: 'POST',
   url: '../booking/makecustomer_XML.php',
@@ -127,7 +127,7 @@ email **REQUIRED** Customers email\
 address **REQUIRED** Customers address\
 auxdata _OPTIONAL_ Auxillary information about customer\
 ### Return data
-~~~
+~~~ xml
 <created status="OK"/>
 ~~~
 ## booking/getcustomer_XML.php
@@ -136,9 +136,9 @@ Reads all information about a customer and updates last visit date to current da
 ### Parameters
 customerID **REQUIRED** ID of the customer\
 ### Return data
-~~~
+~~~ xml
 <customers>
-<customer id="test" firstname="test" lastname="test" address="test" lastvisit="2012-10-16 12:31:51" email="test" auxdata="None!" />
+  <customer id="test" firstname="test" lastname="test" address="test" lastvisit="2012-10-16 12:31:51" email="test" auxdata="None!" />
 </customers>
 ~~~
 ## booking/makebooking_XML.php
@@ -156,7 +156,7 @@ status _OPTIONAL_ Temporary or "real" booking. (1 = temporary, 2 = permanent)\
 position _OPTIONAL_ Position of the booking (Integer)\
 auxdata _OPTIONAL_ Auxillary data\
 ### Return data
-~~~
+~~~ xml
 <result size='20' bookingcost='100' remaining='4' />		
 ~~~
 ## booking/getbookings_XML.php
@@ -168,7 +168,7 @@ resourceID _OPTIONAL_ ID of the resource\
 searchresource _OPTIONAL_ If not empty searches for resource ID using like\
 date _OPTIONAL_ Date of the booking. Format: 2012-10-02 (year-month-day)\
 ### Return data
-~~~
+~~~ xml
 <bookings>
   <booking 
       application='Hotell_Demo'
@@ -195,7 +195,7 @@ Get all bookings made by a certain customer
 type **REQUIRED** Unique Application type. In this case Hotel_Demo for example login name of student\
 customerID **REQUIRED** ID of the customer\
 ### Return data
-~~~
+~~~ xml
 <bookings>
   <booking 
       application='Hotell_Demo'
@@ -226,7 +226,7 @@ location _OPTIONAL_ Location of the resource\
 fulltext _OPTIONAL_ Tries to find a match from name, company or location\
 
 ### Return data
-~~~
+~~~ xml
 <resources>
   <resource 
       id='1001'
@@ -256,7 +256,7 @@ company **REQUIRED** The resource companty\
 type **REQUIRED** Application type\
 fulltext **REQUIRED** Full text search much like for resource search, matches any search term.
 ### Return data
-~~~
+~~~ xml
 <avail>
   <availability 
       resourceID='1008'
@@ -289,7 +289,7 @@ category **REQUIRED** Category of the resource\
 cost **REQUIRED** Cost of the resource\
 auxdata _OPTIONAL_ Auxillary information about resource\
 ### Return data
-~~~
+~~~ xml
 <created status="OK"/>
 ~~~
 ## booking/deletebooking_XML.php
@@ -300,6 +300,6 @@ ID **REQUIRED** ID of the reresource\
 date **REQUIRED** Date of Booking\
 customerID **REQUIRED** ID of Customer\
 ### Return data
-~~~
+~~~ xml
 <deleted status="OK"/>
 ~~~
