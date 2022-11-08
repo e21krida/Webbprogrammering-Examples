@@ -1,6 +1,78 @@
-# Webbprogrammering-API-2014-
+# Webbprogramming-Example
+This repo contains examples and the API used in the Webbprograming course.
+
+- /Examples - Here you find code examples used in the course
+- /SPA-templates - Here you find single-page-application (SPA) templates 
+- /admin - Here you find tools to manipulate booking data
+- /booking - Here you find the booking API that your webb application should use
+
+# Webbprogrammering-API
 All data is returned as XML.
 
+## Sample usage Fetch API and JSON parameters
+Call the appropropriate service with the required (and optional) parameters. For example, to create a new customer the following Fetch-call can be used:
+~~~
+try {
+    const url = "../booking/makecustomer_XML.php";
+
+    // Manually create the JSON object to be submitted to our API
+    const params = {};
+    const inputs = document.querySelectorAll("#make-customer-form input[type='text']");
+    for(const input of inputs){
+        console.log(input)
+        params[input.name]=input.value;
+    }
+
+    // Make request
+    const response = await fetch(url,{
+        method: "post",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+    });
+
+    // Act on the response
+    if(!response.ok){
+        throw new Error(await response.text());
+    }
+    const response_text = await response.text(); // <-- Contains the XML returned byt the API
+}catch(err){
+    console.log("error", err);
+}
+~~~
+## Sample usage Fetch API and FormData paramters
+Call the appropropriate service with the required (and optional) parameters. For example, to create a new customer the following Fetch-call can be used:
+~~~
+try {
+    const url = "../booking/makecustomer_XML.php";
+
+    // Manually create the form data to be submitted to our API
+    const form = new FormData();
+    const inputs = document.querySelectorAll("#make-customer-form input[type='text']");
+    for(const input of inputs){
+        console.log(input)
+        form.append(input.name,input.value);
+    }
+
+    // Make request
+    const response = await fetch(url,{
+        method: "post",
+        body: form
+    });
+
+    // Act on the response
+    if(!response.ok){
+        throw new Error(await response.text());
+    }
+    const response_text = await response.text(); // <-- Contains the XML returned byt the API
+}catch(err){
+    console.log("error", err);
+}
+~~~
+
+## Sample usage jQuery (obsolete)
 Call the appropropriate service with the required (and optional) parameters. For example, to create a new customer the following AJAX-call using jQuery can be used:
 ~~~
 $.ajax({
@@ -18,6 +90,9 @@ $.ajax({
   });
 }
 ~~~
+
+# Webbprogrammering-API Reference Manual
+
 ## booking/makecustomer_XML.php
 ### Description
 Creates a customer.
