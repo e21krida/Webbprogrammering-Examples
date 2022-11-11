@@ -1,0 +1,112 @@
+<html>
+<head>
+		<link rel="stylesheet" href="style.css">
+		<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+ 		<script>
+		
+		// For students, User name of student to differentiate between different applications on the server
+		var apptype="Hotel_Demo";
+
+		//------------------------------------------------------------------------
+		// fixChars
+		//------------------------------------------------------------------------
+		// Converts all attributes from a notation that uses "%" to "&" which 
+		// allows us to pass non-english characthers as XML
+		//------------------------------------------------------------------------
+
+		function fixChars(returnedData)
+		{
+			var resultset=returnedData.childNodes[0];
+	
+			// Iterate over all nodes in root node recursively and replace the strings inside attributes
+			x=returnedData.getElementsByTagName('*');
+			for (i=0;i<x.length;i++){
+					for(j=0;j<x[i].attributes.length;j++){
+						  x[i].attributes[j].nodeValue=x[i].attributes[j].nodeValue.replace(/%/g,"&");
+					}
+			} 
+		}
+
+		//------------------------------------------------------------------------
+		// search resources
+		//------------------------------------------------------------------------
+		// Searches through the resources for a certain application. 
+		// If only type is given all resources for application are given
+		// If either company, location or name are given in any combination, these values are searched
+		// If fulltext is given all attributes are searched at once 
+		//------------------------------------------------------------------------
+		
+		function searchResources()
+		{
+				var input={
+						type:apptype,
+						name:document.getElementById("resNameS").value,
+						location:document.getElementById("resLocationS").value,
+						company:document.getElementById("resCompanyS").value,
+						fulltext:document.getElementById("resFulltextS").value,
+						id:document.getElementById("resIDS").value;
+				};
+
+				fetch('../booking/getresources_XML.php', {
+					  method: 'POST', // or 'PUT'
+					  headers: {'Content-Type': 'application/json'},
+					  body: JSON.stringify(input)
+					})
+					.then(function(response) {                      // first then()
+				      if(response.ok) return(response.text());
+      				throw new Error(response.statusText);
+  				}).then(function(text){
+							showResources(new window.DOMParser().parseFromString(text, "text/xml"));
+					}).catch(function(error) {                        // catch
+    					alert('Request failed\n'+error);
+  				});
+		}
+
+		function showResources(returnedData)
+		{
+				console.log(returnedData);
+				// Fix characters in XML notation to HTML notation
+				fixChars(returnedData);
+				
+				// An XML DOM document is returned from AJAX
+				var resultset=returnedData.childNodes[0];
+				var output="<table>";
+				// Iterate over all nodes in root node (i.e. resources)
+				for (i = 0; i < resultset.childNodes.length; i++) {
+						// Iterate over all child nodes of that node that are resource nodes
+						if(resultset.childNodes.item(i).nodeName=="resource"){
+								// Retrieve data from resource nodes
+								var resource=resultset.childNodes.item(i);
+								output+="<tr class='actiontablerow' onclick='alert(\""+resource.attributes['id'].value+"\")'>";
+								output+="<td>"+resource.attributes['id'].value+"</td>";
+								output+="<td>"+resource.attributes['company'].value+"</td>";
+								output+="<td>"+resource.attributes['name'].value+"</td>";
+								output+="<td>"+resource.attributes['location'].value+"</td>";
+								output+="<td>"+resource.attributes['category'].value+"</td>";
+								output+="</tr>";
+										
+						}
+				}
+
+				output+="</table>"
+				var div=document.getElementById("OutputDivSearchR");
+				div.innerHTML=output;
+		}					
+		</script>
+</head>
+<body>
+
+	<div class="actionbox">
+			<span class="actionheading">Search Resources (search resources given an ID or any or all of name,location,company or any of the above)</span>
+			ID:<input type='text' name='resIDS' id='resIDS' onchange="searchResources()" onkeyup="searchResources()">
+			Name:<input type='text' name='resNameS' id='resNameS' onchange="searchResources()" onkeyup="searchResources()"><br/>
+			Location:<input type='text' name='resLocationS' id='resLocationS' onchange="searchResources()" onkeyup="searchResources()">
+			Company:<input type='text' name='resCompanyS' id='resCompanyS' onchange="searchResources()" onkeyup="searchResources()"><br/>
+			Full Text:<input type='text' name='resFulltextS' id='resFulltextS' onchange="searchResources()" onkeyup="searchResources()"><br/>
+			<input type="button" onclick="searchResources();" value="Search Resource">			
+			<span class="actionheading">Result</span>
+			<div id="OutputDivSearchR" /></div>
+	</div>
+	
+</body>
+</html>
