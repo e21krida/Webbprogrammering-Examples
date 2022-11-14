@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="js-form">
+        <div>
+            <label for="fname">Förnamn</label>
+            <input type="text" id="fname" name="fname" placeholder="Förnamn">    
+        </div>
+        <div>
+            <label for="lname">Efternamn</label>
+            <input type="text" id="lname" name="lname" placeholder="Efternamn">    
+        </div>
+        <input type="submit" value="Skicka">
+    </form>
+    <script>
+        function mySubmitHandler(event){
+            event.preventDefault();
+            console.log(event);
+
+            const inputs = document.querySelectorAll("#js-form input");
+            for (const [i,input] of inputs.entries()){
+                console.log(`${i}, ${input.id}="${input.value}"`);
+            }
+
+            for (const input of inputs){
+                console.log(`${input.id}="${input.value}"`);
+            }
+        }
+        document.querySelector("#js-form").addEventListener("submit",mySubmitHandler);
+    </script>
+</body>
+</html>

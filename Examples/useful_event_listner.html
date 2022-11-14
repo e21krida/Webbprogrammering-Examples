@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            border: 8px solid purple;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Useful events</h2>
+    <p>Be sure to have the javascript console open when viewing this demo.</p>
+    <form>
+        <label for="demo-input"></label>
+        <input type="text" id="demo-input" value="" placeholder="Add text">
+        <select name="demo-select" id="demo-select">
+            <option value="1">Item One</option>
+            <option value="2">Item Two</option>
+            <option value="3">Item Three</option>
+        </select>
+    </form>
+    <script>
+        function myHandler(e){
+            console.log(`Event "${e.type}" detected`,e);
+        }
+
+        const inputs = document.querySelectorAll("form input,form select");
+        for (const input of inputs){
+            input.addEventListener("click", myHandler);
+            input.addEventListener("mousemove", myHandler);
+            input.addEventListener("mouseover", myHandler);
+            input.addEventListener("mouseout", myHandler);
+            input.addEventListener("mousein", myHandler);
+            input.addEventListener("keyup", myHandler);
+            input.addEventListener("keydown", myHandler);
+            input.addEventListener("change", myHandler);
+            input.addEventListener("input", myHandler);
+            input.addEventListener("blur", myHandler);
+            input.addEventListener("focus", myHandler);
+        }
+
+        // See https://www.w3schools.com/tags/ref_eventattributes.asp for a more exhaustive list of events
+    </script>
+</body>
+</html>
