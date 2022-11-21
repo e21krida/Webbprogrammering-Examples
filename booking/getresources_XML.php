@@ -33,7 +33,7 @@
 			//---------------------------------------------------------------------------------------------------------------					
 
 			try{
-					if(getpostAJAX("company")!="UNK"||getpostAJAX("location")!="UNK"||getpostAJAX("fulltext")!="UNK"||getpostAJAX("name")!="UNK"||getpostAJAX("resID")!="UNK"){
+					if(getpostAJAX("category")!="UNK"||getpostAJAX("company")!="UNK"||getpostAJAX("location")!="UNK"||getpostAJAX("fulltext")!="UNK"||getpostAJAX("name")!="UNK"||getpostAJAX("resID")!="UNK"){
 							$querystring="SELECT * FROM resource WHERE type=:TYPE AND (category like :CATEGORY or name like :NAME or company like :COMPANY or location like :LOCATION or id like :RESID)";
 							$stmt = $pdo->prepare($querystring);
 							$stmt->bindParam(':TYPE',$type);
@@ -65,11 +65,10 @@
 							echo " />\n";
 							echo "\n";
 					}				
-					echo "</resources>\n";	
+					echo "</resources>";	
 				
 			} catch (PDOException $e) {
 					err("Error!: ".$e->getMessage()."<br/>");
 					die();
-			}
-			
+			}		
 ?>
