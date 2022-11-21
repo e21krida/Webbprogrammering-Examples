@@ -15,6 +15,7 @@
 			$name="%".getpostAJAX("name")."%";
 			$fulltext=getpostAJAX("fulltext");
 			$resID="%".getpostAJAX("resID")."%";
+			$category="%".getpostAJAX("category")."%";
 			
 			if($fulltext!="UNK"){
 					$company="%".$fulltext."%";
@@ -33,10 +34,11 @@
 
 			try{
 					if(getpostAJAX("company")!="UNK"||getpostAJAX("location")!="UNK"||getpostAJAX("fulltext")!="UNK"||getpostAJAX("name")!="UNK"||getpostAJAX("resID")!="UNK"){
-							$querystring="SELECT * FROM resource WHERE type=:TYPE AND (name like :NAME or company like :COMPANY or location like :LOCATION or id like :RESID)";
+							$querystring="SELECT * FROM resource WHERE type=:TYPE AND (category like :CATEGORY or name like :NAME or company like :COMPANY or location like :LOCATION or id like :RESID)";
 							$stmt = $pdo->prepare($querystring);
 							$stmt->bindParam(':TYPE',$type);
 							$stmt->bindParam(':COMPANY',$company);
+							$stmt->bindParam(':CATEGORY',$category);							
 							$stmt->bindParam(':NAME',$name);
 							$stmt->bindParam(':LOCATION',$location);
 							$stmt->bindParam(':RESID',$resID);
