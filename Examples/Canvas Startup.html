@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+ <head>
+     <script>
+         function startcanvas()
+         {
+             var c = document.getElementById("canvasid");
+             var ctx = c.getContext("2d");
+             ctx.moveTo(5, 5);
+             ctx.lineTo(30, 20);
+             ctx.stroke();
+         }
+     </script>
+ </head>
+ <body onload="startcanvas();">
+     <canvas id="canvasid" width="50" height="50" style="border:1px solid red;width:400px;height:400px;image-rendering: pixelated;">
+        
+     </canvas>
+ </body>
+</html>

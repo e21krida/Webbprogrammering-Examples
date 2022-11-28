@@ -1,0 +1,28 @@
+var objects = [
+                {x:100,y:100,width:20,height:20},
+                {x:140,y:100,width:20,height:20},
+                {x:120,y:120,width:20,height:20}              
+              ];
+
+              var objects=[];
+              for(var i=0;i<100;i++){
+                  objects.push(x:Math.random()*300,y:Math.random()*300,width:20,height:20);
+              }
+
+              function drawgraphics()
+              {
+                  ctx.clearRect(0,0,400,400);
+                      
+                  for(var i=0;i<objects.length;i++){
+                      ctx.save();
+                      ctx.translate(snowflakes[i].xk+(Math.sin(snowflakes[i].xk+(snowflakes[i].yk*0.03))*snowflakes[i].siz*14.0),snowflakes[i].yk);  
+                      ctx.scale(snowflakes[i].siz,snowflakes[i].siz);
+                      ctx.drawImage(img,-18,-18);
+                      ctx.restore();
+                      
+                      snowflakes[i].yk+=snowflakes[i].spd;
+                      if(snowflakes[i].yk>400) snowflakes[i].yk-=400;
+                  }
+     
+                  setTimeout(function(){drawgraphics()}, 30);
+              }              

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+ <head>
+     <script>
+        var ctx;
+        
+        var clouds;
+        
+        var x=-100;
+
+        function startcanvas()
+        {
+            var c = document.getElementById("canvasid");
+            ctx = c.getContext("2d");
+
+            clouds=new Image();
+            clouds.src="clouds.png";
+
+            redraw();
+        }
+
+        function redraw()
+        {
+            ctx.clearRect(0,0,200,200);
+
+            ctx.save();
+            
+            ctx.drawImage(clouds,0,0);
+            ctx.drawImage(clouds, 10, 200, 100, 100);
+            ctx.drawImage(clouds, 50, 50, 80, 80, 150, 150, 200, 200);
+
+            ctx.restore();
+
+            window.requestAnimationFrame(redraw);
+        }
+     </script>
+ </head>
+ <body onload="startcanvas();">
+     <canvas id="canvasid" width="600" height="600" style="border:1px solid red;width:400px;height:400px;image-rendering: pixelated;">
+        
+     </canvas>
+ </body>
+</html>
