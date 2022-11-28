@@ -16,8 +16,28 @@
 			$auxdata=getpostAJAX("auxdata");
 			$type=getpostAJAX("type");
 
-			if($user=="UNK"||$resource=="UNK"||$date=="UNK"||$rebate=="UNK"||$status=="UNK"||$position=="UNK"||$auxdata=="UNK"||$type=="UNK"){
-					err("Missing Form Data: (customerID/resourceID/date/status/position/auxdata/type)");					
+			if($user=="UNK"||$resource=="UNK"||$date=="UNK"||$type=="UNK"){
+					err("Missing Form Data: (type/customerID/resourceID/date)");					
+			}
+
+			// Default to 1 day bookings
+			if($dateto == "UNK"){
+				$dateto = $date;
+			}
+
+			// Default to permanent bookings
+			if($status == "UNK"){
+				$status = 2;
+			}
+
+			// Default to position 0
+			if($position == "UNK"){
+				$position = 0;
+			}
+
+			// Default rebate to 0
+			if($rebate == "UNK"){
+				$rebate = 0;
 			}
 
 			$querystring="SELECT count(*) AS cnt FROM resource WHERE ID=:RESID and type=:TYPE;";
