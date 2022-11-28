@@ -152,9 +152,9 @@ resourceID **REQUIRED** ID of the resource\
 date **REQUIRED** Date of the booking. Format: 2012-10-02 (year-month-day)\
 dateto **REQUIRED** End Date of the booking if there is one. Format: 2012-10-02 (year-month-day)\
 customerID **REQUIRED** ID of the customer\
-rebate _OPTIONAL_ Rebate\
-status _OPTIONAL_ Temporary or "real" booking. (1 = temporary, 2 = permanent)\
-position _OPTIONAL_ Position of the booking (Integer)\
+rebate _OPTIONAL_ Rebate, defaults to 0\
+status _OPTIONAL_ Temporary or "real" booking. (1 = temporary, 2 = permanent) Defaults to 2\
+position _OPTIONAL_ Position of the booking (Integer) Defaults to 0\
 auxdata _OPTIONAL_ Auxillary data\
 ### Return data
 ~~~ xml
