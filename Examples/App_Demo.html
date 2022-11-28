@@ -146,11 +146,13 @@
 		{
 				var input={
 						type:apptype,
-						name:document.getElementById("resNameS").value,
+            //fulltext:document.getElementById("resNameS").value, // We can use for example name as a free text search field
+            name:document.getElementById("resNameS").value,
 						location:document.getElementById("resLocationS").value,
 						company:document.getElementById("resCompanyS").value,
 						category:document.getElementById("resCategoryS").value,            
-						id:document.getElementById("resIDS").value
+						resID:document.getElementById("resIDS").value
+
 				};
 
 				fetch('../booking/getresources_XML.php', {
@@ -514,7 +516,7 @@
 			Name:<input type='text' name='resNameS' id='resNameS' onchange="searchResources()" onkeyup="searchResources()"><br/>
 			Location:<input type='text' name='resLocationS' id='resLocationS' onchange="searchResources()" onkeyup="searchResources()">
 			Company:<input type='text' name='resCompanyS' id='resCompanyS' onchange="searchResources()" onkeyup="searchResources()"><br/>
-			Full Text:<input type='text' name='resFulltextS' id='resFulltextS' onchange="searchResources()" onkeyup="searchResources()"><br/>
+			Category:<input type='text' name='resCategoryS' id='resCategoryS' onchange="searchResources()" onkeyup="searchResources()"><br/>
 			<input type="button" onclick="searchResources();" value="Search Resource">			
 			<span class="actionheading">Result</span>
 			<div id="OutputDivSearchR" /></div>
