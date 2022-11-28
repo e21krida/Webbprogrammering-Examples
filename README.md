@@ -147,6 +147,7 @@ Makes a booking and stores it in the database. (Deletes all temporary bookings f
 
 **This API call has a built-in artifical delay of 3-5s**
 ### Parameters
+type **REQUIRED** the application to book resource in\
 resourceID **REQUIRED** ID of the resource\
 date **REQUIRED** Date of the booking. Format: 2012-10-02 (year-month-day)\
 dateto **REQUIRED** End Date of the booking if there is one. Format: 2012-10-02 (year-month-day)\
