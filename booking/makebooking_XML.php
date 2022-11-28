@@ -16,8 +16,8 @@
 			$auxdata=getpostAJAX("auxdata");
 			$type=getpostAJAX("type");
 
-			if($user=="UNK"||$resource=="UNK"||$date=="UNK"||$type=="UNK"||$status=="UNK"){
-					err("Missing Form Data: (type/customerID/resourceID/date/status)");					
+			if($user=="UNK"||$resource=="UNK"||$date=="UNK"||$type=="UNK"||$status=="UNK"||$position=="UNK"){
+					err("Missing Form Data: (type/customerID/resourceID/date/position/status)");					
 			}
 
 			// Default to 1 day bookings
@@ -26,13 +26,8 @@
 			}
 
 			// Check if $status is legal option
-			if($status < 0 && $status > 2){
-					err("Illegal status: $status (must be either 1 - temporary booking OR 2 - permanent booking)");
-			}
-
-			// Default to position 0
-			if($position == "UNK"){
-				$position = 0;
+			if($status < 1 && $status > 2){
+					err("Illegal status: $status (must be either 1 - preliminary booking OR 2 - permanent booking)");
 			}
 
 			// Default rebate to 0
