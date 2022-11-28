@@ -16,8 +16,8 @@
 			$auxdata=getpostAJAX("auxdata");
 			$type=getpostAJAX("type");
 
-			if($user=="UNK"||$resource=="UNK"||$date=="UNK"){
-					err("Missing Form Data: (customerID/resourceID/date)");					
+			if($user=="UNK"||$resource=="UNK"||$date=="UNK"||$rebate=="UNK"||$status=="UNK"||$position=="UNK"||$auxdata=="UNK"||$type=="UNK"){
+					err("Missing Form Data: (customerID/resourceID/date/status/position/auxdata/type)");					
 			}
 
 			$querystring="SELECT count(*) AS cnt FROM resource WHERE ID=:RESID and type=:TYPE;";
