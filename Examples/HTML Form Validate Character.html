@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <title>Javascript Form Validate Character</title>
     <script type="text/javascript">
-      function clicked()
-      {
-        var textinput = document.getElementById("input1");
-        if(textinput.value.indexOf("@")==-1){
-          alert("Email must contain @");
+        function validate()
+        {
+          var textinput = document.getElementById("input1");
+          if(textinput.value.indexOf("@")!=-1){
+            textinput.style.backgroundColor = "#cfa";
+          }else{
+            textinput.style.backgroundColor = "#f57";
+          }
         }
-       }
     </script>
-  </head>
-  <body>
-    <input id="input1" type="text" value="Must contain at character" />
-    <button onclick="clicked()" >Click here</button>
-  </body>
-  </html>
+</head>
+<body onload="validate()">
+  <input id="input1" type="text" onchange="validate()" onkeyup="validate()" value="Must contain at character" />
+</body>
+</html>
