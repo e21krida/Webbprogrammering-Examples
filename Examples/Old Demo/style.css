@@ -5,6 +5,7 @@ table {
 	border-collapse:collapse;
 	box-shadow: 3px 3px 5px #444; 
 	border:1px solid #fff; 
+	border-color: black;
 }
 .actionbox {
 	border-radius: 6px;
